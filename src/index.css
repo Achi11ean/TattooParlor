@@ -1,0 +1,186 @@
+@import url('https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-height: 100vh;
+  min-width: 100vw;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #646cff;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}
+
+
+.falling-object {
+  position: absolute;
+  top: -50px;
+  animation: fall linear infinite;
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+}
+.react-calendar__navigation__arrow,
+.react-calendar__navigation__next-button,
+.react-calendar__navigation__prev-button,
+.react-calendar__navigation__next2-button,
+.react-calendar__navigation__prev2-button {
+  color: black !important; /* Makes the button text black */
+  background-color: transparent !important; /* Ensures no unwanted backgrounds */
+  border: none; /* Removes any border */
+  font-size: 1.2rem; /* Optional: Adjust font size */
+  font-weight: bold; /* Optional: Make the text bold */
+  padding: 5px 10px; /* Optional: Add some padding */
+  border-radius: 5px; /* Optional: Add some curve to the buttons */
+  transition: background-color 0.3s ease-in-out;
+}
+
+.react-calendar__navigation__arrow:hover,
+.react-calendar__navigation__next-button:hover,
+.react-calendar__navigation__prev-button:hover,
+.react-calendar__navigation__next2-button:hover,
+.react-calendar__navigation__prev2-button:hover {
+  background-color: rgba(0, 0, 0, 0.1); /* Light hover effect */
+}
+/* Style for weekday headers */
+.react-calendar__month-view__weekdays__weekday {
+  color: black !important; /* Makes the text black */
+  background-color: transparent !important; /* Removes any background */
+  font-size: 1rem; /* Adjust font size */
+  font-weight: bold; /* Makes the text bold */
+  text-align: center; /* Centers the text */
+  padding: 5px 0; /* Adds padding for better spacing */
+  border-radius: 5px; /* Optionally curve the edges */
+}
+
+/* Optional hover effect for weekdays */
+.react-calendar__month-view__weekdays__weekday:hover {
+  background-color: rgba(0, 0, 0, 0.1); /* Light background on hover */
+  transition: background-color 0.3s ease-in-out; /* Smooth transition */
+}
+/* Style for day tiles */
+.react-calendar__tile.react-calendar__month-view__days__day {
+  color: black !important; /* Text color black */
+  background-color: transparent !important; /* Transparent background */
+  font-size: 1rem; /* Adjust font size */
+  font-weight: bold; /* Bold text */
+  text-align: center; /* Centers the text */
+  padding: 10px 0; /* Padding for better spacing */
+  border-radius: 8px; /* Smoothly rounded edges */
+  transition: all 0.3s ease-in-out; /* Smooth transition for hover */
+}
+
+/* Style for days not in the selected month */
+.react-calendar__tile--neighboringMonth {
+  color: rgba(128, 128, 128, 0.7) !important; /* Light gray text for neighboring days */
+  background-color: transparent !important; /* Transparent background */
+  font-weight: normal; /* Make text less emphasized */
+  font-size: 0.9rem; /* Slightly smaller font */
+}
+
+/* Optional hover effect for neighboring days */
+.react-calendar__tile--neighboringMonth:hover {
+  background-color: rgba(200, 200, 200, 0.2); /* Subtle hover effect */
+  color: rgba(100, 100, 100, 1); /* Darker gray on hover */
+  transition: all 0.3s ease-in-out; /* Smooth hover transition */
+}
+
+/* Style for other day tiles (keep existing styles) */
+.react-calendar__tile.react-calendar__month-view__days__day {
+  color: black !important; /* Text color black */
+  background-color: transparent !important; /* Transparent background */
+  font-size: 1rem; /* Adjust font size */
+  font-weight: bold; /* Bold text */
+  text-align: center; /* Centers the text */
+  padding: 10px 0; /* Padding for better spacing */
+  border-radius: 8px; /* Smoothly rounded edges */
+  transition: all 0.3s ease-in-out; /* Smooth transition for hover */
+}
+
+/* Hover effect for day tiles */
+.react-calendar__tile.react-calendar__month-view__days__day:hover {
+  background-color: rgba(255, 182, 193, 0.7); /* Light pink background on hover */
+  color: black; /* Keep the text black */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Subtle shadow for hover */
+  transform: scale(1.05); /* Slight scaling effect */
+}
+
+/* Selected day styling */
+.react-calendar__tile--active {
+  background-color: rgba(255, 105, 180, 0.9) !important; /* Hot pink for active day */
+  color: white !important; /* White text for contrast */
+  border-radius: 8px; /* Match rounded edges */
+  font-weight: bold; /* Emphasize active day */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3); /* Slight shadow for active state */
+}
+
+
