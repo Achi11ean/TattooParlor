@@ -182,6 +182,14 @@ const Artists = () => {
 
                 ) : null}
               </div>
+              {userType === "admin" || userType === "artist" ? (
+  <button
+    onClick={() => navigate(`/artists/edit/${artist.id}`)}
+    className="bg-gradient-to-r from-green-500 to-teal-600 text-white px-6 py-2 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 mt-4"
+  >
+    Edit Artist
+  </button>
+) : null}
               </div>
 </RandomGradient>
           );

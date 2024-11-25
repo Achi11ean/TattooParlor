@@ -14,6 +14,7 @@ import About from "./About";
 import AdminDashboard from './AdminDashboard'; // Adjust the path as needed
 import Contact from "./Contact";
 import ContactCenter from "./ContactCenter";
+import EditArtist from "./EditArtist"; // Adjust the path as needed
 
 const App = () => {
 
@@ -88,6 +89,7 @@ const App = () => {
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/messages" element={<ContactCenter />} />
+          <Route path="/artists/edit/:id" element={<EditArtist />} />
 
           {/* Add other routes here if needed */}
         </Routes>
