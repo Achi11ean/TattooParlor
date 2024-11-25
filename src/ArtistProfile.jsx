@@ -16,14 +16,27 @@ const ArtistProfile = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const SocialMediaIcon = ({ platform }) => {
     const icons = {
-      facebook: <i className="fab fa-facebook text-blue-600"></i>, // FontAwesome or custom SVG
-      instagram: <i className="fab fa-instagram text-pink-500"></i>,
-      twitter: <i className="fab fa-twitter text-blue-400"></i>,
-      linkedin: <i className="fab fa-linkedin text-blue-700"></i>,
-      // Add more platforms as needed
+      facebook: (
+        <i className="fab fa-facebook text-blue-600 text-4xl  rounded-full"></i>
+      ),
+      instagram: (
+        <i className="fab fa-instagram text-pink-500 text-4xl p-2 rounded-full"></i>
+      ),
+      twitter: (
+        <i className="fab fa-twitter text-blue-400 text-4xl p-2 rounded-full"></i>
+      ),
+      linkedin: (
+        <i className="fab fa-linkedin text-blue-700 text-4xl p-2 rounded-full"></i>
+      ),
     };
   
-    return icons[platform.toLowerCase()] || <i className="fas fa-link text-gray-500"></i>; // Default icon
+    return (
+      <span className="inline-flex items-center justify-center">
+        {icons[platform.toLowerCase()] || (
+          <i className="fas fa-link text-gray-500 text-2xl p-2 rounded-full"></i>
+        )}
+      </span>
+    );
   };
   
   // Fetch artist data by ID
@@ -219,19 +232,25 @@ const ArtistProfile = () => {
 <div className="mt-6">
   <h2 className="text-xl font-semibold mb-4">Connect with Us</h2>
   {Object.keys(socialMedia).length > 0 ? (
-    <div className="flex flex-wrap gap-4">
-      {Object.entries(socialMedia).map(([platform, handle]) => (
+    <div className="flex  flex-wrap gap-4">
+      {Object.entries(socialMedia).map(([platform, handle]) => {
+        console.log('PLATFORM IS ', platform)
+        console.log(handle)
+        const sanitizedHandle = handle.replace(/["'{}]/g, '').trim();
+        const sanitizedPlatform = platform.replace(/["'{}]/g, '').trim();
+        console.log(sanitizedHandle)
+        return handle != '""' ? (
         <a
-          key={platform}
-          href={handle}
+          key={sanitizedPlatform}
+          href={sanitizedHandle}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-2 px-4 py-2 bg-gradient-to-br from-blue-500 to-blue-700 text-white rounded-lg shadow-md hover:from-blue-600 hover:to-blue-800 transition duration-300"
-        >
-          <SocialMediaIcon platform={platform} /> {/* Icon Component */}
-          <span className="font-medium capitalize">{platform}</span>
+          className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-pink-200 via-blue-200 to-yellow-300 text-gray-800 rounded-lg shadow-md hover:from-pink-400 hover:via-purple-500 hover:to-green-400 hover:shadow-lg transition duration-300 hover:animate-wobble hover:text-white"
+          >
+          <SocialMediaIcon platform={sanitizedPlatform} /> 
+          <span className="font-medium capitalize">{sanitizedPlatform}</span>
         </a>
-      ))}
+      ) : null})}
     </div>
   ) : (
     <p className="text-white">No social media links available.</p>
