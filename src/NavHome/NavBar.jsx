@@ -83,22 +83,23 @@ function Navbar() {
             >
               Contact
             </a>
+            {(userType === "admin" || userType === "artist") && (
+              <a
+                href="/messages"
+                className="block hover:text-red-400 transition duration-300"
+              >
+                Messages
+              </a>
+            )}
             {userType === "admin" && (
               <a
                 href="/admin-dashboard"
-                className="hover:text-red-400 transition duration-300 transform hover:scale-110"
+                className="block hover:text-red-400 transition duration-300"
               >
                 Admin Dashboard
               </a>
             )}
-            {userType === "artist" && (
-              <a
-                href="/artist-dashboard"
-                className="hover:text-red-400 transition duration-300 transform hover:scale-110"
-              >
-                Artist Dashboard
-              </a>
-            )}
+
             {authToken ? (
               <button
                 onClick={handleSignOut}

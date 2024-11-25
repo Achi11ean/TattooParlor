@@ -4,13 +4,16 @@ import Navbar from "./NavHome/NavBar";
 import Services from "./Services";
 import SignUp from "./SignUp";
 import SignIn from "./SignIn";
-import ArtistDashboard from "./ArtistDashboard";
 import Artists from "./Artist";
 import CreateArtist from "./CreateArtist";
 import ArtistProfile from "./ArtistProfile";
 import Reviews from "./Reviews";
 import Booking from "./Booking"; // Import the Booking component
 import GalleryPage from "./GalleryPage";
+import About from "./About";
+import AdminDashboard from './AdminDashboard'; // Adjust the path as needed
+import Contact from "./Contact";
+import ContactCenter from "./ContactCenter";
 
 const App = () => {
 
@@ -75,13 +78,16 @@ const App = () => {
           {/* Sign-Up Route */}
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signin" element={<SignIn />} />
-          <Route path="/artist-dashboard" element={<ArtistDashboard />} />
           <Route path="/artists" element={<Artists />} />
           <Route path="/create-artist" element={<CreateArtist />} />
           <Route path="/artists/:id" element={<ArtistProfile />} /> {/* Optional for individual profiles */}
           <Route path="/artists/:artistId/reviews" element={<Reviews />} />
           <Route path="/bookings" element={<Booking />} /> {/* Add Booking route */}
           <Route path="/gallery" element={<GalleryPage />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/admin-dashboard" element={<AdminDashboard />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/messages" element={<ContactCenter />} />
 
           {/* Add other routes here if needed */}
         </Routes>

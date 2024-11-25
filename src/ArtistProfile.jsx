@@ -140,6 +140,16 @@ const ArtistProfile = () => {
             </p>
           </div>
         </div>
+        <button
+  onClick={() => window.location.href = "https://your-stripe-payment-link-here"}
+  className="bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 text-white px-6 py-3 rounded-full shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 ease-in-out relative overflow-hidden"
+>
+  <span className="absolute inset-0 bg-gradient-to-r from-yellow-300 via-red-500 to-pink-500 opacity-0 hover:opacity-30 transition-opacity duration-300 rounded-full"></span>
+  <span className="relative z-10 font-semibold text-lg uppercase tracking-wider">
+    Process Payment 
+  </span>
+</button>
+
 
 {/* Bookings Section */}
 <div className="mt-6">

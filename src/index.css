@@ -107,7 +107,7 @@ h1 {
 /* Day Tiles */
 .react-calendar__tile.react-calendar__month-view__days__day {
   color: rgb(0, 0, 0) !important; /* Text color */
-  background-color: transparent; /* Transparent background */
+  background-color: rgb(167, 250, 207); /* Transparent background */
   font-size: 1rem; /* Adjust font size */
   font-weight: bold; /* Bold text */
   text-align: center; /* Center the text */
@@ -125,6 +125,18 @@ h1 {
 }
 
 /* Days Not in the Current Month */
+/* Neighboring Month Days */
+.react-calendar__tile--neighboringMonth {
+  background-color: rgba(255, 0, 0, 0.2); /* Light gray background */
+  color: #aaa; /* Subtle text color */
+}
+
+/* Hover Effect for Neighboring Month Days */
+.react-calendar__tile--neighboringMonth:hover {
+  background-color: rgba(255, 0, 0, 0.5); /* Darker gray on hover */
+  transition: background-color 0.3s ease-in-out; /* Smooth transition */
+  color: #555; /* Slightly darker text color on hover */
+}
 
 
 /* Hover Effect for Neighboring Days */
