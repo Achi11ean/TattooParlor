@@ -1,26 +1,28 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import axios from "axios";
+import FallingStars from "./FallingStars"; // Import the falling stars component
 
 const Reviews = ({ artistId }) => {
-    
   const [reviews, setReviews] = useState([]);
   const [newReview, setNewReview] = useState({ star_rating: "", review_text: "", photo_url: "" });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showStars, setShowStars] = useState(false); // Control the falling stars animation
+
   console.log({ artistId });
-  
+
   // Fetch reviews for the artist
   useEffect(() => {
     if (!artistId) {
-        setError("Artist ID is missing or invalid.");
-        setLoading(false);
-        return;
-      }
+      setError("Artist ID is missing or invalid.");
+      setLoading(false);
+      return;
+    }
+
     const fetchReviews = async () => {
       try {
         const response = await axios.get(`http://127.0.0.1:5002/api/artists/${artistId}/reviews`);
-        setReviews(response.data.reviews || []); // Handle case where reviews are not provided
+        setReviews(response.data.reviews || []);
       } catch (err) {
         console.error("Error fetching reviews:", err);
         setError("Failed to load reviews. Please try again later.");
@@ -42,17 +44,15 @@ const Reviews = ({ artistId }) => {
     }
 
     try {
-      const token = localStorage.getItem("authToken"); // Retrieve the token from localStorage
+      const token = localStorage.getItem("authToken");
       const response = await axios.post(
         `http://127.0.0.1:5002/api/artists/${artistId}/reviews`,
         newReview,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
+        { headers: { Authorization: `Bearer ${token}` } }
       );
-      setReviews((prev) => [...prev, response.data]); // Add the new review to the list
-      setNewReview({ star_rating: "", review_text: "", photo_url: "" }); // Reset the form
-      alert("Review added successfully!");
+      setReviews((prev) => [...prev, response.data]);
+      setNewReview({ star_rating: "", review_text: "", photo_url: "" });
+      setShowStars(true); // Trigger falling stars animation
     } catch (err) {
       console.error("Error adding review:", err);
       alert("Failed to add the review.");
@@ -66,7 +66,7 @@ const Reviews = ({ artistId }) => {
       await axios.delete(`http://127.0.0.1:5002/api/reviews/${reviewId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      setReviews((prev) => prev.filter((review) => review.id !== reviewId)); // Remove the deleted review
+      setReviews((prev) => prev.filter((review) => review.id !== reviewId));
       alert("Review deleted successfully!");
     } catch (err) {
       console.error("Error deleting review:", err);
@@ -78,71 +78,104 @@ const Reviews = ({ artistId }) => {
   if (error) return <div className="text-red-500">{error}</div>;
 
   return (
-<div className="p-6 min-h-screen bg-gradient-to-br from-pink-500 via-pink-600 to-pink-800 rounded-3xl">
-<h1 className="text-3xl font-bold mb-6">Reviews for Artist</h1>
+    <div className="p-6  bg-gradient-to-br from-pink-500 via-pink-600 to-pink-800 rounded-3xl">
+      <h1 className="text-3xl font-bold mb-6">Reviews for Artist</h1>
 
       {/* Reviews List */}
-      {reviews.length > 0 ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-          {reviews.map((review) => (
-            <div
-              key={review.id}
-              className="bg-gradient-to-br from-purple-900 via-blue-800 to-black shadow-lg rounded-lg p-4 hover:shadow-2xl hover:scale-105 transition duration-300"
+{/* Reviews List */}
+{reviews.length > 0 ? (
+  <div className="flex overflow-x-auto mb-5 gap-4 scrollbar-custom">
+  {reviews.map((review) => (
+      <div
+        key={review.id}
+        className="flex-shrink-0 bg-gradient-to-br from-purple-900 via-blue-800 to-black shadow-lg rounded-lg p-4 hover:shadow-2xl hover:scale-105 transition duration-300 w-64"
+      >
+        <p className="text-white mb-2 flex items-center">
+          <strong>Rating:</strong>
+          <span className="ml-2">
+            {[...Array(5)].map((_, index) => (
+              <span
+                key={index}
+                className={`text-xl ${
+                  index < review.star_rating ? "text-yellow-400" : "text-gray-400"
+                }`}
               >
-              <p className="text-white mb-2">
-                <strong>Rating:</strong> {review.star_rating}⭐
-              </p>
-              <p className="text-white mb-2">{review.review_text || "No text provided"}</p>
-              {review.photo_url && (
-                <img
-                  src={review.photo_url}
-                  alt="Review"
-                  className="w-full h-40 object-cover rounded-md mb-4"
-                />
-              )}
-              <button
-                onClick={() => handleDeleteReview(review.id)}
-                className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700"
-              >
-                Delete
-              </button>
-            </div>
-          ))}
-        </div>
-      ) : (
-        <p className="text-gray-500">No reviews yet. Be the first to leave one!</p>
-      )}
+                ★
+              </span>
+            ))}
+          </span>
+        </p>
+        <p className="text-white mb-2">{review.review_text || "No text provided"}</p>
+        {review.photo_url && (
+          <img
+            src={review.photo_url}
+            alt="Review"
+            className="w-full h-40 object-cover rounded-md mb-4"
+          />
+        )}
+        <button
+          onClick={() => handleDeleteReview(review.id)}
+          className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700"
+        >
+          Delete
+        </button>
+      </div>
+    ))}
+  </div>
+) : (
+  <p className="text-gray-500">No reviews yet. Be the first to leave one!</p>
+)}
 
       {/* New Review Form */}
-      <div className="bg-white shadow-lg rounded-lg p-6">
+      <div
+        className="shadow-lg bg-black w-full rounded-lg p-6 text-white"
+        style={{
+          backgroundImage: "url('/reviews.webp')",
+          backgroundSize: "contain",
+          backgroundPosition: "top center",
+          backgroundRepeat: "no-repeat",
+        }}
+      >
         <h2 className="text-2xl font-semibold mb-4">Add a Review</h2>
         <form onSubmit={handleCreateReview} className="space-y-4">
           <div>
-            <label className="block text-gray-700 font-medium">Star Rating</label>
-            <input
-              type="number"
-              min="1"
-              max="5"
-              value={newReview.star_rating}
-              onChange={(e) => setNewReview((prev) => ({ ...prev, star_rating: e.target.value }))}
-              required
-              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-500"
-            />
+            <label className="text-red-700 font-medium">Star Rating</label>
+            <div className="flex space-x-1">
+              {[...Array(5)].map((_, index) => (
+                <button
+                  key={index}
+                  type="button"
+                  onClick={() =>
+                    setNewReview((prev) => ({ ...prev, star_rating: index + 1 }))
+                  }
+                  className={`text-lg ${
+                    index < newReview.star_rating ? "text-yellow-400" : "text-white"
+                  }`}
+                  style={{ padding: 0, background: "none", border: "none" }}
+                >
+                  ★
+                </button>
+              ))}
+            </div>
           </div>
           <div>
-            <label className="block text-gray-700 font-medium">Review Text</label>
+            <label className="block text-white font-medium">Review Text</label>
             <textarea
               value={newReview.review_text}
-              onChange={(e) => setNewReview((prev) => ({ ...prev, review_text: e.target.value }))}
+              onChange={(e) =>
+                setNewReview((prev) => ({ ...prev, review_text: e.target.value }))
+              }
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-500"
             />
           </div>
           <div>
-            <label className="block text-gray-700 font-medium">Photo URL</label>
+            <label className="block text-white font-medium">Photo URL</label>
             <input
               type="url"
               value={newReview.photo_url}
-              onChange={(e) => setNewReview((prev) => ({ ...prev, photo_url: e.target.value }))}
+              onChange={(e) =>
+                setNewReview((prev) => ({ ...prev, photo_url: e.target.value }))
+              }
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-500"
             />
           </div>
@@ -159,6 +192,7 @@ const Reviews = ({ artistId }) => {
           </button>
         </form>
       </div>
+      {showStars && <FallingStars onComplete={() => setShowStars(false)} />}
     </div>
   );
 };

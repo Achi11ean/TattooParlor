@@ -86,7 +86,7 @@ const BookingCalendar = ({ artistId }) => {
       <h2 className="text-3xl font-bold mb-6 text-center text-white">
         Artist Bookings
       </h2>
-      <div className="bg-white p-6 rounded-lg shadow-xl max-w-screen-md mx-auto">
+      <div className="bg-white my-custom-calendar p-6 rounded-lg shadow-xl max-w-screen-md mx-auto">
         <Calendar
           localizer={localizer}
           events={events}

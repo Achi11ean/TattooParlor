@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useAuth } from "./AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const CreateArtist = ({ onArtistCreated }) => {
   const { authToken } = useAuth(); // Correctly retrieve the token from AuthContext
+  const navigate = useNavigate(); // Initialize navigation
 
   const [formData, setFormData] = useState({
     name: "",
@@ -96,12 +98,14 @@ const CreateArtist = ({ onArtistCreated }) => {
           },
         }
       );
-      onArtistCreated(response.data.artist);
+      // Navigate to the artists page after successful creation
+      navigate("/artists");
     } catch (err) {
       console.error("Error creating artist:", err);
       setError(err.response?.data?.error || "Something went wrong!");
     }
   };
+
   const times = Array.from({ length: 24 }, (_, i) => {
     const hour = i % 24;
     const period = hour < 12 ? "AM" : "PM";

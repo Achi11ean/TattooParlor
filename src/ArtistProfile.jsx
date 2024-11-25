@@ -4,6 +4,7 @@ import Calendar from "react-calendar"; // Import the calendar component
 import axios from "axios";
 import "react-calendar/dist/Calendar.css"; // Import default styles for the calendar
 import Reviews from "./Reviews"; // Import the Reviews component
+import Gallery from "./Gallery";
 
 const ArtistProfile = () => {
   const { id } = useParams(); // Get artist ID from URL params
@@ -13,7 +14,18 @@ const ArtistProfile = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedDate, setSelectedDate] = useState(new Date());
-
+  const SocialMediaIcon = ({ platform }) => {
+    const icons = {
+      facebook: <i className="fab fa-facebook text-blue-600"></i>, // FontAwesome or custom SVG
+      instagram: <i className="fab fa-instagram text-pink-500"></i>,
+      twitter: <i className="fab fa-twitter text-blue-400"></i>,
+      linkedin: <i className="fab fa-linkedin text-blue-700"></i>,
+      // Add more platforms as needed
+    };
+  
+    return icons[platform.toLowerCase()] || <i className="fas fa-link text-gray-500"></i>; // Default icon
+  };
+  
   // Fetch artist data by ID
   useEffect(() => {
     const fetchArtist = async () => {
@@ -59,8 +71,14 @@ const ArtistProfile = () => {
   );
 
   return (
-    <div className="p-6 bg-gray-100 min-h-screen">
-      <button
+<div
+  className="p-6 min-h-screen w-screen"
+  style={{
+    backgroundImage: "url('/profile3.webp')",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+  }}
+>      <button
         onClick={() => navigate("/artists")}
         className="mb-6 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
       >
@@ -197,35 +215,58 @@ const ArtistProfile = () => {
 
 
         {/* Social Media Section */}
-        <div className="mt-6">
-          <h2 className="text-xl font-semibold mb-2">Social Media</h2>
-          {Object.keys(socialMedia).length > 0 ? (
-            <ul>
-              {Object.entries(socialMedia).map(([platform, handle]) => (
-                <li key={platform}>
-                  <a
-                    href={handle}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-500 hover:underline"
-                  >
-                    {platform.charAt(0).toUpperCase() + platform.slice(1)}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p className="text-gray-500">No social media links available.</p>
-          )}
-        </div>
+{/* Social Media Section */}
+<div className="mt-6">
+  <h2 className="text-xl font-semibold mb-4">Connect with Us</h2>
+  {Object.keys(socialMedia).length > 0 ? (
+    <div className="flex flex-wrap gap-4">
+      {Object.entries(socialMedia).map(([platform, handle]) => (
+        <a
+          key={platform}
+          href={handle}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-2 px-4 py-2 bg-gradient-to-br from-blue-500 to-blue-700 text-white rounded-lg shadow-md hover:from-blue-600 hover:to-blue-800 transition duration-300"
+        >
+          <SocialMediaIcon platform={platform} /> {/* Icon Component */}
+          <span className="font-medium capitalize">{platform}</span>
+        </a>
+      ))}
+    </div>
+  ) : (
+    <p className="text-white">No social media links available.</p>
+  )}
+</div>
+
 
         {/* Average Rating Section */}
         <div className="mt-6">
-          <h2 className="text-xl font-semibold mb-2">Average Rating</h2>
-          <p className="text-gray-700">
-            <strong>{artist.average_rating?.toFixed(1) || "N/A"}⭐</strong>
-          </p>
-        </div>
+  <h2 className="text-xl font-semibold mb-2">Average Rating</h2>
+  <div className="text-gray-700 flex items-center">
+    {artist.average_rating ? (
+      <>
+        {[...Array(5)].map((_, index) => (
+          <span
+            key={index}
+            className={`text-xl ${
+              index < Math.round(artist.average_rating) ? "text-yellow-400" : "text-gray-300"
+            }`}
+          >
+            ★
+          </span>
+        ))}
+      </>
+    ) : (
+      <p className="text-gray-500">N/A</p>
+    )}
+  </div>
+  <div>
+  <Gallery
+  artistId={id} // Use id here
+/>
+
+    </div>
+</div>
 
         {/* Reviews Section */}
         <div className="mt-6">

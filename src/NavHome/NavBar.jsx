@@ -1,9 +1,16 @@
 import { useState } from "react";
 import { useAuth } from "../AuthContext"; // Ensure this path is correct
+import { useNavigate } from "react-router-dom"; // Navigate after logging out
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const { userType } = useAuth(); // Get userType directly from AuthContext
+  const { userType, authToken, logout } = useAuth(); // Get userType and authToken from AuthContext
+  const navigate = useNavigate();
+
+  const handleSignOut = () => {
+    logout();
+    navigate("/"); // Redirect to home or sign-in page after logging out
+  };
 
   return (
     <nav className="bg-gradient-to-r pt-5 from-gray-800 via-gray-900 to-black text-white shadow-lg">
@@ -92,12 +99,21 @@ function Navbar() {
                 Artist Dashboard
               </a>
             )}
-            <a
-              href="/signin"
-              className="hover:text-red-400 transition duration-300 transform hover:scale-110"
-            >
-              Sign In
-            </a>
+            {authToken ? (
+              <button
+                onClick={handleSignOut}
+                className="hover:text-red-400 transition duration-300 transform hover:scale-110"
+              >
+                Sign Out
+              </button>
+            ) : (
+              <a
+                href="/signin"
+                className="hover:text-red-400 transition duration-300 transform hover:scale-110"
+              >
+                Sign In
+              </a>
+            )}
           </div>
         </div>
       </div>
@@ -158,12 +174,21 @@ function Navbar() {
                 Artist Dashboard
               </a>
             )}
-            <a
-              href="/signin"
-              className="block hover:text-red-400 transition duration-300"
-            >
-              Sign In
-            </a>
+            {authToken ? (
+              <button
+                onClick={handleSignOut}
+                className="block hover:text-red-400 transition duration-300"
+              >
+                Sign Out
+              </button>
+            ) : (
+              <a
+                href="/signin"
+                className="block hover:text-red-400 transition duration-300"
+              >
+                Sign In
+              </a>
+            )}
           </div>
         </div>
       )}

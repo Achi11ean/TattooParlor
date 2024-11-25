@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useAuth } from "./AuthContext";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import RandomGradient from "./RandomGradient";
 
 const Artists = () => {
   const [artists, setArtists] = useState([]);
@@ -60,20 +61,28 @@ const Artists = () => {
   if (error) return <div className="text-red-500">{error}</div>;
 
   return (
-    <div className="p-6 bg-gray-100 min-h-screen">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold">Artists</h1>
+<div
+  className="p-6 min-h-screen"
+  style={{
+    backgroundImage: "url('/starry.webp')",
+    backgroundSize: "cover",
+    backgroundBlendMode: "overlay",
+  }}
+>
+  
+<div className="flex justify-between items-center mb-6">
+        <h1 className="text-5xl font-bold">Artists</h1>
         {userType === "artist" || userType === "admin" ? (
           <button
             onClick={handleCreateArtist}
-            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+            className="px-4 py-2 bg-blue-600 text-white text-3xl rounded-md hover:bg-blue-700"
           >
             Create Artist Profile
           </button>
         ) : null}
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 text-3xl md:grid-cols-2 lg:grid-cols-3 gap-6">
         {artists.map((artist) => {
           // Parse availability_schedule if it's a JSON string
           const schedule =
@@ -82,63 +91,99 @@ const Artists = () => {
               : artist.availability_schedule;
 
           return (
-            <div
-              key={artist.id}
-              className="bg-white shadow-lg rounded-lg p-4 hover:shadow-xl transition duration-300"
-            >
-              <img
-                src={artist.profile_picture || "https://via.placeholder.com/150"}
-                alt={artist.name}
-                className="w-full h-40 object-cover rounded-t-lg"
-              />
+<RandomGradient key={artist.id}>
+<div className="p-4 rounded-lg shadow-lg transition duration-300 text-white custom-scrollbar"
+    style={{
+      height: "400px", // Set a fixed height for all cards
+      overflowY: "auto", // Add vertical scrolling for overflowing content
+    }}>
+<div className="w-40 h-40 bg-gray-200 flex items-center justify-center rounded-full overflow-hidden mx-auto">
+<img
+    src={artist.profile_picture || "https://via.placeholder.com/150"}
+    alt={artist.name}
+    className="w-full h-full object-cover"
+  />
+</div>
+
+
+
               <div className="p-4">
-                <h2 className="text-xl font-semibold mb-2">{artist.name}</h2>
-                <p className="text-gray-600 mb-2">{artist.specialties}</p>
-                <p className="text-gray-500 text-sm mb-4">{artist.bio}</p>
-                <p className="text-gray-700 text-sm">
+                <h2 className="text-4xl font-semibold mb-2">{artist.name}</h2>
+                <p className="text-white text-xl mb-2">Specialties: {artist.specialties}</p>
+                <p className="text-white text-xl mb-4">Bio: {artist.bio}</p>
+
+
+
+<p className="text-white text-lg">
+
+<p className="text-white text-xl">
                   <strong>Location:</strong> {artist.location || "N/A"}
                 </p>
-                <p className="text-gray-700 text-sm">
                   <strong>Years of Experience:</strong>{" "}
                   {artist.years_of_experience || "N/A"}
                 </p>
-                <p className="text-gray-700 text-sm">
-                  <strong>Schedule:</strong>{" "}
-                  {schedule
-                    ? Object.entries(schedule)
-                        .map(([day, { start, end }]) =>
-                          start && end
-                            ? `${day}: ${start} - ${end}`
-                            : `${day}: Not available`
-                        )
-                        .join(" | ")
-                    : "Not specified"}
-                </p>
+<div className="overflow-x-auto overflow-y-hidden  h-39 mt-2">
+  <div className="grid grid-flow-col auto-cols-max gap-3">
+    {schedule ? (
+      Object.entries(schedule).map(([day, { start, end }]) => (
+        <div
+          key={day}
+          className={`flex flex-col items-center text-center justify-center border rounded-lg p-5 text-base transition-transform transform hover:scale-110 hover:font-bold ${
+            start && end ? "bg-pink-500 text-white" : "bg-red-800 text-gray-300"
+          }`}
+        >
+          <span className="font-bold">{day}</span>
+          <span>{start && end ? `${start} - ${end}` : "N/A"}</span>
+        </div>
+      ))
+    ) : (
+      <p className="text-gray-400 text-base col-span-full text-center">
+        Not specified
+      </p>
+    )}
+  </div>
+</div>
+
+
+
 
                 <div className="flex items-center justify-between mt-4">
-                  <p className="text-sm text-gray-500">
-                    <strong>Rating:</strong>{" "}
-                    {artist.average_rating
-                      ? artist.average_rating.toFixed(1)
-                      : "N/A"}⭐
-                  </p>
-                  <button
-                    onClick={() => navigate(`/artists/${artist.id}`)}
-                    className="text-blue-500 hover:underline"
-                  >
-                    View Profile
-                  </button>
+                <p className="text-md text-white flex items-center">
+  <strong className="mr-2">Rating:</strong>
+  {artist.average_rating
+    ? Array.from({ length: 5 }, (_, index) => (
+        <span
+          key={index}
+          className={`${
+            index < Math.floor(artist.average_rating) ? "text-yellow-400" : "text-gray-400"
+          }`}
+        >
+          ★
+        </span>
+      ))
+    : "N/A"}
+</p>
+
+<button
+  onClick={() => navigate(`/artists/${artist.id}`)}
+  className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-2 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
+>
+  View Profile
+</button>
+
                 </div>
                 {userType === "admin" || userType === "artist" ? (
                   <button
-                    onClick={() => handleDeleteArtist(artist.id)}
-                    className="mt-4 px-4  py-2 bg-red-600 text-white rounded-md hover:bg-red-700 w-full"
-                  >
-                    Delete Artist
-                  </button>
+  onClick={() => handleDeleteArtist(artist.id)}
+  className="bg-gradient-to-r from-red-600 to-red-800 text-white px-6 py-2 rounded-full shadow-lg hover:shadow-xl transition-all w-full duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 mt-4 "
+>
+  Delete Artist
+</button>
+
                 ) : null}
               </div>
-            </div>
+              </div>
+</RandomGradient>
           );
         })}
       </div>
