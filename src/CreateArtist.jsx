@@ -236,7 +236,7 @@ const CreateArtist = ({ onArtistCreated }) => {
 
   {/* Location */}
   <div>
-    <label className="block text-lg font-semibold">Location</label>
+    <label className="block text-lg  font-semibold">Location</label>
     <input
       type="text"
       name="location"

@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useAuth } from "./AuthContext";
 
 const Booking = () => {
   const [bookings, setBookings] = useState([]);
   const [artists, setArtists] = useState([]);
+  const { userType } = useAuth();
+
   const [formData, setFormData] = useState({
     tattoo_style: "",
     tattoo_size: "",
@@ -142,36 +145,36 @@ const Booking = () => {
   )}
   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
   <label className="block">
-      <span className="text-sm text-gray-400">Name</span>
+      <span className="text-sm text-white">Name</span>
       <input
         type="text"
         name="name"
         value={formData.name}
         onChange={handleChange}
         placeholder="Enter your name"
-        className="mt-2 p-3 bg-gray-700 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+        className="mt-2 p-3 text-black bg-pink-200 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent placeholder-black"
         required
       />
     </label>
     <label className="block">
-      <span className="text-sm text-gray-400">Phone Number</span>
+      <span className="text-sm text-white">Phone Number</span>
       <input
         type="tel"
         name="phone_number"
         value={formData.phone_number}
         onChange={handleChange}
         placeholder="Enter phone number"
-        className="mt-2 p-3 bg-gray-700 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+        className="mt-2 p-3 text-black bg-pink-200 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent placeholder-black"
         required
       />
     </label>
     <label className="block">
-      <span className="text-sm text-gray-400">Call or Text Preference</span>
+      <span className="text-lg text-white">Call or Text Preference</span>
       <select
         name="call_or_text_preference"
         value={formData.call_or_text_preference}
         onChange={handleChange}
-        className="mt-2 p-3 bg-gray-700 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+        className="mt-2 p-3 text-black bg-pink-200 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-black"
         required
       >
         <option value="" disabled>
@@ -182,48 +185,48 @@ const Booking = () => {
       </select>
     </label>
     <label className="block">
-      <span className="text-sm text-gray-400">Tattoo Style</span>
+      <span className="text-lg text-white">Tattoo Style</span>
       <input
         type="text"
         name="tattoo_style"
         value={formData.tattoo_style}
         onChange={handleChange}
         placeholder="Enter tattoo style"
-        className="mt-2 p-3 bg-gray-700 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+        className="mt-2 p-3 text-black bg-pink-200 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent placeholder-black"
         required
       />
     </label>
     <label className="block">
-      <span className="text-sm text-gray-400">Tattoo Size</span>
+      <span className="text-lg">Tattoo Size</span>
       <input
         type="text"
         name="tattoo_size"
         value={formData.tattoo_size}
         onChange={handleChange}
         placeholder="Enter tattoo size"
-        className="mt-2 p-3 bg-gray-700 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+        className="mt-2 p-3 text-black bg-pink-200 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent placeholder-black"
         required
       />
     </label>
     <label className="block">
-      <span className="text-sm text-gray-400">Placement</span>
+      <span className="text-lg text-white">Placement</span>
       <input
         type="text"
         name="placement"
         value={formData.placement}
         onChange={handleChange}
         placeholder="Enter placement"
-        className="mt-2 p-3 bg-gray-700 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+        className="mt-2 p-3 text-black bg-pink-200 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent placeholder-black"
         required
       />
     </label>
     <label className="block">
-      <span className="text-sm text-gray-400">Artist</span>
+      <span className="text-lg text-white">Artist</span>
       <select
         name="artist_id"
         value={formData.artist_id}
         onChange={handleChange}
-        className="mt-2 p-3 bg-gray-700 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent"
+        className="mt-2 p-3 text-black bg-pink-200 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent placeholder-black"
         required
       >
         <option value="" disabled>
@@ -237,37 +240,37 @@ const Booking = () => {
       </select>
     </label>
     <label className="block">
-      <span className="text-sm text-gray-400">Studio Location</span>
+      <span className="text-lg text-white">Studio Location</span>
       <input
         type="text"
         name="studio_location"
         value={formData.studio_location}
         onChange={handleChange}
         placeholder="Enter studio location"
-        className="mt-2 p-3 bg-gray-700 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
+        className="mt-2 p-3 text-black bg-pink-200 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent placeholder-black"
         required
       />
     </label>
     <label className="block">
-      <span className="text-sm text-gray-400">Appointment Date</span>
+      <span className="text-lg text-white">Appointment Date</span>
       <input
         type="datetime-local"
         name="appointment_date"
         value={formData.appointment_date}
         onChange={handleChange}
-        className="mt-2 p-3 bg-gray-700 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+        className="mt-2 p-3 text-black bg-blue-400 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent placeholder-black"
         required
       />
     </label>
     <label className="block">
-      <span className="text-sm text-gray-400">Price</span>
+      <span className="text-lg text-white">Price</span>
       <input
         type="number"
         name="price"
         value={formData.price}
         onChange={handleChange}
         placeholder="Enter price"
-        className="mt-2 p-3 bg-gray-700 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+        className="mt-2 p-3 text-black bg-pink-200 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent placeholder-black"
         required
       />
     </label>
@@ -282,6 +285,8 @@ const Booking = () => {
 
 </div>
       {/* Booking List */}
+      {(userType === "artist" || userType === "admin") && (
+
 <div
   className="mt-10 max-w-4xl mx-auto p-6 rounded-lg shadow-lg relative"
   style={{
@@ -359,7 +364,7 @@ const Booking = () => {
     ))}
   </div>
 </div>
-
+      )}
 
     </div>
   );

@@ -147,14 +147,14 @@ const Gallery = ({ artistId, isArtist, isAdmin }) => {
         placeholder="Image URL"
         value={imageUrl}
         onChange={(e) => setImageUrl(e.target.value)}
-        className="border border-gray-300 rounded-lg p-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent shadow-sm"
+        className="border text-white border-gray-300 rounded-lg p-3  focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent shadow-sm"
       />
       <input
         type="text"
         placeholder="Caption (optional)"
         value={caption}
         onChange={(e) => setCaption(e.target.value)}
-        className="border border-gray-300 rounded-lg p-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent shadow-sm"
+        className="border border-gray-300 rounded-lg p-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent shadow-sm"
       />
       <button
         type="submit"

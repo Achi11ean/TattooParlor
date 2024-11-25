@@ -5,6 +5,7 @@ import axios from "axios";
 import "react-calendar/dist/Calendar.css"; // Import default styles for the calendar
 import Reviews from "./Reviews"; // Import the Reviews component
 import Gallery from "./Gallery";
+import BookingCalendar from "./BookingCalendar";
 
 const ArtistProfile = () => {
   const { id } = useParams(); // Get artist ID from URL params
@@ -12,6 +13,7 @@ const ArtistProfile = () => {
   const [artist, setArtist] = useState(null);
   const [bookings, setBookings] = useState([]); // State to store bookings
   const [loading, setLoading] = useState(true);
+  
   const [error, setError] = useState(null);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const SocialMediaIcon = ({ platform }) => {
@@ -79,10 +81,11 @@ const ArtistProfile = () => {
       : {};
 
   // Filter bookings for the selected date
-  const bookingsForDate = bookings.filter(
-    (booking) => booking.date === selectedDate.toISOString().split("T")[0]
-  );
-
+  const bookingsForDate = bookings.filter((booking) => {
+    const appointmentDate = new Date(Date.parse(booking.appointment_date));
+    return appointmentDate.toDateString() === selectedDate.toDateString();
+  });
+  
   return (
 <div
   className="p-6 min-h-screen w-screen"
@@ -150,7 +153,20 @@ const ArtistProfile = () => {
         Select a Date
       </h3>
       <Calendar
-  onChange={setSelectedDate}
+  onChange={(date) => {
+    setSelectedDate(date);
+
+    // Filter bookings for the selected date and include time
+    const filteredBookings = bookings.filter(
+      (booking) =>
+        new Date(booking.appointment_date).toDateString() ===
+        date.toDateString()
+    );
+
+    console.log("Bookings for selected date:", filteredBookings);
+
+    // Optionally, handle any logic for displaying or using the filtered bookings
+  }}
   value={selectedDate}
   className="w-full bg-gradient-to-br from-red-700 via-blue-900 to-black p-4 rounded-lg shadow-xl"
   tileClassName={({ date, view }) =>
@@ -163,7 +179,8 @@ const ArtistProfile = () => {
     if (
       bookings.some(
         (booking) =>
-          new Date(booking.date).toDateString() === date.toDateString()
+          new Date(booking.appointment_date).toDateString() ===
+          date.toDateString()
       )
     ) {
       return (
@@ -174,13 +191,11 @@ const ArtistProfile = () => {
   }}
   tileDisabled={({ date, view }) =>
     view === "month" && new Date(date) < new Date() // Disable past dates
-      ? true
-      : false
   }
   navigationLabel={({ date, label, locale, view }) => (
     <div
       style={{
-        color: "black",
+        color: "white",
         fontWeight: "bold",
         fontSize: "1.2rem",
         textAlign: "center",
@@ -189,40 +204,52 @@ const ArtistProfile = () => {
       {label}
     </div>
   )}
-  
   nextLabel=">"
   prevLabel="<"
   next2Label=">>"
   prev2Label="<<"
   navigationClassName="text-black bg-black hover:bg-blue-800 px-4 py-2 rounded"
-  
 />
 
 </div>
 
     {/* Bookings for the selected date */}
     <div
-      className="flex-1 bg-gray-100 p-6 rounded-lg shadow-lg border border-gray-300"
+  className="flex-1 bg-gray-100 p-6 rounded-lg shadow-lg border border-gray-300"
+>
+  <h3 className="text-2xl font-semibold mb-4 text-gray-800">
+    Bookings on {selectedDate.toDateString()}:
+  </h3>
+  {bookingsForDate.length > 0 ? (
+    <ul
+      className="space-y-4 text-black"
+      style={{
+        maxHeight: "300px", // Adjust height as needed
+        overflowY: "auto", // Enable vertical scrolling
+      }}
     >
-      <h3 className="text-2xl font-semibold mb-4 text-gray-800">
-        Bookings on {selectedDate.toDateString()}:
-      </h3>
-      {bookingsForDate.length > 0 ? (
-        <ul className="space-y-4">
-          {bookingsForDate.map((booking, index) => (
-            <li
-              key={index}
-              className="p-4 bg-black border-l-4 border-blue-600 rounded-lg shadow"
-            >
-              <strong className="text-gray-800">Time:</strong> {booking.time} <br />
-              <strong className="text-gray-800">Client:</strong> {booking.client}
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p className="text-gray-500 text-lg">No bookings for this date.</p>
-      )}
-    </div>
+      {bookingsForDate.map((booking, index) => {
+        const appointmentDate = new Date(Date.parse(booking.appointment_date));
+        return (
+          <li
+            key={index}
+            className="p-4 bg-pink-200 border-l-4 border-blue-600 rounded-lg shadow"
+          >
+            <strong className="text-black">Time:</strong>{" "}
+            {appointmentDate.toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+            })}{" "}
+            <br />
+          </li>
+        );
+      })}
+    </ul>
+  ) : (
+    <p className="text-black text-lg">No bookings for this date.</p>
+  )}
+</div>
+
   </div>
 </div>
 
@@ -234,11 +261,8 @@ const ArtistProfile = () => {
   {Object.keys(socialMedia).length > 0 ? (
     <div className="flex  flex-wrap gap-4">
       {Object.entries(socialMedia).map(([platform, handle]) => {
-        console.log('PLATFORM IS ', platform)
-        console.log(handle)
         const sanitizedHandle = handle.replace(/["'{}]/g, '').trim();
         const sanitizedPlatform = platform.replace(/["'{}]/g, '').trim();
-        console.log(sanitizedHandle)
         return handle != '""' ? (
         <a
           key={sanitizedPlatform}

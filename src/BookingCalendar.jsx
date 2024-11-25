@@ -10,9 +10,7 @@ const BookingCalendar = ({ artistId }) => {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [showDetails, setShowDetails] = useState(false);
 
-  const token = localStorage.getItem("authToken");
-
-  // Fetch bookings for the artist
+  // Fetch bookings for the given artistId
   useEffect(() => {
     const fetchBookings = async () => {
       try {
@@ -22,7 +20,6 @@ const BookingCalendar = ({ artistId }) => {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              ...(token && { Authorization: `Bearer ${token}` }),
             },
           }
         );
@@ -32,10 +29,10 @@ const BookingCalendar = ({ artistId }) => {
         if (response.ok) {
           const formattedEvents = data.map((booking) => ({
             id: booking.id,
-            title: booking.client,
-            start: new Date(booking.start_time),
-            end: new Date(booking.end_time),
-            type: booking.type || "Booking",
+            title: booking.name || "Booking",
+            start: new Date(booking.appointment_date),
+            end: new Date(booking.appointment_date), // Adjust if there's an end time
+            type: booking.tattoo_style || "Tattoo Booking",
           }));
           setEvents(formattedEvents);
         } else {
@@ -46,8 +43,10 @@ const BookingCalendar = ({ artistId }) => {
       }
     };
 
-    fetchBookings();
-  }, [artistId, token]);
+    if (artistId) {
+      fetchBookings();
+    }
+  }, [artistId]);
 
   // Handle event selection
   const handleSelectEvent = (event) => {
@@ -63,10 +62,7 @@ const BookingCalendar = ({ artistId }) => {
           <strong>Title:</strong> {selectedEvent?.title}
         </p>
         <p className="mb-2">
-          <strong>Start:</strong> {selectedEvent?.start.toLocaleString()}
-        </p>
-        <p className="mb-2">
-          <strong>End:</strong> {selectedEvent?.end.toLocaleString()}
+          <strong>Date:</strong> {selectedEvent?.start.toLocaleString()}
         </p>
         <p className="mb-2">
           <strong>Type:</strong> {selectedEvent?.type}
@@ -84,7 +80,7 @@ const BookingCalendar = ({ artistId }) => {
   return (
     <div className="p-6 min-h-screen bg-gradient-to-br from-pink-500 via-pink-600 to-pink-800">
       <h2 className="text-3xl font-bold mb-6 text-center text-white">
-        Artist Bookings
+        Artist's Bookings
       </h2>
       <div className="bg-white my-custom-calendar p-6 rounded-lg shadow-xl max-w-screen-md mx-auto">
         <Calendar

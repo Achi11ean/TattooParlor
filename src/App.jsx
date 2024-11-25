@@ -10,6 +10,7 @@ import CreateArtist from "./CreateArtist";
 import ArtistProfile from "./ArtistProfile";
 import Reviews from "./Reviews";
 import Booking from "./Booking"; // Import the Booking component
+import GalleryPage from "./GalleryPage";
 
 const App = () => {
 
@@ -80,6 +81,7 @@ const App = () => {
           <Route path="/artists/:id" element={<ArtistProfile />} /> {/* Optional for individual profiles */}
           <Route path="/artists/:artistId/reviews" element={<Reviews />} />
           <Route path="/bookings" element={<Booking />} /> {/* Add Booking route */}
+          <Route path="/gallery" element={<GalleryPage />} />
 
           {/* Add other routes here if needed */}
         </Routes>
