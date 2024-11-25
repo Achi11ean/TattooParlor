@@ -85,10 +85,10 @@ const Reviews = ({ artistId }) => {
 {/* Reviews List */}
 {reviews.length > 0 ? (
   <div className="flex overflow-x-auto mb-5 gap-4 scrollbar-custom">
-  {reviews.map((review) => (
+    {reviews.map((review) => (
       <div
         key={review.id}
-        className="flex-shrink-0 bg-gradient-to-br from-purple-900 via-blue-800 to-black shadow-lg rounded-lg p-4 hover:shadow-2xl hover:scale-105 transition duration-300 w-64"
+        className="flex-shrink-0 relative bg-gradient-to-br from-purple-900 via-blue-800 to-black shadow-lg rounded-lg p-4 hover:shadow-2xl hover:scale-105 transition duration-300 w-64 group"
       >
         <p className="text-white mb-2 flex items-center">
           <strong>Rating:</strong>
@@ -105,14 +105,18 @@ const Reviews = ({ artistId }) => {
             ))}
           </span>
         </p>
-        <p className="text-white mb-2">{review.review_text || "No text provided"}</p>
-        {review.photo_url && (
-          <img
-            src={review.photo_url}
-            alt="Review"
-            className="w-full h-40 object-cover rounded-md mb-4"
-          />
-        )}
+        <div className="relative">
+          {review.photo_url && (
+            <img
+              src={review.photo_url}
+              alt="Review"
+              className="w-full h-40 object-cover rounded-md mb-4"
+            />
+          )}
+          <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-70 text-white text-sm p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-md">
+            {review.review_text || "No text provided"}
+          </div>
+        </div>
         <button
           onClick={() => handleDeleteReview(review.id)}
           className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700"

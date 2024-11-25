@@ -70,6 +70,7 @@ const Gallery = ({ artistId, isArtist, isAdmin }) => {
       setLoading(false);
     }
   };
+  const { userType } = useAuth(); // Assume userType is provided by the AuthContext
 
   // Delete a photo
   const handleDelete = async (photoId) => {
@@ -105,57 +106,66 @@ const Gallery = ({ artistId, isArtist, isAdmin }) => {
 
       {/* Horizontal Scrollable Container */}
       <div className="flex overflow-x-auto gap-4 pb-4 scrollbar-custom">
-      {photos.length > 0 ? (
-          photos.map((photo) => (
-            <div key={photo.id} className="photo-card flex-shrink-0">
-              <img
-                src={photo.image_url}
-                alt={photo.caption || "Gallery Image"}
-                className="w-64 h-64 object-cover rounded-md shadow-md"
-              />
-              {photo.caption && <p className="text-center mt-2">{photo.caption}</p>}
-              {(isArtist || isAdmin) && (
-                <button
-                  aria-label="Delete photo"
-                  onClick={() => handleDelete(photo.id)}
-                  className="mt-2 text-red-500 hover:text-red-700"
-                >
-                  Delete
-                </button>
-              )}
-            </div>
-          ))
-        ) : (
-          <p className="text-gray-500 text-center">No photos found.</p>
+  {photos.length > 0 ? (
+    photos.map((photo) => (
+      <div key={photo.id} className="photo-card flex-shrink-0 relative">
+        <img
+          src={photo.image_url}
+          alt={photo.caption || "Gallery Image"}
+          className="w-64 h-64 object-cover rounded-md shadow-md"
+        />
+        {photo.caption && (
+          <div className="absolute inset-0 bg-black bg-opacity-70 flex items-center justify-center text-white text-sm p-4 opacity-0 transition-opacity duration-300 hover:opacity-100 rounded-md">
+            {photo.caption}
+          </div>
+        )}
+        {(isArtist || isAdmin) && (
+          <button
+            aria-label="Delete photo"
+            onClick={() => handleDelete(photo.id)}
+            className="mt-2 text-red-500 hover:text-red-700"
+          >
+            Delete
+          </button>
         )}
       </div>
+    ))
+  ) : (
+    <p className="text-gray-500 text-center">No photos found.</p>
+  )}
+</div>
+
 
       {/* Upload Form */}
-      <form onSubmit={handleUpload} className="upload-form mt-6">
-        <h3 className="text-xl font-semibold mb-2">Upload New Photo</h3>
-        <div className="flex flex-col gap-4">
-          <input
-            type="text"
-            placeholder="Image URL"
-            value={imageUrl}
-            onChange={(e) => setImageUrl(e.target.value)}
-            className="border border-gray-300 rounded-md p-2"
-          />
-          <input
-            type="text"
-            placeholder="Caption (optional)"
-            value={caption}
-            onChange={(e) => setCaption(e.target.value)}
-            className="border border-gray-300 rounded-md p-2"
-          />
-          <button
-            type="submit"
-            className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
-          >
-            Upload
-          </button>
-        </div>
-      </form>
+      {(userType === "admin" || userType === "artist") && (
+  <form onSubmit={handleUpload} className="upload-form mt-6">
+    <h3 className="text-xl font-semibold mb-2">Upload New Photo</h3>
+    <div className="flex flex-col gap-6 p-6 bg-gradient-to-r from-blue-100 to-purple-100 shadow-lg rounded-lg max-w-full mx-auto">
+      <h2 className="text-2xl font-bold text-center text-gray-700">Upload Image</h2>
+      <input
+        type="text"
+        placeholder="Image URL"
+        value={imageUrl}
+        onChange={(e) => setImageUrl(e.target.value)}
+        className="border border-gray-300 rounded-lg p-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent shadow-sm"
+      />
+      <input
+        type="text"
+        placeholder="Caption (optional)"
+        value={caption}
+        onChange={(e) => setCaption(e.target.value)}
+        className="border border-gray-300 rounded-lg p-3 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent shadow-sm"
+      />
+      <button
+        type="submit"
+        className="bg-gradient-to-r from-blue-500 to-purple-500 text-white py-3 px-6 rounded-lg font-semibold shadow-md hover:shadow-lg hover:from-blue-600 hover:to-purple-600 transform transition-transform duration-200 hover:scale-105"
+      >
+        Upload
+      </button>
+    </div>
+  </form>
+)}
+
     </div>
   );
 };
