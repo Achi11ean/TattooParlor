@@ -50,15 +50,18 @@ const EditArtist = () => {
             twitter: "",
             linkedin: "",
           },
-          availability_schedule: artistData.availability_schedule || {
-            Monday: { start: "", end: "" },
-            Tuesday: { start: "", end: "" },
-            Wednesday: { start: "", end: "" },
-            Thursday: { start: "", end: "" },
-            Friday: { start: "", end: "" },
-            Saturday: { start: "", end: "" },
-            Sunday: { start: "", end: "" },
-          },
+          availability_schedule:
+          typeof artistData.availability_schedule === "string"
+            ? JSON.parse(artistData.availability_schedule) // Parse if it's a string
+            : artistData.availability_schedule || {
+                Monday: { start: "", end: "" },
+                Tuesday: { start: "", end: "" },
+                Wednesday: { start: "", end: "" },
+                Thursday: { start: "", end: "" },
+                Friday: { start: "", end: "" },
+                Saturday: { start: "", end: "" },
+                Sunday: { start: "", end: "" },
+              },
         });
       } catch (err) {
         console.error("Error fetching artist:", err);
@@ -109,20 +112,29 @@ const EditArtist = () => {
       },
     }));
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
+  
     try {
-      await axios.patch(
+      // Ensure `availability_schedule` is properly formatted
+      const payload = {
+        ...formData,
+        styles: formData.styles.split(",").map((style) => style.trim()), // Convert styles to an array
+        availability_schedule: { ...formData.availability_schedule }, // Ensure it's an object
+      };
+  
+      console.log("Submitting payload:", payload); // Debugging to verify format
+  
+      // Make the PATCH request
+      const response = await axios.patch(
         `http://127.0.0.1:5002/api/artists/${id}`,
-        {
-          ...formData,
-          styles: formData.styles.split(",").map((style) => style.trim()), // Convert styles to array
-        },
+        payload,
         {
           headers: { Authorization: `Bearer ${authToken}` },
         }
       );
+  
+      console.log("Patch response:", response.data); // Debugging response
       alert("Artist updated successfully!");
       navigate("/artists");
     } catch (err) {
@@ -130,7 +142,8 @@ const EditArtist = () => {
       setError(err.response?.data?.error || "Something went wrong!");
     }
   };
-
+  
+  
   const times = Array.from({ length: 24 }, (_, i) => {
     const hour = i % 24;
     const period = hour < 12 ? "AM" : "PM";
@@ -145,13 +158,13 @@ const EditArtist = () => {
 <div
   className="min-h-screen w-screen flex items-center justify-center bg-cover bg-center"
   style={{
-    backgroundImage: "url('your-background-image.jpg')", // Replace with your image path
+    backgroundImage: "url('/profile2.webp')", // Replace with your image path
     backgroundSize: "cover", // Ensures the image covers the entire screen
     backgroundRepeat: "no-repeat", // Prevents repeating
     backgroundPosition: "center", // Ensures proper alignment
   }}
 >
-  <div className="max-h-[90vh] w-full max-w-4xl overflow-y-auto bg-black bg-opacity-50 p-6 rounded-lg shadow-lg">
+  <div className="max-h-[90vh] w-full max-w-4xl overflow-y-auto  bg-opacity-50 p-6 rounded-lg shadow-lg">
     <form
       onSubmit={handleSubmit}
       className="space-y-8 bg-gradient-to-br from-green-400 via-blue-500 to-purple-600 p-8 rounded-xl shadow-xl text-white max-w-screen-md mx-auto"
@@ -197,17 +210,21 @@ const EditArtist = () => {
       {/* Social Media */}
       <div>
         <label className="block text-lg font-semibold">Social Media</label>
-        {Object.keys(formData.social_media).map((platform) => (
+        {Object.keys(formData.social_media).map((platform) => {
+            
+            const platformCleanURL = formData.social_media[platform].replace(/[\s{}"]/g, '').trim();
+            const platformClean = platform.replace(/[\s{}"]/g, '').trim();
+            return (
           <input
-            key={platform}
+            key={platformClean}
             type="url"
-            name={`social_media.${platform}`}
-            value={formData.social_media[platform]}
+            name={`social_media.${platformClean}`}
+            value={platformCleanURL}
             onChange={handleInputChange}
-            placeholder={`${platform} URL`}
+            placeholder={`${platformClean} URL`}
             className="w-full px-4 py-2 bg-gray-800 border border-gray-600 rounded-lg mb-2"
           />
-        ))}
+        )})}
       </div>
 
       {/* Years of Experience */}
@@ -259,39 +276,55 @@ const EditArtist = () => {
         />
       </div>
 
-      {/* Availability Schedule */}
-      <div>
-        <label className="block text-lg font-semibold">Availability Schedule</label>
-        {Object.entries(formData.availability_schedule).map(([day, schedule]) => (
-          <div key={day} className="flex items-center space-x-4">
-            <label className="w-20 text-gray-200 font-medium">{day}</label>
-            <select
-              value={schedule.start}
-              onChange={(e) => handleScheduleChange(day, "start", e.target.value)}
-              className="bg-gray-800 border border-gray-600 rounded-lg px-4 py-2"
-            >
-              <option value="">Start</option>
-              {times.map((time) => (
-                <option key={time} value={time}>
-                  {time}
-                </option>
-              ))}
-            </select>
-            <select
-              value={schedule.end}
-              onChange={(e) => handleScheduleChange(day, "end", e.target.value)}
-              className="bg-gray-800 border border-gray-600 rounded-lg px-4 py-2"
-            >
-              <option value="">End</option>
-              {times.map((time) => (
-                <option key={time} value={time}>
-                  {time}
-                </option>
-              ))}
-            </select>
-          </div>
-        ))}
+{/* Availability Schedule */}
+{/* Availability Schedule */}
+{/* Availability Schedule */}
+<div>
+  <label className="block text-lg font-semibold">Availability Schedule</label>
+  {["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"].map((day) => {
+    const schedule = formData.availability_schedule[day] || { start: "", end: "" };
+
+    // Log the current day and its corresponding schedule
+    console.log(`Day: ${day}`, schedule);
+
+    return (
+      <div key={day} className="flex items-center space-x-4">
+        <label className="w-20 text-gray-200 font-medium">{day}</label>
+        <select
+          value={schedule.start}
+          onChange={(e) => {
+            console.log(`Start time changed for ${day}:`, e.target.value);
+            handleScheduleChange(day, "start", e.target.value);
+          }}
+          className="bg-gray-800 border border-gray-600 rounded-lg px-4 py-2"
+        >
+          <option value="Closed">Start</option>
+          {times.map((time) => (
+            <option key={time} value={time}>
+              {time}
+            </option>
+          ))}
+        </select>
+        <select
+          value={schedule.end}
+          onChange={(e) => {
+            console.log(`End time changed for ${day}:`, e.target.value);
+            handleScheduleChange(day, "end", e.target.value);
+          }}
+          className="bg-gray-800 border border-gray-600 rounded-lg px-4 py-2"
+        >
+          <option value="Closed">End</option>
+          {times.map((time) => (
+            <option key={time} value={time}>
+              {time}
+            </option>
+          ))}
+        </select>
       </div>
+    );
+  })}
+</div>
+
 
       {/* Certifications */}
       <div>

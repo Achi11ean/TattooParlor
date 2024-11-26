@@ -17,13 +17,13 @@ const CreateArtist = ({ onArtistCreated }) => {
     location: "",
     profile_picture: "",
     availability_schedule: {
-      Monday: { start: "", end: "" },
-      Tuesday: { start: "", end: "" },
-      Wednesday: { start: "", end: "" },
-      Thursday: { start: "", end: "" },
-      Friday: { start: "", end: "" },
-      Saturday: { start: "", end: "" },
-      Sunday: { start: "", end: "" },
+      Monday: { start: "Closed", end: "Closed" },
+      Tuesday: { start: "Closed", end: "Closed" },
+      Wednesday: { start: "Closed", end: "Closed" },
+      Thursday: { start: "Closed", end: "Closed" },
+      Friday: { start: "Closed", end: "Closed" },
+      Saturday: { start: "Closed", end: "Closed" },
+      Sunday: { start: "Closed", end: "Closed" },
     },
     certifications: "",
     awards: "",
@@ -98,6 +98,7 @@ const CreateArtist = ({ onArtistCreated }) => {
           },
         }
       );
+      console.log('RESPONSE FROM CREATE', response)
       // Navigate to the artists page after successful creation
       navigate("/artists");
     } catch (err) {
@@ -270,7 +271,7 @@ const CreateArtist = ({ onArtistCreated }) => {
             onChange={(e) => handleScheduleChange(day, "start", e.target.value)}
             className="bg-gray-800 border border-gray-600 rounded-lg px-4 py-2 focus:ring focus:ring-blue-300"
           >
-            <option value="">Start</option>
+            <option value="Closed">Start</option>
             {times.map((time) => (
               <option key={time} value={time}>
                 {time}
@@ -282,7 +283,7 @@ const CreateArtist = ({ onArtistCreated }) => {
             onChange={(e) => handleScheduleChange(day, "end", e.target.value)}
             className="bg-gray-800 border border-gray-600 rounded-lg px-4 py-2 focus:ring focus:ring-blue-300"
           >
-            <option value="">End</option>
+            <option value="Closed">End</option>
             {times.map((time) => (
               <option key={time} value={time}>
                 {time}
