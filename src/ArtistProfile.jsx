@@ -6,6 +6,7 @@ import "react-calendar/dist/Calendar.css"; // Import default styles for the cale
 import Reviews from "./Reviews"; // Import the Reviews component
 import Gallery from "./Gallery";
 import BookingCalendar from "./BookingCalendar";
+import { useAuth } from "./AuthContext";
 
 const ArtistProfile = () => {
   const { id } = useParams(); // Get artist ID from URL params
@@ -13,7 +14,9 @@ const ArtistProfile = () => {
   const [artist, setArtist] = useState(null);
   const [bookings, setBookings] = useState([]); // State to store bookings
   const [loading, setLoading] = useState(true);
-  
+  const { userType, authToken } = useAuth(); // Get authToken and userType from AuthContext
+  const isArtist = artist?.created_by === parseInt(localStorage.getItem("user")?.id); // Match created_by with logged-in user ID
+  const isAdmin = userType === "admin"; // Check if the user is an admin
   const [error, setError] = useState(null);
   const [selectedDate, setSelectedDate] = useState(new Date());
   const SocialMediaIcon = ({ platform }) => {
@@ -314,9 +317,7 @@ const ArtistProfile = () => {
     )}
   </div>
   <div>
-  <Gallery
-  artistId={id} // Use id here
-/>
+  <Gallery artistId={id} isArtist={isArtist} isAdmin={isAdmin} />
 
     </div>
 </div>

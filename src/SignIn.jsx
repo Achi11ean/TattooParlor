@@ -95,6 +95,9 @@ const SignIn = () => {
               Sign up!
             </Link>
           </p>
+          <Link to="/forgot-password" className="text-red-500 hover:underline">
+  Forgot Password?
+</Link>
         </div>
       </div>
     </div>

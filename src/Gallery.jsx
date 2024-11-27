@@ -106,33 +106,34 @@ const Gallery = ({ artistId, isArtist, isAdmin }) => {
 
       {/* Horizontal Scrollable Container */}
       <div className="flex overflow-x-auto gap-4 pb-4 scrollbar-custom">
-  {photos.length > 0 ? (
-    photos.map((photo) => (
-      <div key={photo.id} className="photo-card flex-shrink-0 relative">
-        <img
-          src={photo.image_url}
-          alt={photo.caption || "Gallery Image"}
-          className="w-64 h-64 object-cover rounded-md shadow-md"
-        />
-        {photo.caption && (
-          <div className="absolute inset-0 bg-black bg-opacity-70 flex items-center justify-center text-white text-sm p-4 opacity-0 transition-opacity duration-300 hover:opacity-100 rounded-md">
-            {photo.caption}
-          </div>
-        )}
-        {(isArtist || isAdmin) && (
-          <button
-            aria-label="Delete photo"
-            onClick={() => handleDelete(photo.id)}
-            className="mt-2 text-red-500 hover:text-red-700"
-          >
-            Delete
-          </button>
-        )}
-      </div>
-    ))
-  ) : (
-    <p className="text-gray-500 text-center">No photos found.</p>
-  )}
+      {photos.length > 0 ? (
+  photos.map((photo) => (
+    <div key={photo.id} className="photo-card flex-shrink-0 relative">
+      <img
+        src={photo.image_url}
+        alt={photo.caption || "Gallery Image"}
+        className="w-64 h-64 object-cover rounded-md shadow-md"
+      />
+      {photo.caption && (
+        <div className="absolute inset-0 bg-black bg-opacity-70 flex items-center justify-center text-white text-sm p-4 opacity-0 transition-opacity duration-300 hover:opacity-100 rounded-md">
+          {photo.caption}
+        </div>
+      )}
+      {(isArtist || isAdmin) && (
+        <button
+          aria-label="Delete photo"
+          onClick={() => handleDelete(photo.id)}
+          className="absolute bottom-2 right-2 bg-red-500 text-white px-3 py-1 text-sm rounded-lg shadow-lg hover:bg-red-700 transition duration-300"
+        >
+          Delete
+        </button>
+      )}
+    </div>
+  ))
+) : (
+  <p className="text-gray-500 text-center">No photos found.</p>
+)}
+
 </div>
 
 

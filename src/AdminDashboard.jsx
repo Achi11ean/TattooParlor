@@ -12,6 +12,35 @@ ChartJS.register(...registerables);
 const AdminDashboard = () => {
   const { userType } = useAuth();
   const navigate = useNavigate();
+  const [editingUser, setEditingUser] = useState(null); // Track user being edited
+  const [editedData, setEditedData] = useState({}); // Store changes
+  const handleEditUser = (userId) => {
+    const user = users.find((u) => u.id === userId);
+    setEditingUser(userId);
+    setEditedData({ username: user.username, email: user.email, user_type: user.user_type });
+  };
+
+  const handleSaveUser = async () => {
+    try {
+      const response = await axios.patch(
+        `http://127.0.0.1:5002/api/users/${editingUser}`,
+        editedData,
+        { headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` } }
+      );
+
+      if (response.status === 200) {
+        alert("User updated successfully");
+        setUsers((prevUsers) =>
+          prevUsers.map((user) => (user.id === editingUser ? response.data.user : user))
+        );
+        setEditingUser(null); // Exit editing mode
+      }
+    } catch (error) {
+      console.error("Error updating user:", error);
+      alert("Failed to update user. Please try again.");
+    }
+  };
+
   const handleDeleteUser = async (userId) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this user?");
     if (!confirmDelete) return;
@@ -57,7 +86,11 @@ const AdminDashboard = () => {
       alert("Failed to update payment status. Please try again.");
     }
   };
-  
+  const handleCancelEdit = () => {
+    setEditingUser(null); // Cancel editing
+    setEditedData({});
+  };
+
   // Fetch dashboard data
   useEffect(() => {
     const fetchDashboardData = async () => {
@@ -131,42 +164,52 @@ const AdminDashboard = () => {
 <div
   className="h-screen overflow-y-auto"
   style={{
-    background: "linear-gradient(to bottom, #1e3a8a, #1e40af, #1e429f, #1e3a8a, #000)", // Blue gradient to black
+    backgroundImage: `url('admin.webp')`, // Replace with your image URL or route
+    backgroundSize: "cover", // Ensure the image covers the entire container
+    backgroundPosition: "center", // Center the image
+    backgroundRepeat: "no-repeat", // Prevent the image from repeating
     color: "#fff", // White text for better readability
   }}
 >
 
- <h1 className="text-3xl mt-10 font-bold mb-6 text-center">Admin Dashboard</h1>
+<h1
+  className="text-5xl  mt-0 font-extrabold mb-8 text-center text-black bg-white"
+  style={{ fontFamily: "'Poppins', sans-serif" }}
+>
+  Admin Dashboard
+</h1>
 
-      {/* Platform Metrics */}
-      <div className="grid grid-cols-1 sm:grid-cols-3  gap-6 mb-6">
+
+{/* Platform Metrics */}
+<div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mb-8 px-4">
   {/* Total Bookings */}
-  <div className="bg-gradient-to-r from-blue-500 to-blue-700 text-white shadow-lg rounded-lg p-6 text-center transform hover:scale-105 transition duration-300">
-    <h2 className="text-lg font-semibold">Total Bookings</h2>
-    <p className="text-4xl font-extrabold mt-2">
+  <div className="bg-white shadow-md rounded-lg p-6 text-center transform hover:-translate-y-2 hover:shadow-lg transition-all duration-300 max-w-[250px] mx-auto">
+    <h2 className="text-xl font-medium text-gray-700">Total Bookings</h2>
+    <p className="text-5xl font-bold text-blue-600 mt-3">
       {platformMetrics.total_bookings || 0}
     </p>
-    <span className="block mt-1 text-sm opacity-75">Bookings so far</span>
+    <span className="block mt-2 text-sm text-gray-500">Bookings so far</span>
   </div>
 
   {/* Total Earnings */}
-  <div className="bg-gradient-to-r from-green-500 to-green-700 text-white shadow-lg rounded-lg p-6 text-center transform hover:scale-105 transition duration-300">
-    <h2 className="text-lg font-semibold">Total Earnings</h2>
-    <p className="text-4xl font-extrabold mt-2">
+  <div className="bg-white shadow-md rounded-lg p-6 pr-20 text-center transform hover:-translate-y-2 hover:shadow-lg transition-all duration-300 max-w-[250px] mx-auto">
+    <h2 className="text-xl font-medium text-gray-700">Total Earnings</h2>
+    <p className="text-4xl font-bold text-green-600 mt-3">
       ${platformMetrics.total_earnings?.toFixed(2) || "0.00"}
     </p>
-    <span className="block mt-1 text-sm opacity-75">Earnings to date</span>
+    <span className="block mt-2 text-sm text-gray-500">Earnings to date</span>
   </div>
 
   {/* Average Rating */}
-  <div className="bg-gradient-to-r from-yellow-500 to-yellow-700 text-white shadow-lg rounded-lg p-6 text-center transform hover:scale-105 transition duration-300">
-    <h2 className="text-lg font-semibold">Average Rating</h2>
-    <p className="text-4xl font-extrabold mt-2">
+  <div className="bg-white shadow-md rounded-lg p-6 text-center transform hover:-translate-y-2 hover:shadow-lg transition-all duration-300 max-w-[250px] mx-auto">
+    <h2 className="text-xl font-medium text-gray-700">Average Rating</h2>
+    <p className="text-5xl font-bold text-yellow-500 mt-3">
       {platformMetrics.average_rating || "N/A"}
     </p>
-    <span className="block mt-1 text-sm opacity-75">Overall rating</span>
+    <span className="block mt-2 text-sm text-gray-500">Overall rating</span>
   </div>
 </div>
+
 
 
 <div className=" shadow-lg rounded-lg p-6 mb-6" style={{ maxHeight: "400px", overflow: "hidden" }}>
@@ -176,7 +219,7 @@ const AdminDashboard = () => {
 {/* Chart Container */}
 {/* Chart Container */}
 <div 
-  className="p-2 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 shadow-lg rounded-lg flex flex-col justify-center items-center" 
+  className="p-2  shadow-lg rounded-lg flex flex-col justify-center items-center" 
   style={{ minHeight: "450px", maxWidth: "95%", margin: "0 auto" }} // Increased minHeight for more space
 >
   <h2 
@@ -238,7 +281,9 @@ const AdminDashboard = () => {
 
 
 {/* Users Table */}
-<div className="bg-gradient-to-r from-red-400 via-yellow-500 to-purple-300 shadow-md rounded-lg p-6 mb-6">
+<div className=" shadow-md rounded-lg ml-20 p-6 mb-6"
+  style={{ maxWidth: "1800px" }} // Limit the width of the container
+>
   <h2
     className="text-2xl font-bold mb-4 text-center"
     style={{
@@ -253,16 +298,59 @@ const AdminDashboard = () => {
     columns={[
       {
         name: "Username",
-        selector: (row) => row.username,
+        selector: (row) =>
+          editingUser === row.id ? (
+            <input
+              type="text"
+              value={editedData.username}
+              onChange={(e) =>
+                setEditedData((prev) => ({ ...prev, username: e.target.value }))
+              }
+              className="p-1 border rounded"
+            />
+          ) : (
+            row.username
+          ),
         sortable: true,
       },
       {
         name: "Email",
-        selector: (row) => row.email,
+        selector: (row) =>
+          editingUser === row.id ? (
+            <input
+              type="email"
+              value={editedData.email}
+              onChange={(e) =>
+                setEditedData((prev) => ({ ...prev, email: e.target.value }))
+              }
+              className="p-1 border rounded"
+            />
+          ) : (
+            row.email
+          ),
       },
       {
         name: "User Type",
-        selector: (row) => row.user_type,
+        selector: (row) =>
+          editingUser === row.id ? (
+            <select
+              value={editedData.user_type}
+              onChange={(e) =>
+                setEditedData((prev) => ({ ...prev, user_type: e.target.value }))
+              }
+              className="p-1 border rounded"
+            >
+              <option value="admin">Admin</option>
+              <option value="artist">Artist</option>
+            </select>
+          ) : (
+            row.user_type
+          ),
+      },
+      {
+        name: "Created At",
+        selector: (row) => row.created_at || "N/A",
+        sortable: true, // Allow sorting by created_at
       },
       {
         name: "Last Login",
@@ -270,14 +358,38 @@ const AdminDashboard = () => {
       },
       {
         name: "Actions",
-        cell: (row) => (
-          <button
-            onClick={() => handleDeleteUser(row.id)}
-            className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded shadow"
-          >
-            Delete
-          </button>
-        ),
+        cell: (row) =>
+          editingUser === row.id ? (
+            <div>
+              <button
+                onClick={handleSaveUser}
+                className="bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded shadow mr-2"
+              >
+                Save
+              </button>
+              <button
+                onClick={handleCancelEdit}
+                className="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded shadow"
+              >
+                Cancel
+              </button>
+            </div>
+          ) : (
+            <div>
+              <button
+                onClick={() => handleEditUser(row.id)}
+                className="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded shadow mr-2"
+              >
+                Edit
+              </button>
+              <button
+                onClick={() => handleDeleteUser(row.id)}
+                className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded shadow"
+              >
+                Delete
+              </button>
+            </div>
+          ),
       },
     ]}
     data={users}
@@ -326,43 +438,6 @@ const AdminDashboard = () => {
 
 
 
-      {/* Bookings Table */}
-      <div
-  className="shadow-lg rounded-lg p-6"
-  style={{
-    background: "linear-gradient(to bottom right, #4f46e5, #8b5cf6, #ec4899)",
-    color: "#fff",
-    boxShadow: "0px 10px 20px rgba(0, 0, 0, 0.2)", // Enhanced shadow for a lifting effect
-    border: "1px solid rgba(255, 255, 255, 0.3)", // Subtle border for depth
-  }}
->
-  <h2 className="text-xl font-semibold mb-4">Bookings</h2>
-  <DataTable
-    columns={[
-      ...bookingColumns,
-      {
-        name: "Payment Status",
-        selector: (row) => row.payment_status,
-        cell: (row) => (
-          <select
-            value={row.payment_status}
-            onChange={(e) => handlePaymentStatusUpdate(row.id, e.target.value)}
-            className="p-1 rounded bg-white text-black border border-gray-300"
-          >
-            <option value="unpaid">Unpaid</option>
-            <option value="paid">Paid</option>
-          </select>
-        ),
-        sortable: true,
-      },
-    ]}
-    data={bookings}
-    pagination
-    highlightOnHover
-    pointerOnHover
-    responsive
-  />
-</div>
 
     </div>
   );

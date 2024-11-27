@@ -15,6 +15,8 @@ import AdminDashboard from './AdminDashboard'; // Adjust the path as needed
 import Contact from "./Contact";
 import ContactCenter from "./ContactCenter";
 import EditArtist from "./EditArtist"; // Adjust the path as needed
+import ResetPassword from './ResetPassword';
+import ForgotPassword from "./ForgotPassword";
 
 const App = () => {
 
@@ -90,6 +92,8 @@ const App = () => {
           <Route path="/contact" element={<Contact />} />
           <Route path="/messages" element={<ContactCenter />} />
           <Route path="/artists/edit/:id" element={<EditArtist />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
 
           {/* Add other routes here if needed */}
         </Routes>
