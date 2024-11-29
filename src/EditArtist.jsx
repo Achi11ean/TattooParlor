@@ -119,6 +119,7 @@ const EditArtist = () => {
       // Ensure `availability_schedule` is properly formatted
       const payload = {
         ...formData,
+        years_of_experience: parseInt(formData.years_of_experience, 10), // Explicitly convert to integer
         styles: formData.styles.split(",").map((style) => style.trim()), // Convert styles to an array
         availability_schedule: { ...formData.availability_schedule }, // Ensure it's an object
       };
