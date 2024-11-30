@@ -25,7 +25,7 @@ const AdminDashboard = () => {
   const handleSaveUser = async () => {
     try {
       const response = await axios.patch(
-        `http://127.0.0.1:5002/api/users/${editingUser}`,
+        `https://tattooparlorbackend.onrender.com/api/users/${editingUser}`,
         editedData,
         { headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` } }
       );
@@ -48,7 +48,7 @@ const AdminDashboard = () => {
     if (!confirmDelete) return;
   
     try {
-      const response = await axios.delete(`http://127.0.0.1:5002/api/users/${userId}`, {
+      const response = await axios.delete(`https://tattooparlorbackend.onrender.com/api/users/${userId}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` },
       });
   
@@ -71,7 +71,7 @@ const AdminDashboard = () => {
   const handlePaymentStatusUpdate = async (bookingId, newStatus) => {
     try {
       const response = await axios.patch(
-        `http://127.0.0.1:5002/api/bookings/${bookingId}/payment_status`,
+        `https://tattooparlorbackend.onrender.com/api/bookings/${bookingId}/payment_status`,
         { payment_status: newStatus },
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` },
@@ -98,7 +98,7 @@ const AdminDashboard = () => {
     const fetchSetting = async () => {
       try {
         const response = await axios.get(
-          "http://127.0.0.1:5002/api/global-settings/show_create_artist_button",
+          "https://tattooparlorbackend.onrender.com/api/global-settings/show_create_artist_button",
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("authToken")}`, // Include token if required
@@ -117,7 +117,7 @@ const AdminDashboard = () => {
   const toggleShowCreateArtistButton = async () => {
     try {
       const response = await axios.patch(
-        "http://127.0.0.1:5002/api/global-settings/show_create_artist_button",
+        "https://tattooparlorbackend.onrender.com/api/global-settings/show_create_artist_button",
         { value: !showCreateArtistButton }, // Toggle the current value
         {
           headers: {
@@ -142,10 +142,10 @@ const AdminDashboard = () => {
 
       try {
         const [dashboardResponse, trendsResponse] = await Promise.all([
-          axios.get("http://127.0.0.1:5002/api/admin-dashboard", {
+          axios.get("https://tattooparlorbackend.onrender.com/api/admin-dashboard", {
             headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` },
           }),
-          axios.get("http://127.0.0.1:5002/api/admin-dashboard/bookings-trends", {
+          axios.get("https://tattooparlorbackend.onrender.com/api/admin-dashboard/bookings-trends", {
             headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` },
           }),
         ]);

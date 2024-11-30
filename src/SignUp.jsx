@@ -57,7 +57,7 @@ const SignUp = () => {
       const { username, email, password, userType } = formData;
       console.log("Sending data to API:", { username, email, password, userType });
   
-      const response = await axios.post("http://127.0.0.1:5002/api/signup", {
+      const response = await axios.post("https://tattooparlorbackend.onrender.com/api/signup", {
         username,
         email,
         password,

@@ -15,7 +15,7 @@ const ArtistDashboard = () => {
   const fetchDashboardData = async () => {
     try {
       const token = localStorage.getItem("authToken");
-      const response = await axios.get("http://127.0.0.1:5002/api/artist-dashboard", {
+      const response = await axios.get("https://tattooparlorbackend.onrender.com/api/artist-dashboard", {
         headers: { Authorization: `Bearer ${token}` },
       });
 

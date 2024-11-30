@@ -12,7 +12,7 @@ const GalleryPage = () => {
   useEffect(() => {
     const fetchGalleries = async () => {
       try {
-        const response = await axios.get(`http://127.0.0.1:5002/api/galleries?page=${page}`);
+        const response = await axios.get(`https://tattooparlorbackend.onrender.com/api/galleries?page=${page}`);
         setGalleries(response.data.galleries);
         setTotalPages(response.data.pages);
       } catch (err) {

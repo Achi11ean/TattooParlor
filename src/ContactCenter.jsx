@@ -9,7 +9,7 @@ const ContactCenter = () => {
   const handleStatusChange = async (inquiryId, newStatus) => {
     try {
       await axios.patch(
-        `http://127.0.0.1:5002/api/inquiries/${inquiryId}`,
+        `https://tattooparlorbackend.onrender.com/api/inquiries/${inquiryId}`,
         { status: newStatus },
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` },
@@ -39,7 +39,7 @@ const ContactCenter = () => {
       }
   
       try {
-        const response = await axios.get("http://127.0.0.1:5002/api/inquiries", {
+        const response = await axios.get("https://tattooparlorbackend.onrender.com/api/inquiries", {
           headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` },
         });
         setInquiries(response.data.inquiries);
@@ -56,7 +56,7 @@ const ContactCenter = () => {
 
   const handleDelete = async (inquiryId) => {
     try {
-      await axios.delete(`http://127.0.0.1:5002/api/inquiries/${inquiryId}`, {
+      await axios.delete(`https://tattooparlorbackend.onrender.com/api/inquiries/${inquiryId}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` },
       });
       // Remove the deleted inquiry from the state

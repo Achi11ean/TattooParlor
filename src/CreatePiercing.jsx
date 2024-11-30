@@ -27,7 +27,7 @@ const CreatePiercing = ({ onPiercingCreated }) => {
   useEffect(() => {
     const fetchArtists = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:5002/api/artists");
+        const response = await axios.get("https://tattooparlorbackend.onrender.com/api/artists");
         setArtists(response.data.artists);
       } catch (err) {
         console.error("Error fetching artists:", err);
@@ -73,7 +73,7 @@ const CreatePiercing = ({ onPiercingCreated }) => {
     };
   
     try {
-      const response = await axios.post("http://127.0.0.1:5002/api/piercings", requestData);
+      const response = await axios.post("https://tattooparlorbackend.onrender.com/api/piercings", requestData);
       console.log("Backend response:", response.data);
       setSuccessMessage("Piercing created successfully!");
       onPiercingCreated(response.data); // Notify parent of the new piercing

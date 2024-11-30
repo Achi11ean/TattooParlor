@@ -38,7 +38,7 @@ const ResetPassword = () => {
     }
 
     try {
-      const response = await axios.post('http://127.0.0.1:5002/api/reset-password', {
+      const response = await axios.post('https://tattooparlorbackend.onrender.com/api/reset-password', {
         token,
         new_password: password,
       });

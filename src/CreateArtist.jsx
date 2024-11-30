@@ -90,7 +90,7 @@ const CreateArtist = ({ onArtistCreated }) => {
 
     try {
       const response = await axios.post(
-        "http://127.0.0.1:5002/api/artists",
+        "https://tattooparlorbackend.onrender.com/api/artists",
         formData,
         {
           headers: {

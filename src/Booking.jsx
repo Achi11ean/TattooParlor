@@ -21,7 +21,7 @@ const Booking = () => {
       if (!searchQuery.trim()) {
         // If the search query is empty, fetch all bookings
         try {
-          const response = await axios.get("http://127.0.0.1:5002/api/bookings");
+          const response = await axios.get("https://tattooparlorbackend.onrender.com/api/bookings");
           setBookings(response.data.bookings);
           setNoBookingResults(false); // Reset no results
 
@@ -34,7 +34,7 @@ const Booking = () => {
       }
 
       try {
-        const response = await axios.get("http://127.0.0.1:5002/api/bookings/search", {
+        const response = await axios.get("https://tattooparlorbackend.onrender.com/api/bookings/search", {
           params: { name: searchQuery },
         });
         setBookings(response.data); // Update bookings state with search results
@@ -76,7 +76,7 @@ const Booking = () => {
   
     try {
       const response = await axios.patch(
-        `http://127.0.0.1:5002/api/bookings/${editingBooking.id}`,
+        `https://tattooparlorbackend.onrender.com/api/bookings/${editingBooking.id}`,
         updatedBooking
       );
       setBookings((prevBookings) =>
@@ -125,7 +125,7 @@ const Booking = () => {
   
     try {
       const response = await axios.patch(
-        `http://127.0.0.1:5002/api/piercings/${editingPiercing.id}`,
+        `https://tattooparlorbackend.onrender.com/api/piercings/${editingPiercing.id}`,
         updatedPiercing
       );
       setPiercings((prevPiercings) =>
@@ -148,7 +148,7 @@ const Booking = () => {
       const fetchPiercingSearchResults = async () => {
         if (!piercingSearchQuery.trim()) {
           try {
-            const response = await axios.get("http://127.0.0.1:5002/api/piercings");
+            const response = await axios.get("https://tattooparlorbackend.onrender.com/api/piercings");
             setPiercings(response.data.piercings);
             setError(null);
           } catch (err) {
@@ -159,7 +159,7 @@ const Booking = () => {
         }
   
         try {
-          const response = await axios.get("http://127.0.0.1:5002/api/piercings/search", {
+          const response = await axios.get("https://tattooparlorbackend.onrender.com/api/piercings/search", {
             params: { name: piercingSearchQuery },
           });
           setPiercings(response.data);
@@ -184,7 +184,7 @@ const Booking = () => {
 
   const handleDeleteBooking = async (id) => {
     try {
-      await axios.delete(`http://127.0.0.1:5002/api/bookings/${id}`);
+      await axios.delete(`https://tattooparlorbackend.onrender.com/api/bookings/${id}`);
       setBookings((prevBookings) => prevBookings.filter((booking) => booking.id !== id));
       setSuccessMessage("Booking deleted successfully!");
     } catch (err) {
@@ -195,7 +195,7 @@ const Booking = () => {
   
   const handleDeletePiercing = async (id) => {
     try {
-      await axios.delete(`http://127.0.0.1:5002/api/piercings/${id}`);
+      await axios.delete(`https://tattooparlorbackend.onrender.com/api/piercings/${id}`);
       setPiercings((prevPiercings) => prevPiercings.filter((piercing) => piercing.id !== id));
       setSuccessMessage("Piercing deleted successfully!");
     } catch (err) {
@@ -209,9 +209,9 @@ const Booking = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const bookingsResponse = await axios.get("http://127.0.0.1:5002/api/bookings");
-        const artistsResponse = await axios.get("http://127.0.0.1:5002/api/artists");
-        const piercingsResponse = await axios.get("http://127.0.0.1:5002/api/piercings"); // Fetch piercings
+        const bookingsResponse = await axios.get("https://tattooparlorbackend.onrender.com/api/bookings");
+        const artistsResponse = await axios.get("https://tattooparlorbackend.onrender.com/api/artists");
+        const piercingsResponse = await axios.get("https://tattooparlorbackend.onrender.com/api/piercings"); // Fetch piercings
         setBookings(bookingsResponse.data.bookings);
         setArtists(artistsResponse.data.artists);
         setPiercings(piercingsResponse.data.piercings); // Set piercings data
@@ -262,7 +262,7 @@ const Booking = () => {
     console.log("Request data being sent to backend:", requestData); // Final request payload
     
     try {
-      const response = await axios.post("http://127.0.0.1:5002/api/bookings", requestData);
+      const response = await axios.post("https://tattooparlorbackend.onrender.com/api/bookings", requestData);
       console.log("Backend response:", response.data); // Log successful response
       setBookings((prevBookings) => [...prevBookings, response.data]); // Add new booking to the state
       setSuccessMessage("Booking created successfully!");

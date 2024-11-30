@@ -18,7 +18,7 @@ const Gallery = ({ artistId, isArtist, isAdmin }) => {
       try {
         setLoading(true);
         const response = await axios.get(
-          `http://127.0.0.1:5002/api/artists/${artistId}/gallery`,
+          `https://tattooparlorbackend.onrender.com/api/artists/${artistId}/gallery`,
           {
             params: { search: debouncedQuery }, // Pass the search query to the backend
           }
@@ -56,7 +56,7 @@ const Gallery = ({ artistId, isArtist, isAdmin }) => {
     try {
       setLoading(true);
       const response = await axios.post(
-        `http://127.0.0.1:5002/api/artists/${artistId}/gallery`,
+        `https://tattooparlorbackend.onrender.com/api/artists/${artistId}/gallery`,
         { image_url: imageUrl, caption },
         { headers: { Authorization: `Bearer ${authToken}` } }
       );
@@ -77,7 +77,7 @@ const Gallery = ({ artistId, isArtist, isAdmin }) => {
     if (!window.confirm("Are you sure you want to delete this photo?")) return;
 
     try {
-      await axios.delete(`http://127.0.0.1:5002/api/gallery/${photoId}`, {
+      await axios.delete(`https://tattooparlorbackend.onrender.com/api/gallery/${photoId}`, {
         headers: {
           Authorization: `Bearer ${authToken}`, // Include the token for authentication
         },

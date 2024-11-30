@@ -36,7 +36,7 @@ const EditArtist = () => {
   useEffect(() => {
     const fetchArtist = async () => {
       try {
-        const response = await axios.get(`http://127.0.0.1:5002/api/artists/${id}`, {
+        const response = await axios.get(`https://tattooparlorbackend.onrender.com/api/artists/${id}`, {
           headers: { Authorization: `Bearer ${authToken}` },
         });
         const artistData = response.data;
@@ -128,7 +128,7 @@ const EditArtist = () => {
   
       // Make the PATCH request
       const response = await axios.patch(
-        `http://127.0.0.1:5002/api/artists/${id}`,
+        `https://tattooparlorbackend.onrender.com/api/artists/${id}`,
         payload,
         {
           headers: { Authorization: `Bearer ${authToken}` },

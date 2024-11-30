@@ -21,7 +21,7 @@ const Artists = () => {
   const handleDeleteArtist = async (artistId) => {
     try {
       const token = localStorage.getItem("authToken"); // Retrieve the token from localStorage
-      await axios.delete(`http://127.0.0.1:5002/api/artists/${artistId}`, {
+      await axios.delete(`https://tattooparlorbackend.onrender.com/api/artists/${artistId}`, {
         headers: {
           Authorization: `Bearer ${token}`, // Ensure token is included
         },
@@ -41,7 +41,7 @@ const Artists = () => {
     const fetchArtists = async () => {
       try {
         const token = localStorage.getItem("authToken"); // Retrieve the token from localStorage
-        const response = await axios.get("http://127.0.0.1:5002/api/artists", {
+        const response = await axios.get("https://tattooparlorbackend.onrender.com/api/artists", {
           headers: { Authorization: `Bearer ${token}` },
         });
         console.log("Fetched artists:", response.data.artists); // Debug the artists data
@@ -61,7 +61,7 @@ const Artists = () => {
     const fetchSetting = async () => {
       try {
         const response = await axios.get(
-          "http://127.0.0.1:5002/api/global-settings/show_create_artist_button",
+          "https://tattooparlorbackend.onrender.com/api/global-settings/show_create_artist_button",
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("authToken")}`, // Include token if required

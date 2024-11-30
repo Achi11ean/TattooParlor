@@ -9,7 +9,7 @@ const RequestPasswordReset = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://127.0.0.1:5002/api/request-password-reset", { email });
+      const response = await axios.post("https://tattooparlorbackend.onrender.com/api/request-password-reset", { email });
       setMessage(response.data.message);
     } catch (err) {
       setError(err.response?.data?.error || "Something went wrong. Please try again.");

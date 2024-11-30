@@ -48,12 +48,12 @@ const ArtistProfile = () => {
   useEffect(() => {
     const fetchArtist = async () => {
       try {
-        const response = await axios.get(`http://127.0.0.1:5002/api/artists/${id}`);
+        const response = await axios.get(`https://tattooparlorbackend.onrender.com/api/artists/${id}`);
         setArtist(response.data);
 
         // Fetch bookings for the artist
         const bookingsResponse = await axios.get(
-          `http://127.0.0.1:5002/api/artists/${id}/bookings`
+          `https://tattooparlorbackend.onrender.com/api/artists/${id}/bookings`
         );
         setBookings(bookingsResponse.data); // Set bookings data
       } catch (err) {

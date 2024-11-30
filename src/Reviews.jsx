@@ -23,7 +23,7 @@ const Reviews = ({ artistId }) => {
 
     const fetchReviews = async () => {
       try {
-        const response = await axios.get(`http://127.0.0.1:5002/api/artists/${artistId}/reviews`);
+        const response = await axios.get(`https://tattooparlorbackend.onrender.com/api/artists/${artistId}/reviews`);
         setReviews(response.data.reviews || []);
       } catch (err) {
         console.error("Error fetching reviews:", err);
@@ -48,7 +48,7 @@ const Reviews = ({ artistId }) => {
     try {
       const token = localStorage.getItem("authToken");
       const response = await axios.post(
-        `http://127.0.0.1:5002/api/artists/${artistId}/reviews`,
+        `https://tattooparlorbackend.onrender.com/api/artists/${artistId}/reviews`,
         newReview,
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -65,7 +65,7 @@ const Reviews = ({ artistId }) => {
   const handleDeleteReview = async (reviewId) => {
     try {
       const token = localStorage.getItem("authToken");
-      await axios.delete(`http://127.0.0.1:5002/api/reviews/${reviewId}`, {
+      await axios.delete(`https://tattooparlorbackend.onrender.com/api/reviews/${reviewId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setReviews((prev) => prev.filter((review) => review.id !== reviewId));

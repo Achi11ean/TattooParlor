@@ -24,7 +24,7 @@ const ContactCenter = () => {
     setMessage(null);
 
     try {
-      await axios.post("http://127.0.0.1:5002/api/inquiries", formData, {
+      await axios.post("https://tattooparlorbackend.onrender.com/api/inquiries", formData, {
         headers: { "Content-Type": "application/json" },
       });
       setMessage({
