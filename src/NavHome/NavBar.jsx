@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useAuth } from "../AuthContext"; // Ensure this path is correct
 import { useNavigate } from "react-router-dom"; // Navigate after logging out
+import { Link } from "react-router-dom";
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
