@@ -58,18 +58,18 @@ const App = () => {
                     <div className="text-center py-8">
 
   <div className="mt-6 flex justify-center space-x-4">
-    <a
-      href="/bookings"
-      className="px-20 py-3 bg-gradient-to-r from-black to-blue-700 text-white rounded shadow-md hover:from-blue-700 hover:to-black transition-all duration-200"
-    >
-      Book Now
-    </a>
-    <a
-      href="/artists"
-      className="px-20 py-3 bg-gradient-to-r from-red-700 to-black  text-white rounded shadow-md hover:from-black hover:to-red-700 transition-all duration-200"
-    >
-      Explore Artists
-    </a>
+  <Link
+  to="/bookings"
+  className="px-20 py-3 bg-gradient-to-r from-black to-blue-700 text-white rounded shadow-md hover:from-blue-700 hover:to-black transition-all duration-200"
+>
+  Book Now
+</Link>
+<Link
+  to="/artists"
+  className="px-20 py-3 bg-gradient-to-r from-red-700 to-black  text-white rounded shadow-md hover:from-black hover:to-red-700 transition-all duration-200"
+>
+  Explore Artists
+</Link>
   </div>
 </div>
 

@@ -48,57 +48,57 @@ function Navbar() {
 
           {/* Desktop Links */}
           <div className={`hidden md:flex space-x-10 text-2xl`}>
-            <a
-              href="/"
+            <Link
+              to="/"
               className="hover:text-red-400 transition duration-300 transform hover:scale-110"
             >
               Home
-            </a>
-            <a
-              href="/artists"
+            </Link>
+            <Link
+              to="/artists"
               className="hover:text-red-400 transition duration-300 transform hover:scale-110"
             >
               Artists
-            </a>
-            <a
-              href="/gallery"
+            </Link>
+            <Link
+              to="/gallery"
               className="hover:text-red-400 transition duration-300 transform hover:scale-110"
             >
               Gallery
-            </a>
-            <a
-              href="/bookings"
+            </Link>
+            <Link
+              to="/bookings"
               className="hover:text-red-400 transition duration-300 transform hover:scale-110"
             >
               Bookings
-            </a>
-            <a
-              href="/about"
+            </Link>
+            <Link
+              to="/about"
               className="hover:text-red-400 transition duration-300 transform hover:scale-110"
             >
               About
-            </a>
-            <a
-              href="/contact"
+            </Link>
+            <Link
+              to="/contact"
               className="hover:text-red-400 transition duration-300 transform hover:scale-110"
             >
               Contact
-            </a>
+            </Link>
             {(userType === "admin" || userType === "artist") && (
-              <a
-                href="/messages"
+              <Link
+                to="/messages"
                 className="block hover:text-red-400 transition duration-300"
               >
                 Messages
-              </a>
+              </Link>
             )}
             {userType === "admin" && (
-              <a
-                href="/admin-dashboard"
+              <Link
+                to="/admin-dashboard"
                 className="block hover:text-red-400 transition duration-300"
               >
                 Admin Dashboard
-              </a>
+              </Link>
             )}
 
             {authToken ? (
@@ -110,11 +110,11 @@ function Navbar() {
               </button>
             ) : (
               <Link
-              to="/signin"
-              className="hover:text-red-400 transition duration-300 transform hover:scale-110"
-            >
-              Sign In
-            </Link>
+                to="/signin"
+                className="hover:text-red-400 transition duration-300 transform hover:scale-110"
+              >
+                Sign In
+              </Link>
             )}
           </div>
         </div>
@@ -124,57 +124,57 @@ function Navbar() {
       {isOpen && (
         <div className="md:hidden bg-gray-900 py-4 text-center">
           <div className="space-y-2 text-2xl">
-            <a
-              href="/"
-              className="block hover:text-red-400 transition duration-300"
-            >
-              Home
-            </a>
-            <a
-              href="/artists"
+          <Link
+  to="/"
+  className="block hover:text-red-400 transition duration-300"
+>
+  Home
+</Link>
+            <Link
+              to="/artists"
               className="block hover:text-red-400 transition duration-300"
             >
               Artists
-            </a>
-            <a
-              href="/gallery"
+            </Link>
+            <Link
+              to="/gallery"
               className="block hover:text-red-400 transition duration-300"
             >
               Gallery
-            </a>
-            <a
-              href="/bookings"
+            </Link>
+            <Link
+              to="/bookings"
               className="block hover:text-red-400 transition duration-300"
             >
               Bookings
-            </a>
-            <a
-              href="/about"
+            </Link>
+            <Link
+              to="/about"
               className="block hover:text-red-400 transition duration-300"
             >
               About
-            </a>
-            <a
-              href="/contact"
+            </Link>
+            <Link
+              to="/contact"
               className="block hover:text-red-400 transition duration-300"
             >
               Contact
-            </a>
+            </Link>
             {userType === "admin" && (
-              <a
-                href="/admin-dashboard"
+              <Link
+                to="/admin-dashboard"
                 className="block hover:text-red-400 transition duration-300"
               >
                 Admin Dashboard
-              </a>
+              </Link>
             )}
             {userType === "artist" && (
-              <a
-                href="/artist-dashboard"
+              <Link
+                to="/artist-dashboard"
                 className="block hover:text-red-400 transition duration-300"
               >
                 Artist Dashboard
-              </a>
+              </Link>
             )}
             {authToken ? (
               <button
@@ -184,12 +184,12 @@ function Navbar() {
                 Sign Out
               </button>
             ) : (
-              <a
-                href="/signin"
+              <Link
+                to="/signin"
                 className="block hover:text-red-400 transition duration-300"
               >
                 Sign In
-              </a>
+              </Link>
             )}
           </div>
         </div>
