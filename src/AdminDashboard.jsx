@@ -153,18 +153,27 @@ const AdminDashboard = () => {
       }
   
       try {
-        const [dashboardResponse] = await Promise.all([
-          axios.get("https://tattooparlorbackend.onrender.com/api/admin-dashboard", {
+        // Fetch dashboard data for users and bookings
+        const dashboardResponse = await axios.get(
+          "https://tattooparlorbackend.onrender.com/api/admin-dashboard",
+          {
             headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` },
-          }),
-        ]);
+          }
+        );
   
+        const fetchedUsers = dashboardResponse.data.users || [];
         const fetchedBookings = dashboardResponse.data.bookings || [];
+  
+        // Set users and bookings
+        setUsers(fetchedUsers);
         setBookings(fetchedBookings);
   
         // Calculate monthly trends based on bookings
         const monthlyData = getMonthlyTrends(fetchedBookings);
         setMonthlyTrends(monthlyData);
+  
+        // Optionally set platform metrics if available
+        setPlatformMetrics(dashboardResponse.data.platform_metrics || {});
       } catch (err) {
         console.error("Error fetching dashboard data:", err.response || err.message);
         setError("Failed to fetch dashboard data. Please try again later.");
