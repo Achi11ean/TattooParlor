@@ -318,7 +318,7 @@ const Booking = () => {
           {showBookingForm && (
       <form
   onSubmit={handleCreateBooking}
-  className="bg-gradient-to-r from-gray-800 to-gray-900 text-white p-8 rounded-lg shadow-2xl max-w-2xl mx-auto"
+  className="bg-gradient-to-r from-gray-800 to-gray-900 text-white p-8 rounded-lg shadow-2xl max-w-lg mx-auto"
 >
   <h2 className="text-4xl  font-bold mb-6 text-center bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-blue-500">
     Book Tattoo Appointment

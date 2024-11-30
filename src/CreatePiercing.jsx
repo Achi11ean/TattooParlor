@@ -100,7 +100,7 @@ const CreatePiercing = ({ onPiercingCreated }) => {
     <div>
 <button
   onClick={togglePiercingForm}
-  className="w-60 py-3 bg-gradient-to-r from-black via-red-800 to-black text-center justify-center items-center ml-10 mr-80 text-white font-bold rounded-lg shadow-lg hover:scale-105 transform transition duration-300 text-2xl p-6"
+  className="w-60 py-3 bg-gradient-to-r from-black via-red-800 to-black text-center justify-center items-center ml-40 mr-80 text-white font-bold rounded-lg shadow-lg hover:scale-105 transform transition duration-300 text-2xl p-6"
   style={{
     fontFamily: "'Creepster', cursive", // Add a macabre font like 'Creepster'
     textShadow: "2px 2px 5px rgba(0, 0, 0, 0.8)",
@@ -113,7 +113,7 @@ const CreatePiercing = ({ onPiercingCreated }) => {
     {showPiercingForm && (
     
     <div
-  className="flex flex-wrap justify-between ml-10 mr-40 mt-0 max-w-8xl pb-3  rounded-lg shadow-lg relative"
+  className="flex flex-wrap justify-between ml-10 mr-40 mt-0 max-w-lg pb-3  rounded-lg shadow-lg relative"
 >
   
     <form
