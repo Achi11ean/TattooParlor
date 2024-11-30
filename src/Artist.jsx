@@ -7,8 +7,14 @@ import RandomGradient from "./RandomGradient";
 const Artists = () => {
   const [artists, setArtists] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showCreateArtistButton, setShowCreateArtistButton] = useState(() => {
+    // Initialize the state from localStorage
+    const savedState = localStorage.getItem("showCreateArtistButton");
+    return savedState !== null ? JSON.parse(savedState) : true;
+  });
+
   const [error, setError] = useState(null);
-  const { userType } = useAuth();
+  const { userType, userId } = useAuth();
   const navigate = useNavigate();
 
   // Function to handle artist deletion
@@ -51,7 +57,26 @@ const Artists = () => {
 
     fetchArtists();
   }, []);
+  useEffect(() => {
+    const fetchSetting = async () => {
+      try {
+        const response = await axios.get(
+          "http://127.0.0.1:5002/api/global-settings/show_create_artist_button",
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("authToken")}`, // Include token if required
+            },
+          }
+        );
+        setShowCreateArtistButton(response.data.show_create_artist_button);
+      } catch (error) {
+        console.error("Error fetching global setting:", error);
+        setError("Failed to load settings.");
+      }
+    };
 
+    fetchSetting();
+  }, []);
   // Navigate to the CreateArtist page
   const handleCreateArtist = () => {
     navigate("/create-artist");
@@ -69,17 +94,17 @@ const Artists = () => {
     backgroundBlendMode: "overlay",
   }}
 >
-  
+
 <div className="flex justify-between items-center mb-6">
         <h1 className="text-5xl font-bold">Artists</h1>
-        {userType === "artist" || userType === "admin" ? (
+        {showCreateArtistButton && (userType === "artist" || userType === "admin") && (
           <button
             onClick={handleCreateArtist}
             className="px-4 py-2 bg-blue-600 text-white text-3xl rounded-md hover:bg-blue-700"
           >
             Create Artist Profile
           </button>
-        ) : null}
+)}
       </div>
 
       <div className="grid grid-cols-1 text-3xl md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -172,24 +197,25 @@ const Artists = () => {
 </button>
 
                 </div>
-                {userType === "admin" || userType === "artist" ? (
-                  <button
-  onClick={() => handleDeleteArtist(artist.id)}
-  className="bg-gradient-to-r from-red-600 to-red-800 text-white px-6 py-2 rounded-full shadow-lg hover:shadow-xl transition-all w-full duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 mt-4 "
->
-  Delete Artist
-</button>
-
-                ) : null}
-              </div>
-              {userType === "admin" || userType === "artist" ? (
+                
+                {(userType === "admin" || userId === artist.created_by) && (
   <button
     onClick={() => navigate(`/artists/edit/${artist.id}`)}
-    className="bg-gradient-to-r from-green-500 to-teal-600 text-white px-6 py-2 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 mt-4"
+    className="bg-gradient-to-r from-green-500 to-teal-600 text-white px-6 py-2 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-green-500 float-right focus:ring-offset-2 mt-4"
   >
     Edit Artist
   </button>
-) : null}
+)}
+              </div>
+              {(userType === "admin" || userId === artist.created_by) && (
+  <button
+    onClick={() => handleDeleteArtist(artist.id)}
+    className="bg-gradient-to-r from-red-600 to-red-800 text-white px-6 py-2 rounded-full shadow-lg hover:shadow-xl transition-all  w-30 duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 float-left"
+    >
+    Delete Artist
+  </button>
+)}
+
               </div>
 </RandomGradient>
           );

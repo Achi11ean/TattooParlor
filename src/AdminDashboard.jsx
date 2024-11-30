@@ -12,6 +12,8 @@ ChartJS.register(...registerables);
 const AdminDashboard = () => {
   const { userType } = useAuth();
   const navigate = useNavigate();
+  const [showCreateArtistButton, setShowCreateArtistButton] = useState(false);
+
   const [editingUser, setEditingUser] = useState(null); // Track user being edited
   const [editedData, setEditedData] = useState({}); // Store changes
   const handleEditUser = (userId) => {
@@ -91,6 +93,45 @@ const AdminDashboard = () => {
     setEditedData({});
   };
 
+  // Fetch the button state from the backend
+  useEffect(() => {
+    const fetchSetting = async () => {
+      try {
+        const response = await axios.get(
+          "http://127.0.0.1:5002/api/global-settings/show_create_artist_button",
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("authToken")}`, // Include token if required
+            },
+          }
+        );
+        setShowCreateArtistButton(response.data.show_create_artist_button);
+      } catch (error) {
+        console.error("Error fetching setting:", error);
+      }
+    };
+  
+    fetchSetting();
+  }, []);
+
+  const toggleShowCreateArtistButton = async () => {
+    try {
+      const response = await axios.patch(
+        "http://127.0.0.1:5002/api/global-settings/show_create_artist_button",
+        { value: !showCreateArtistButton }, // Toggle the current value
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("authToken")}`, // Include token if required
+          },
+        }
+      );
+  
+      setShowCreateArtistButton(response.data.show_create_artist_button); // Update UI with the response
+    } catch (error) {
+      console.error("Error updating setting:", error);
+    }
+  };
+  
   // Fetch dashboard data
   useEffect(() => {
     const fetchDashboardData = async () => {
@@ -179,7 +220,16 @@ const AdminDashboard = () => {
   Admin Dashboard
 </h1>
 
-
+<div className="flex justify-end items-center mb-4">
+  <button
+    onClick={toggleShowCreateArtistButton}
+    className={`px-4 py-2 text-white rounded-md shadow-lg ${
+      showCreateArtistButton ? "bg-red-500 hover:bg-red-600" : "bg-green-500 hover:bg-green-600"
+    } transition-all`}
+  >
+    {showCreateArtistButton ? "Hide Create Artist Button" : "Show Create Artist Button"}
+  </button>
+</div>
 {/* Platform Metrics */}
 <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mb-8 px-4">
   {/* Total Bookings */}

@@ -77,7 +77,7 @@ h1 {
 .react-calendar__navigation__arrow,
 .react-calendar__navigation__next2-button,
 .react-calendar__navigation__prev2-button {
-  color: rgb(255, 0, 0) !important; /* Button text color */
+  color: rgb(255, 242, 0) !important; /* Button text color */
   background-color: transparent !important; /* Transparent background */
   border: none; /* No border */
   font-size: 1.2rem; /* Adjust font size */
@@ -88,41 +88,84 @@ h1 {
 }
 
 
+/* Highlight Today */
+.react-calendar__tile--now {
+  background: linear-gradient(145deg, #ffcc00, #ff9900); /* Vibrant gradient for today's date */
+  color: #fff; /* White text for contrast */
+  font-weight: bold; /* Make the text bold */
+  border-radius: 10px; /* Smooth rounded edges */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Subtle shadow for emphasis */
+  transform: scale(1.05); /* Slight scaling to make it stand out */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth animation */
+}
+
+/* Hover Effect for Today */
+.react-calendar__tile--now:hover {
+  background: linear-gradient(145deg, #ff8800, #ff4400); /* Slightly darker gradient on hover */
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.4); /* Enhanced shadow */
+  transform: scale(1.1); /* Increased scaling for interactivity */
+  cursor: pointer; /* Add a pointer cursor on hover */
+}
 
 /* Weekday Headers */
 .react-calendar__month-view__weekdays__weekday {
-  color: rgb(31, 6, 255) !important; /* Text color */
-  font-size: .9rem; /* Adjust font size */
-  font-weight: bold; /* Bold text */
-  text-align: center; /* Center the text */
-  background-color: pink;
+  color: #2E3A59; /* Neutral dark blue for modern text */
+  font-size: .90rem; /* Adjust font size for readability */
+  font-weight: 500; /* Medium weight for a balanced look */
+  text-align: left; /* Center-align text */
+  background-color: #F5F7FA; /* Light gray for a clean background */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+  text-transform: uppercase; /* Modern look with uppercase text */
 }
 
-/* Hover Effect for Weekday Headers */
+/* Hover Effect */
 .react-calendar__month-view__weekdays__weekday:hover {
-  background-color: rgb(249, 126, 126); /* Light red background on hover */
-  transition: background-color 0.3s ease-in-out; /* Smooth transition */
+  background-color: #E8EBF0; /* Slightly darker gray on hover */
+  color: #1A202C; /* Darker text for contrast */
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15); /* Enhance shadow on hover */
+  transition: all 0.3s ease-in-out; /* Smooth transition for hover effects */
 }
+
 
 /* Day Tiles */
+/* General Day Tile Styling */
 .react-calendar__tile.react-calendar__month-view__days__day {
-  color: rgb(0, 0, 0) !important; /* Text color */
-  background-color: rgb(167, 250, 207); /* Transparent background */
-  font-size: 1rem; /* Adjust font size */
-  font-weight: bold; /* Bold text */
-  text-align: center; /* Center the text */
-  padding: 10px 0; /* Padding for spacing */
-  border-radius: 8px; /* Rounded edges */
-  transition: all 0.3s ease-in-out; /* Smooth transition for hover */
+  color: #1E1E1E; /* Neutral dark text color */
+  background: linear-gradient(145deg, #c87bff, #d7fcc8); /* Cool gradient background */
+  font-size: 1rem; /* Slightly larger font for better readability */
+  font-weight: 600; /* Medium bold text */
+  text-align: center; /* Center-align text */
+  padding: 12px 0; /* Add vertical spacing */
+  border-radius: 2px; /* Smoother rounded edges */
+  border: 2px solid #e6ffe8; /* Add a subtle border for distinction */
+  transition: all 0.3s ease-in-out; /* Smooth transition for hover effects */
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
 
 /* Hover Effect for Day Tiles */
 .react-calendar__tile.react-calendar__month-view__days__day:hover {
-  background-color: rgba(255, 182, 193, 0.7); /* Light pink background on hover */
-  color: black; /* Keep text color black */
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Subtle shadow on hover */
-  transform: scale(1.05); /* Slight scaling effect */
+  background: linear-gradient(145deg, #50101e, #8f76fa); /* Soft pink gradient on hover */
+  color: #ffffff; /* Darker text color */
+  box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.2); /* Enhanced shadow for hover */
+  transform: scale(1.1); /* Slight scaling effect for hover */
+  border: 2px solid #ffb3c1; /* Add a border accent on hover */
 }
+
+/* Weekends - Saturday and Sunday */
+.react-calendar__tile.react-calendar__month-view__days__day:nth-child(7n),
+.react-calendar__tile.react-calendar__month-view__days__day:nth-child(7n+1) {
+  background: linear-gradient(145deg, #a6c8ff, #fff5e6); /* Light warm tones for weekends */
+  color: #d35400; /* Distinct orange text color */
+}
+
+/* Weekend Hover Effect */
+.react-calendar__tile.react-calendar__month-view__days__day:nth-child(7n):hover,
+.react-calendar__tile.react-calendar__month-view__days__day:nth-child(7n+1):hover {
+  background: linear-gradient(145deg, #ffbe76, #ffddb5); /* Warm gradient for hover */
+  color: #1E1E1E; /* Neutral dark text */
+  transform: scale(1.1); /* Same scaling effect */
+}
+
 
 /* Days Not in the Current Month */
 /* Neighboring Month Days */

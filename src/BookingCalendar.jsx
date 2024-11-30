@@ -11,42 +11,23 @@ const BookingCalendar = ({ artistId }) => {
   const [showDetails, setShowDetails] = useState(false);
 
   // Fetch bookings for the given artistId
-  useEffect(() => {
-    const fetchBookings = async () => {
-      try {
-        const response = await fetch(
-          `http://127.0.0.1:5002/api/artists/${artistId}/bookings`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-
-        const data = await response.json();
-
-        if (response.ok) {
-          const formattedEvents = data.map((booking) => ({
-            id: booking.id,
-            title: booking.name || "Booking",
-            start: new Date(booking.appointment_date),
-            end: new Date(booking.appointment_date), // Adjust if there's an end time
-            type: booking.tattoo_style || "Tattoo Booking",
-          }));
-          setEvents(formattedEvents);
-        } else {
-          console.error("Error fetching bookings:", data.error);
-        }
-      } catch (error) {
-        console.error("Error fetching bookings:", error);
-      }
-    };
-
-    if (artistId) {
-      fetchBookings();
-    }
-  }, [artistId]);
+  const BookingCalendar = ({ bookings }) => {
+    const [events, setEvents] = useState([]);
+  
+    useEffect(() => {
+      const formattedEvents = bookings.map((booking) => ({
+        id: booking.id,
+        title: booking.name || "Booking",
+        start: new Date(booking.appointment_date),
+        end: new Date(booking.appointment_date),
+        type: booking.tattoo_style || "Tattoo Booking",
+      }));
+      setEvents(formattedEvents);
+    }, [bookings]);
+  
+    // Rest of BookingCalendar code...
+  };
+  
 
   // Handle event selection
   const handleSelectEvent = (event) => {

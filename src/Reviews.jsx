@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import FallingStars from "./FallingStars"; // Import the falling stars component
+import { useAuth } from "./AuthContext"; // Ensure this is the correct path
 
 const Reviews = ({ artistId }) => {
   const [reviews, setReviews] = useState([]);
@@ -8,6 +9,7 @@ const Reviews = ({ artistId }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [showStars, setShowStars] = useState(false); // Control the falling stars animation
+  const { userType, authToken, userId } = useAuth(); // Add userId if available in AuthContext
 
   console.log({ artistId });
 
@@ -117,12 +119,15 @@ const Reviews = ({ artistId }) => {
             {review.review_text || "No text provided"}
           </div>
         </div>
+        {(userType === "admin" || userId === artistId) && (
+
         <button
           onClick={() => handleDeleteReview(review.id)}
           className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700"
         >
           Delete
         </button>
+        )}
       </div>
     ))}
   </div>

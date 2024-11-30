@@ -119,15 +119,15 @@ const Gallery = ({ artistId, isArtist, isAdmin }) => {
           {photo.caption}
         </div>
       )}
-      {(isArtist || isAdmin) && (
-        <button
-          aria-label="Delete photo"
-          onClick={() => handleDelete(photo.id)}
-          className="absolute bottom-2 right-2 bg-red-500 text-white px-3 py-1 text-sm rounded-lg shadow-lg hover:bg-red-700 transition duration-300"
-        >
-          Delete
-        </button>
-      )}
+{(isAdmin || (isArtist && artistId === photo.artist_id)) && (
+  <button
+    aria-label="Delete photo"
+    onClick={() => handleDelete(photo.id)}
+    className="absolute bottom-2 right-2 bg-red-500 text-white px-3 py-1 text-sm rounded-lg shadow-lg hover:bg-red-700 transition duration-300"
+  >
+    Delete
+  </button>
+)}
     </div>
   ))
 ) : (
@@ -138,7 +138,7 @@ const Gallery = ({ artistId, isArtist, isAdmin }) => {
 
 
       {/* Upload Form */}
-      {(userType === "admin" || userType === "artist") && (
+      {(isAdmin || (isArtist && artistId === userType?.id)) && (
   <form onSubmit={handleUpload} className="upload-form mt-6">
     <h3 className="text-xl font-semibold mb-2">Upload New Photo</h3>
     <div className="flex flex-col gap-6 p-6 bg-gradient-to-r from-blue-100 to-purple-100 shadow-lg rounded-lg max-w-full mx-auto">
@@ -157,6 +157,7 @@ const Gallery = ({ artistId, isArtist, isAdmin }) => {
         onChange={(e) => setCaption(e.target.value)}
         className="border border-gray-300 rounded-lg p-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent shadow-sm"
       />
+      
       <button
         type="submit"
         className="bg-gradient-to-r from-blue-500 to-purple-500 text-white py-3 px-6 rounded-lg font-semibold shadow-md hover:shadow-lg hover:from-blue-600 hover:to-purple-600 transform transition-transform duration-200 hover:scale-105"

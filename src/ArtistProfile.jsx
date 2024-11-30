@@ -119,7 +119,31 @@ const ArtistProfile = () => {
             <h1 className="text-3xl font-bold">{artist.name}</h1>
             <p className="text-white">{artist.specialties || "Specialties not specified"}</p>
             <p className="text-white text-sm mt-2">{artist.bio || "No bio available."}</p>
+            
           </div>
+                  {/* Average Rating Section */}
+                  <div className="mt-0 ml-40 bg-gradient-to-b from-red-600 via-red-900 to-black p-2 rounded-lg shadow-lg text-center">
+                  <h2 className="text-xl underline font-semibold mb-2">Average Rating</h2>
+  <div className="text-gray-700 flex items-center">
+    {artist.average_rating ? (
+      <>
+        {[...Array(5)].map((_, index) => (
+          <span
+            key={index}
+            className={`text-3xl ${
+              index < Math.round(artist.average_rating) ? "text-yellow-400" : "text-gray-300"
+            }`}
+          >
+            ★
+          </span>
+        ))}
+      </>
+    ) : (
+      <p className="text-gray-500">N/A</p>
+    )}
+  </div>
+
+</div>
         </div>
 
         {/* Details Section */}
@@ -143,10 +167,12 @@ const ArtistProfile = () => {
             </p>
           </div>
         </div>
+        
         <button
   onClick={() => window.location.href = "https://your-stripe-payment-link-here"}
   className="bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 text-white px-6 py-3 rounded-full shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 ease-in-out relative overflow-hidden"
 >
+  
   <span className="absolute inset-0 bg-gradient-to-r from-yellow-300 via-red-500 to-pink-500 opacity-0 hover:opacity-30 transition-opacity duration-300 rounded-full"></span>
   <span className="relative z-10 font-semibold text-lg uppercase tracking-wider">
     Process Payment 
@@ -154,16 +180,43 @@ const ArtistProfile = () => {
 </button>
 
 
+
+
+        {/* Social Media Section */}
+{/* Social Media Section */}
+<div className="mt-6">
+  <h2 className="text-xl font-semibold mb-4">Connect with Us</h2>
+  {Object.keys(socialMedia).length > 0 ? (
+    <div className="flex  flex-wrap gap-4">
+      {Object.entries(socialMedia).map(([platform, handle]) => {
+        const sanitizedHandle = handle.replace(/["'{}]/g, '').trim();
+        const sanitizedPlatform = platform.replace(/["'{}]/g, '').trim();
+        return handle != '""' ? (
+        <a
+          key={sanitizedPlatform}
+          href={sanitizedHandle}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-pink-200 via-blue-200 to-yellow-300 text-gray-800 rounded-lg shadow-md hover:from-pink-400 hover:via-purple-500 hover:to-green-400 hover:shadow-lg transition duration-300 hover:animate-wobble hover:text-white"
+          >
+          <SocialMediaIcon platform={sanitizedPlatform} /> 
+          <span className="font-medium capitalize">{sanitizedPlatform}</span>
+        </a>
+      ) : null})}
+    </div>
+  ) : (
+    <p className="text-white">No social media links available.</p>
+  )}
+</div>
 {/* Bookings Section */}
 <div className="mt-6">
-  <h2 className="text-3xl font-bold mb-6 text-center">Bookings</h2>
   <div className="flex flex-col md:flex-row gap-6 items-center justify-center">
     {/* Calendar Component */}
     <div
-      className="w-full md:w-1/2 p-4 bg-gradient-to-br from-red-500 via-yellow-700 to-black shadow-xl rounded-lg"
-    >
+className="w-full bg-gradient-to-br from-purple-800 via-yellow-500 to-green-600 p-4 rounded-lg shadow-lg border border-gray-300 hover:shadow-xl transition-shadow duration-300"
+>
       <h3 className="text-center text-white text-2xl font-semibold mb-4">
-        Select a Date
+        Artist Booking Calendar
       </h3>
       <Calendar
   onChange={(date) => {
@@ -202,9 +255,7 @@ const ArtistProfile = () => {
     }
     return null;
   }}
-  tileDisabled={({ date, view }) =>
-    view === "month" && new Date(date) < new Date() // Disable past dates
-  }
+
   navigationLabel={({ date, label, locale, view }) => (
     <div
       style={{
@@ -226,19 +277,24 @@ const ArtistProfile = () => {
 
 </div>
 
+
     {/* Bookings for the selected date */}
-    <div
-  className="flex-1 bg-gray-100 p-6 rounded-lg shadow-lg border border-gray-300"
+
+
+  </div>
+</div>
+<br/>
+<div
+  className="flex-1 bg-gradient-to-bl from-purple-600 via-yellow-400 to-green-500 p-6 rounded-xl shadow-lg border border-gray-200 hover:shadow-2xl transition-shadow duration-300"
 >
   <h3 className="text-2xl font-semibold mb-4 text-gray-800">
-    Bookings on {selectedDate.toDateString()}:
+    Selected Date: <br /> {selectedDate.toDateString()}
   </h3>
   {bookingsForDate.length > 0 ? (
     <ul
-      className="space-y-4 text-black"
+      className="space-y-4 text-black overflow-y-auto scrollbar-custom"
       style={{
-        maxHeight: "300px", // Adjust height as needed
-        overflowY: "auto", // Enable vertical scrolling
+        maxHeight: "160px", // Restrict height for scrolling
       }}
     >
       {bookingsForDate.map((booking, index) => {
@@ -246,9 +302,9 @@ const ArtistProfile = () => {
         return (
           <li
             key={index}
-            className="p-4 bg-pink-200 border-l-4 border-blue-600 rounded-lg shadow"
+            className="p-4 text-white text-center bg-gradient-to-r from-red-900 via-red-800 to-black border-l-8 border-white-500 rounded-lg shadow-lg hover:shadow-2xl transition-transform duration-300"
           >
-            <strong className="text-black">Time:</strong>{" "}
+            <strong className="text-white text-center">Time:</strong>{" "}
             {appointmentDate.toLocaleTimeString([], {
               hour: "2-digit",
               minute: "2-digit",
@@ -262,72 +318,22 @@ const ArtistProfile = () => {
     <p className="text-black text-lg">No bookings for this date.</p>
   )}
 </div>
-
-  </div>
-</div>
-
-
-        {/* Social Media Section */}
-{/* Social Media Section */}
-<div className="mt-6">
-  <h2 className="text-xl font-semibold mb-4">Connect with Us</h2>
-  {Object.keys(socialMedia).length > 0 ? (
-    <div className="flex  flex-wrap gap-4">
-      {Object.entries(socialMedia).map(([platform, handle]) => {
-        const sanitizedHandle = handle.replace(/["'{}]/g, '').trim();
-        const sanitizedPlatform = platform.replace(/["'{}]/g, '').trim();
-        return handle != '""' ? (
-        <a
-          key={sanitizedPlatform}
-          href={sanitizedHandle}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-pink-200 via-blue-200 to-yellow-300 text-gray-800 rounded-lg shadow-md hover:from-pink-400 hover:via-purple-500 hover:to-green-400 hover:shadow-lg transition duration-300 hover:animate-wobble hover:text-white"
-          >
-          <SocialMediaIcon platform={sanitizedPlatform} /> 
-          <span className="font-medium capitalize">{sanitizedPlatform}</span>
-        </a>
-      ) : null})}
-    </div>
-  ) : (
-    <p className="text-white">No social media links available.</p>
-  )}
-</div>
-
-
-        {/* Average Rating Section */}
-        <div className="mt-6">
-  <h2 className="text-xl font-semibold mb-2">Average Rating</h2>
-  <div className="text-gray-700 flex items-center">
-    {artist.average_rating ? (
-      <>
-        {[...Array(5)].map((_, index) => (
-          <span
-            key={index}
-            className={`text-xl ${
-              index < Math.round(artist.average_rating) ? "text-yellow-400" : "text-gray-300"
-            }`}
-          >
-            ★
-          </span>
-        ))}
-      </>
-    ) : (
-      <p className="text-gray-500">N/A</p>
-    )}
-  </div>
-  <div>
+<br/>
+==========================================================================
+ <br/>
+<div>
   <Gallery artistId={id} isArtist={isArtist} isAdmin={isAdmin} />
 
     </div>
-</div>
 
         {/* Reviews Section */}
         <div className="mt-6">
           <h2 className="text-xl font-semibold mb-2">--------------------------------------------------------------------------------</h2>
           <Reviews artistId={id} />
         </div>
+        
       </div>
+      
     </div>
   );
 };
