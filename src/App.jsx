@@ -17,6 +17,7 @@ import ContactCenter from "./ContactCenter";
 import EditArtist from "./EditArtist"; // Adjust the path as needed
 import ResetPassword from './ResetPassword';
 import ForgotPassword from "./ForgotPassword";
+import { Link } from "react-router-dom";
 
 const App = () => {
 
