@@ -108,12 +108,12 @@ function Navbar() {
                 Sign Out
               </button>
             ) : (
-              <a
-                href="/signin"
-                className="hover:text-red-400 transition duration-300 transform hover:scale-110"
-              >
-                Sign In
-              </a>
+              <Link
+              to="/signin"
+              className="hover:text-red-400 transition duration-300 transform hover:scale-110"
+            >
+              Sign In
+            </Link>
             )}
           </div>
         </div>
