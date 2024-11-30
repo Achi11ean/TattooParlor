@@ -21,7 +21,19 @@ const AdminDashboard = () => {
     setEditingUser(userId);
     setEditedData({ username: user.username, email: user.email, user_type: user.user_type });
   };
-
+  const getMonthlyTrends = (bookings) => {
+    // Initialize an array with 12 zeros (one for each month)
+    const monthlyCounts = Array(12).fill(0);
+  
+    bookings.forEach((booking) => {
+      const appointmentDate = new Date(booking.appointment_date);
+      const month = appointmentDate.getMonth(); // Get month as a number (0-11)
+      monthlyCounts[month] += 1; // Increment the count for the corresponding month
+    });
+  
+    return monthlyCounts; // Array of counts for each month
+  };
+  
   const handleSaveUser = async () => {
     try {
       const response = await axios.patch(
@@ -139,21 +151,20 @@ const AdminDashboard = () => {
         navigate("/signin");
         return;
       }
-
+  
       try {
-        const [dashboardResponse, trendsResponse] = await Promise.all([
+        const [dashboardResponse] = await Promise.all([
           axios.get("https://tattooparlorbackend.onrender.com/api/admin-dashboard", {
             headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` },
           }),
-          axios.get("https://tattooparlorbackend.onrender.com/api/admin-dashboard/bookings-trends", {
-            headers: { Authorization: `Bearer ${localStorage.getItem("authToken")}` },
-          }),
         ]);
-
-        setUsers(dashboardResponse.data.users || []);
-        setBookings(dashboardResponse.data.bookings || []);
-        setPlatformMetrics(dashboardResponse.data.platform_metrics || {});
-        setMonthlyTrends(trendsResponse.data.monthly_trends || []);
+  
+        const fetchedBookings = dashboardResponse.data.bookings || [];
+        setBookings(fetchedBookings);
+  
+        // Calculate monthly trends based on bookings
+        const monthlyData = getMonthlyTrends(fetchedBookings);
+        setMonthlyTrends(monthlyData);
       } catch (err) {
         console.error("Error fetching dashboard data:", err.response || err.message);
         setError("Failed to fetch dashboard data. Please try again later.");
@@ -161,20 +172,34 @@ const AdminDashboard = () => {
         setLoading(false);
       }
     };
-
+  
     fetchDashboardData();
   }, [userType, navigate]);
+  
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div className="text-red-500">{error}</div>;
 
   // Chart data for monthly trends
   const chartData = {
-    labels: ["January", "February", "March", "April", "May"],
+    labels: [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ],
     datasets: [
       {
         label: "Monthly Bookings",
-        data: [10, 15, 7, 12, 20],
+        data: monthlyTrends, // Dynamic data from state
         borderColor: "#6a11cb",
         backgroundColor: "rgba(106, 17, 203, 0.2)",
         borderWidth: 2,
