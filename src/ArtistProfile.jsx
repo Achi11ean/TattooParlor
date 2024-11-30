@@ -319,7 +319,7 @@ className="w-full bg-gradient-to-br from-purple-800 via-yellow-500 to-green-600 
   )}
 </div>
 <br/>
-==========================================================================
+
  <br/>
 <div>
   <Gallery artistId={id} isArtist={isArtist} isAdmin={isAdmin} />
@@ -328,7 +328,7 @@ className="w-full bg-gradient-to-br from-purple-800 via-yellow-500 to-green-600 
 
         {/* Reviews Section */}
         <div className="mt-6">
-          <h2 className="text-xl font-semibold mb-2">--------------------------------------------------------------------------------</h2>
+          <h2 className="text-xl font-semibold mb-2"></h2>
           <Reviews artistId={id} />
         </div>
         

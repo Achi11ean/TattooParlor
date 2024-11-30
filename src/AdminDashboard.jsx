@@ -307,8 +307,8 @@ const AdminDashboard = () => {
   style={{ minHeight: "450px", maxWidth: "95%", margin: "0 auto" }} // Increased minHeight for more space
 >
   <h2 
-    className="text-2xl font-bold text-white mb-4 text-center"
-    style={{ width: "100%", textAlign: "center" }} // Center-align title with full width
+  className="text-2xl font-bold text-white mb-4 text-center bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 p-2 rounded-lg"
+  style={{ width: "100%", textAlign: "center" }} // Center-align title with full width
   >
     Monthly Booking Trends
   </h2>
@@ -368,16 +368,15 @@ const AdminDashboard = () => {
 <div className=" shadow-md rounded-lg ml-20 p-6 mb-6"
   style={{ maxWidth: "1800px" }} // Limit the width of the container
 >
-  <h2
-    className="text-2xl font-bold mb-4 text-center"
-    style={{
-      background: "linear-gradient(to right, #4f46e5, #8b5cf6, #ec4899)",
-      WebkitBackgroundClip: "text",
-      WebkitTextFillColor: "transparent",
-    }}
-  >
-    Users
-  </h2>
+<h2
+  className="text-3xl font-bold mb-4 text-center bg-gradient-to-r from-black via-red-800 to-black shadow-lg"
+  style={{
+    textShadow: "2px 2px 8px rgba(255, 0, 0, 0.8)", // Add a glowing red shadow for drama
+  }}
+>
+  Users
+</h2>
+
   <DataTable
     columns={[
       {
