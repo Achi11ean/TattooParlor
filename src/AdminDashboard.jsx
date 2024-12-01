@@ -262,10 +262,10 @@ const AdminDashboard = () => {
 >
   Admin Dashboard
 </h1>
-<div className="flex justify-between items-center mb-4">
+<div className="flex flex-col md:flex-row justify-between items-center mb-4">
   <button
     onClick={toggleShowCreateArtistButton}
-    className={`px-4 py-2 text-white rounded-md shadow-lg ${
+    className={`w-full md:w-auto px-4 py-2 text-white rounded-md shadow-lg ${
       showCreateArtistButton ? "bg-red-500 hover:bg-red-600" : "bg-green-500 hover:bg-green-600"
     } transition-all`}
   >
@@ -274,45 +274,43 @@ const AdminDashboard = () => {
 </div>
 
 {/* Platform Metrics */}
-<div className="flex justify-between items-center mb-8 px-4">
+<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8 px-4">
   {/* Total Bookings */}
-  <div className="bg-white shadow-md rounded-lg flex-1 mx-2 p-6 text-center transform hover:-translate-y-2 hover:shadow-lg transition-all duration-300">
-    <h2 className="text-xl font-medium text-gray-700">Total Tattoo Bookings</h2>
-    <p className="text-5xl font-bold text-blue-600 mt-3">
+  <div className="bg-white shadow-md rounded-lg p-4 sm:p-6 text-center transform hover:-translate-y-2 hover:shadow-lg transition-all duration-300">
+    <h2 className="text-lg sm:text-xl font-medium text-gray-700">Total Tattoo Bookings</h2>
+    <p className="text-3xl sm:text-5xl font-bold text-blue-600 mt-3">
       {platformMetrics.total_bookings || 0}
     </p>
     <span className="block mt-2 text-sm text-gray-500">Bookings so far</span>
   </div>
 
   {/* Total Piercings Bookings */}
-  <div className="bg-white shadow-md rounded-lg flex-1 mx-2 p-6 text-center transform hover:-translate-y-2 hover:shadow-lg transition-all duration-300">
-    <h2 className="text-xl font-medium text-gray-700">Total Piercings Bookings</h2>
-    <p className="text-5xl font-bold text-purple-600 mt-3">
+  <div className="bg-white shadow-md rounded-lg p-4 sm:p-6 text-center transform hover:-translate-y-2 hover:shadow-lg transition-all duration-300">
+    <h2 className="text-lg sm:text-xl font-medium text-gray-700">Total Piercings Bookings</h2>
+    <p className="text-3xl sm:text-5xl font-bold text-purple-600 mt-3">
       {platformMetrics.total_piercings || 0}
     </p>
     <span className="block mt-2 text-sm text-gray-500">Piercings so far</span>
   </div>
 
   {/* Total Earnings */}
-  <div className="bg-white shadow-md rounded-lg flex-1 mx-2 p-6 text-center transform hover:-translate-y-2 hover:shadow-lg transition-all duration-300">
-    <h2 className="text-xl font-medium text-gray-700">Total Earnings</h2>
-    <p className="text-4xl font-bold text-green-600 mt-3">
+  <div className="bg-white shadow-md rounded-lg p-4 sm:p-6 text-center transform hover:-translate-y-2 hover:shadow-lg transition-all duration-300">
+    <h2 className="text-lg sm:text-xl font-medium text-gray-700">Total Earnings</h2>
+    <p className="text-3xl sm:text-4xl font-bold text-green-600 mt-3">
       ${platformMetrics.total_earnings?.toFixed(2) || "0.00"}
     </p>
     <span className="block mt-2 text-sm text-gray-500">Earnings to date</span>
   </div>
 
   {/* Average Rating */}
-  <div className="bg-white shadow-md rounded-lg flex-1 mx-2 p-6 text-center transform hover:-translate-y-2 hover:shadow-lg transition-all duration-300">
-    <h2 className="text-xl font-medium text-gray-700">Average Rating</h2>
-    <p className="text-5xl font-bold text-yellow-500 mt-3">
+  <div className="bg-white shadow-md rounded-lg p-4 sm:p-6 text-center transform hover:-translate-y-2 hover:shadow-lg transition-all duration-300">
+    <h2 className="text-lg sm:text-xl font-medium text-gray-700">Average Rating</h2>
+    <p className="text-3xl sm:text-5xl font-bold text-yellow-500 mt-3">
       {platformMetrics.average_rating || "N/A"}
     </p>
     <span className="block mt-2 text-sm text-gray-500">Overall rating</span>
   </div>
 </div>
-
-
 
 <div className=" shadow-lg rounded-lg p-6 mb-6" style={{ maxHeight: "400px", overflow: "hidden" }}>
   {/* Title with gradient background */}
@@ -383,7 +381,7 @@ const AdminDashboard = () => {
 
 
 {/* Users Table */}
-<div className=" shadow-md rounded-lg ml-20 p-6 mb-6"
+<div className=" shadow-md rounded-lg p-6 mb-6"
   style={{ maxWidth: "1800px" }} // Limit the width of the container
 >
 <h2
