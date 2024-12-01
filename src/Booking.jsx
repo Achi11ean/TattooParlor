@@ -455,7 +455,7 @@ const Booking = () => {
         name="price"
         value={formData.price}
         onChange={handleChange}
-        placeholder="Enter price"
+        placeholder="Enter Budget Constraints"
         className="mt-2 p-3 text-black bg-pink-200 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent placeholder-black"
         required
       />
