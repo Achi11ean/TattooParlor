@@ -100,7 +100,7 @@ const CreatePiercing = ({ onPiercingCreated }) => {
     <div>
 <button
   onClick={togglePiercingForm}
-  className="w-60 py-3 bg-gradient-to-r from-black via-red-800 to-black text-center justify-center items-center ml-40 mr-80 text-white font-bold rounded-lg shadow-lg hover:scale-105 transform transition duration-300 text-2xl p-6"
+  className="w-50 py-3 bg-gradient-to-b from-black via-red-800 to-black text-center justify-center items-center  text-white font-bold rounded-lg shadow-lg hover:scale-105 transform transition duration-300 mx-auto text-3xl p-6"
   style={{
     fontFamily: "'Creepster', cursive", // Add a macabre font like 'Creepster'
     textShadow: "2px 2px 5px rgba(0, 0, 0, 0.8)",
@@ -113,14 +113,14 @@ const CreatePiercing = ({ onPiercingCreated }) => {
     {showPiercingForm && (
     
     <div
-  className="flex flex-wrap justify-between ml-10 mr-40 mt-0 max-w-lg pb-3  rounded-lg shadow-lg relative"
+  className="flex flex-wrap justify-between  pb-3 max-w-lg rounded-lg shadow-lg "
 >
   
     <form
       onSubmit={handleCreatePiercing}
-      className="bg-gradient-to-r from-gray-800 to-gray-900 text-white p-8 rounded-lg shadow-2xl max-w-2xl "
+      className="bg-gradient-to-r from-yellow-800 to-green-900 text-white p-8 rounded-lg shadow-2xl "
     >
-      <h2 className="text-4xl font-bold mb-6 text-center bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-blue-500">
+      <h2 className="text-4xl font-bold mb-6 text-center bg-clip-text text-transparent bg-gradient-to-b from-white to-white">
         Book Piercing Appointment
       </h2>
       {successMessage && (
@@ -135,7 +135,7 @@ const CreatePiercing = ({ onPiercingCreated }) => {
       )}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       <label className="block">
-  <span className="text-lg">Name</span>
+  <span className="text-lg font-bold">Name</span>
   <input
     type="text"
     name="name"
@@ -147,7 +147,7 @@ const CreatePiercing = ({ onPiercingCreated }) => {
   />
 </label>
 <label className="block">
-  <span className="text-lg">Phone Number</span>
+  <span className="text-lg font-bold">Phone Number</span>
   <input
     type="tel"
     name="phone_number"
@@ -159,7 +159,7 @@ const CreatePiercing = ({ onPiercingCreated }) => {
   />
 </label>
 <label className="block">
-  <span className="text-lg">Contact Preference</span>
+  <span className="text-lg font-bold">Contact Preference</span>
   <select
     name="call_or_text_preference"
     value={formData.call_or_text_preference}
@@ -177,7 +177,7 @@ const CreatePiercing = ({ onPiercingCreated }) => {
 
 
         <label className="block">
-          <span className="text-lg">Piercing Type</span>
+          <span className="text-lg font-bold">Piercing Type</span>
           <input
             type="text"
             name="piercing_type"
@@ -189,7 +189,7 @@ const CreatePiercing = ({ onPiercingCreated }) => {
           />
         </label>
         <label className="block">
-          <span className="text-lg">Jewelry Type</span>
+          <span className="text-lg font-bold">Jewelry Type</span>
           <input
             type="text"
             name="jewelry_type"
@@ -201,7 +201,7 @@ const CreatePiercing = ({ onPiercingCreated }) => {
           />
         </label>
         <label className="block">
-          <span className="text-lg">Placement</span>
+          <span className="text-lg font-bold">Placement</span>
           <input
             type="text"
             name="placement"
@@ -213,7 +213,7 @@ const CreatePiercing = ({ onPiercingCreated }) => {
           />
         </label>
         <label className="block">
-          <span className="text-lg">Artist</span>
+          <span className="text-lg font-bold">Artist</span>
           <select
             name="artist_id"
             value={formData.artist_id}
@@ -232,7 +232,7 @@ const CreatePiercing = ({ onPiercingCreated }) => {
           </select>
         </label>
         <label className="block">
-          <span className="text-lg">Studio Location</span>
+          <span className="text-lg font-bold">Studio Location</span>
           <input
             type="text"
             name="studio_location"
@@ -244,7 +244,7 @@ const CreatePiercing = ({ onPiercingCreated }) => {
           />
         </label>
         <label className="block">
-          <span className="text-lg">Appointment Date</span>
+          <span className="text-lg font-bold">Appointment Date</span>
           <input
             type="datetime-local"
             name="appointment_date"
@@ -255,13 +255,13 @@ const CreatePiercing = ({ onPiercingCreated }) => {
           />
         </label>
         <label className="block">
-          <span className="text-lg">Price</span>
+          <span className="text-lg font-bold">Budget</span>
           <input
             type="number"
             name="price"
             value={formData.price}
             onChange={handleChange}
-            placeholder="Enter price"
+            placeholder="Enter Budget preference"
             className="mt-2 p-3 text-black bg-pink-200 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-teal-500"
             required
           />
@@ -269,7 +269,7 @@ const CreatePiercing = ({ onPiercingCreated }) => {
       </div>
       <button
         type="submit"
-        className="mt-8 w-full py-3 bg-gradient-to-r from-pink-500 to-blue-500 text-white font-semibold rounded-lg hover:shadow-xl hover:scale-105 transform transition duration-300"
+        className="mt-8 w-full py-3 bg-gradient-to-r from-pink-500 to-blue-500 text-white font-bold text-2xl rounded-lg hover:shadow-xl hover:scale-105 transform transition duration-300"
       >
         Submit Piercing
       </button>

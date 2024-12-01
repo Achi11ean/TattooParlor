@@ -298,16 +298,17 @@ const Booking = () => {
 >
 
 <div
-  className="flex flex-wrap justify-between ml-10 mr-40 mt-2 max-w-8xl pb-3  rounded-lg shadow-lg relative"
+  className="flex flex-wrap justify-between  max-w-8xl pb-3  rounded-lg shadow-lg relative"
 >
 
       {/* Booking Form */}
       <div>
+        
       <button
   onClick={toggleBookingForm}
-  className="w-60 py-3 bg-gradient-to-r from-black via-red-800 to-black text-center justify-center items-center ml-60 mr-80 text-white font-bold rounded-lg shadow-lg hover:scale-105 transform transition duration-300 mt-8 text-2xl p-6"
+  className="w-50 pr-12 py-3 bg-gradient-to-b from-black via-red-800 to-black text-left text-white font-bold rounded-lg shadow-lg hover:scale-105 gap-0 mr-0 transform transition duration-300 mt-8 text-3xl p-6"
   style={{
-    fontFamily: "'Creepster', cursive", // Macabre font
+    fontFamily: "'Creepster', cursive", 
     textShadow: "2px 2px 5px rgba(0, 0, 0, 0.8)",
     letterSpacing: "2px",
   }}
@@ -318,9 +319,9 @@ const Booking = () => {
           {showBookingForm && (
       <form
   onSubmit={handleCreateBooking}
-  className="bg-gradient-to-r from-gray-800 to-gray-900 text-white p-8 rounded-lg shadow-2xl max-w-lg mx-auto"
+  className="bg-gradient-to-r from-purple-800 to-orange-400 text-white p-8 rounded-lg shadow-2xl max-w-lg"
 >
-  <h2 className="text-4xl  font-bold mb-6 text-center bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-blue-500">
+  <h2 className="text-4xl  font-bold mb-6 text-center bg-clip-text text-transparent bg-gradient-to-r from-white to-white">
     Book Tattoo Appointment
   </h2>
   {successMessage && (
@@ -330,7 +331,7 @@ const Booking = () => {
   )}
   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
   <label className="block">
-      <span className="text-sm text-white">Name</span>
+      <span className="text-md text-white font-bold">Name</span>
       <input
         type="text"
         name="name"
@@ -342,7 +343,7 @@ const Booking = () => {
       />
     </label>
     <label className="block">
-      <span className="text-sm text-white">Phone Number</span>
+      <span className="text-md text-white font-bold">Phone Number</span>
       <input
         type="tel"
         name="phone_number"
@@ -354,7 +355,7 @@ const Booking = () => {
       />
     </label>
     <label className="block">
-      <span className="text-lg text-white">Call or Text Preference</span>
+      <span className="text-lg text-white font-bold">Call or Text Preference</span>
       <select
         name="call_or_text_preference"
         value={formData.call_or_text_preference}
@@ -365,12 +366,12 @@ const Booking = () => {
         <option value="" disabled>
           Choose preference
         </option>
-        <option value="call">Call</option>
-        <option value="text">Text</option>
+        <option value="call font-bold">Call</option>
+        <option value="text font-bold">Text</option>
       </select>
     </label>
     <label className="block">
-      <span className="text-lg text-white">Tattoo Style</span>
+      <span className="text-lg text-white font-bold">Tattoo Style</span>
       <input
         type="text"
         name="tattoo_style"
@@ -382,7 +383,7 @@ const Booking = () => {
       />
     </label>
     <label className="block">
-      <span className="text-lg">Tattoo Size</span>
+      <span className="text-lg font-bold">Tattoo Size</span>
       <input
         type="text"
         name="tattoo_size"
@@ -394,7 +395,7 @@ const Booking = () => {
       />
     </label>
     <label className="block">
-      <span className="text-lg text-white">Placement</span>
+      <span className="text-lg text-white font-bold">Placement</span>
       <input
         type="text"
         name="placement"
@@ -406,7 +407,7 @@ const Booking = () => {
       />
     </label>
     <label className="block">
-      <span className="text-lg text-white">Artist</span>
+      <span className="text-lg text-white font-bold">Artist</span>
       <select
         name="artist_id"
         value={formData.artist_id}
@@ -425,7 +426,7 @@ const Booking = () => {
       </select>
     </label>
     <label className="block">
-      <span className="text-lg text-white">Studio Location</span>
+      <span className="text-lg text-white font-bold">Studio Location</span>
       <input
         type="text"
         name="studio_location"
@@ -437,7 +438,7 @@ const Booking = () => {
       />
     </label>
     <label className="block">
-      <span className="text-lg text-white">Appointment Date</span>
+      <span className="text-lg text-white font-bold">Appointment Date</span>
       <input
         type="datetime-local"
         name="appointment_date"
@@ -448,7 +449,7 @@ const Booking = () => {
       />
     </label>
     <label className="block">
-      <span className="text-lg text-white">Price</span>
+      <span className="text-lg text-white font-bold">Price</span>
       <input
         type="number"
         name="price"
@@ -462,19 +463,22 @@ const Booking = () => {
   </div>
   <button
     type="submit"
-    className="mt-8 w-full py-3 bg-gradient-to-r from-pink-500 to-blue-500 text-white font-semibold rounded-lg hover:shadow-xl hover:scale-105 transform transition duration-300"
+    className="mt-8 w-full py-3 bg-gradient-to-r from-blue-500 to-pink-500 text-white font-semibold text-2xl rounded-lg hover:shadow-xl hover:scale-105 transform transition duration-300"
   >
     Submit Booking
   </button>
 </form>
           )}
-        </div>
-<div className="mt-10">
+
+<div className="mt-10 mx-auto">
   <CreatePiercing onPiercingCreated={handlePiercingCreated} />
 </div>
+
+        </div>
 </div>
+
 <div
-  className="flex flex-wrap justify-between ml-10 mr-40 mt-10 max-w-8xl pb-3 rounded-lg shadow-lg relative"
+  className="flex flex-wrap justify-between max-w-8xl pb-3 rounded-lg shadow-lg relative"
 >
 <br/>
 <br/>
@@ -483,7 +487,7 @@ const Booking = () => {
       {(userType === "artist" || userType === "admin") && (
 
 <div
-  className="mt-10 max-w-3xl ml-20 mx-auto p-6 rounded-lg shadow-lg relative"
+  className="mt-10 p-6 rounded-2xl shadow-lg mx-auto"
   style={{
     backgroundImage: `
       linear-gradient(
@@ -498,7 +502,7 @@ const Booking = () => {
   }}
 >
 
-  <h2 className="text-3xl font-semibold  mb-6 text-center text-white">
+  <h2 className="text-3xl font-semibold   mb-6 text-center text-white">
     Existing Bookings
   </h2>
   <div className="flex items-center gap-0 mb-2">
@@ -511,23 +515,23 @@ const Booking = () => {
     />
   </div>
   {error && <p className="text-red-400">{error}</p>}
-  <div className="flex overflow-x-auto space-x-6 p-4 bg-gray-900/70 backdrop-blur-md rounded-lg shadow-lg">
+  <div className="flex overflow-x-auto space-x-6 p-4 bg-pink-900/70 backdrop-blur-md rounded-lg shadow-lg">
     {bookings.map((booking) => (
       <div
         key={booking.id}
-        className="flex-none w-72 bg-gradient-to-b from-gray-800 to-gray-900 rounded-lg shadow-md p-6 text-white hover:scale-105 transform transition-transform duration-300"
+        className="flex-none w-52 bg-gradient-to-b from-gray-800 to-gray-900 rounded-lg shadow-md p-6 text-white hover:scale-105 transform transition-transform duration-300"
       >
         <h3 className="text-xl font-bold text-pink-400">{booking.name}</h3>
         <p className="text-sm text-gray-400 mt-2">
-          <span className="font-semibold text-gray-200">Booking Date:</span>{" "}
+          <span className="font-semibold text-gray-200">Booking Date:</span><br/>{" "}
           {new Date(booking.booking_date).toLocaleString()}
         </p>
         <p className="text-sm text-gray-400">
-          <span className="font-semibold text-gray-200">Appointment Date:</span>{" "}
+          <span className="font-semibold text-gray-200">Appointment Date:</span><br/>{" "}
           {new Date(booking.appointment_date).toLocaleString()}
         </p>
         <p className="text-sm text-gray-400">
-          <span className="font-semibold text-gray-200">Phone Number:</span>{" "}
+          <span className="font-semibold text-gray-200">Phone Number:</span><br/>{" "}
           {booking.phone_number}
         </p>
         <p className="text-sm text-gray-400">
@@ -810,9 +814,9 @@ const Booking = () => {
 
 {userType === "artist" || userType === "admin" ? (
   <div
-  className="mt-10 max-w-3xl mx-auto p-6 rounded-lg shadow-lg relative backdrop-blur-md"
+  className="mt-10 max-w-3xl mx-auto p-6 rounded-2xl shadow-lg relative backdrop-blur-md"
   style={{
-    background: "linear-gradient(to right, rgba(236, 72, 153, 0.5), rgba(139, 92, 246, 0.5), rgba(59, 130, 246, 0.5))",
+    background: "linear-gradient(to bottom, rgba(236, 72, 153, 0.5), rgba(139, 92, 246, 0.5), rgba(59, 130, 246, 0.5))",
   }}
 >
   <h2 className="text-3xl font-semibold mb-6 text-center text-white">
@@ -822,14 +826,14 @@ const Booking = () => {
           type="text"
           value={piercingSearchQuery}
           onChange={(e) => setPiercingSearchQuery(e.target.value)}
-          placeholder="Search piercings by client name"
+          placeholder="Search by client name"
           className="flex-grow p-2 rounded-lg text-white w-full mb-4"
         />
     <div className="flex overflow-x-auto space-x-6 p-4 bg-gray-900/70 backdrop-blur-md rounded-lg shadow-lg">
       {piercings.map((piercing) => (
         <div
           key={piercing.id}
-          className="flex-none w-72 bg-gradient-to-b from-gray-800 to-gray-900 rounded-lg shadow-md p-6 text-white hover:scale-105 transform transition-transform duration-300"
+          className="flex-none w-52 bg-gradient-to-b from-gray-800 to-gray-900 rounded-lg shadow-md p-6 text-white hover:scale-105 transform transition-transform duration-300"
         >
           <h3 className="text-xl font-bold text-pink-400">{piercing.name}</h3>
           <p className="text-sm text-gray-400">
