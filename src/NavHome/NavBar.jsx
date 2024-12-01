@@ -160,6 +160,14 @@ function Navbar() {
             >
               Contact
             </Link>
+            {(userType === "admin" || userType === "artist") && (
+        <Link
+          to="/messages"
+          className="block hover:text-red-400 transition duration-300"
+        >
+          Messages
+        </Link>
+      )}
             {userType === "admin" && (
               <Link
                 to="/admin-dashboard"

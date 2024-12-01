@@ -72,78 +72,83 @@ const ContactCenter = () => {
 
   return (
 <div
-  className="p-6 min-h-screen"
+  className="p-6 min-h-screen "
   style={{
     backgroundImage: "url('contactcenter.webp')",
-    backgroundSize: "cover", // Ensures the image covers the entire container
-    backgroundPosition: "center", // Centers the image
-    backgroundRepeat: "no-repeat", // Prevents tiling
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
     color: "#fff",
   }}
 >
+  <h1 className="text-3xl font-bold mb-6 text-center">Contact Center</h1>
 
-      <h1 className="text-3xl font-bold mb-6 text-center">
-        Contact Center
-      </h1>
-      <div className=" text-black shadow-lg rounded-lg p-6">
-        {inquiries.length > 0 ? (
-          <table className="min-w-full table-auto border-collapse rounded-2xl shadow-lg overflow-hidden">
-  <thead>
-    <tr className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 text-white">
-      <th className="border px-4 py-2">Name</th>
-      <th className="border px-4 py-2">Phone Number</th>
-      <th className="border px-4 py-2">Email</th>
-      <th className="border px-4 py-2">Inquiry</th>
-      <th className="border px-4 py-2">Submitted At</th>
-      <th className="border px-4 py-2">Status</th>
-      <th className="border px-4 py-2">Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    {inquiries.map((inquiry, index) => (
-      <tr
-        key={index}
-        className={`${
-          index % 2 === 0 ? "bg-gray-100" : "bg-white"
-        } hover:bg-indigo-50`}
-      >
-        <td className="border px-4 py-2">{inquiry.name}</td>
-        <td className="border px-4 py-2">{inquiry.phone_number}</td>
-        <td className="border px-4 py-2">{inquiry.email}</td>
-        <td className="border px-4 py-2">{inquiry.inquiry}</td>
-        <td className="border px-4 py-2">{inquiry.submitted_at}</td>
-        {/* Status Column */}
-        <td className="border px-4 py-2">
-          <select
-            value={inquiry.status}
-            onChange={(e) => handleStatusChange(inquiry.id, e.target.value)}
-            className="border rounded-lg p-2 bg-gray-100 text-gray-700 hover:bg-gray-200 focus:ring-2 focus:ring-indigo-500 focus:outline-none shadow-md"
+  <div
+    className="text-black shadow-lg rounded-lg p-6"
+    style={{ maxHeight: "80vh", overflowY: "auto" }}
+  >    {inquiries.length > 0 ? (
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  gap-6">
+        {inquiries.map((inquiry, index) => (
+          <div
+            key={index}
+            className="bg-orange-200 p-6 shadow-md rounded-lg hover:shadow-lg transition-shadow border-l-4 border-orange-500"
           >
-            <option value="pending" className="bg-white text-black">Pending</option>
-            <option value="contacted" className="bg-white text-black">Contacted</option>
-            <option value="final_booking" className="bg-white text-black">Pending Final Booking</option>
-            <option value="booked" className="bg-white text-black">Booked</option>
-          </select>
-        </td>
-        {/* Actions Column */}
-        <td className="border px-4 py-2">
-          <button
-            onClick={() => handleDelete(inquiry.id)}
-            className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
-          >
-            Delete
-          </button>
-        </td>
-      </tr>
-    ))}
-  </tbody>
-</table>
-
-        ) : (
-          <p className="text-center">No inquiries found.</p>
-        )}
+            <h2 className="text-xl font-extrabold text-orange-700 mb-2">
+              {inquiry.name}
+            </h2>
+            <p className="text-gray-800 mb-1">
+              <strong>Phone:</strong> {inquiry.phone_number}
+            </p>
+            <p className="text-gray-800 mb-1">
+              <strong>Email:</strong> {inquiry.email}
+            </p>
+            <p className="text-gray-800 mb-1">
+              <strong>Inquiry:</strong> {inquiry.inquiry}
+            </p>
+            <p className="text-gray-800 mb-1">
+              <strong>Submitted At:</strong> {inquiry.submitted_at}
+            </p>
+            <div className="mt-4">
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Status:
+              </label>
+              <select
+                value={inquiry.status}
+                onChange={(e) => handleStatusChange(inquiry.id, e.target.value)}
+                className="w-full border border-orange-300 rounded-lg p-2 bg-white text-gray-800 focus:ring-2 focus:ring-orange-500 focus:outline-none shadow-sm"
+              >
+                <option value="pending" className="bg-white text-black">
+                  Pending
+                </option>
+                <option value="contacted" className="bg-white text-black">
+                  Contacted
+                </option>
+                <option
+                  value="final_booking"
+                  className="bg-white text-black"
+                >
+                  Pending Final Booking
+                </option>
+                <option value="booked" className="bg-white text-black">
+                  Booked
+                </option>
+              </select>
+            </div>
+            <button
+              onClick={() => handleDelete(inquiry.id)}
+              className="mt-4 w-full bg-orange-600 text-white px-4 py-2 rounded-lg hover:bg-orange-700 focus:ring-2 focus:ring-orange-500 transition-all"
+            >
+              Delete
+            </button>
+          </div>
+        ))}
       </div>
-    </div>
+    ) : (
+      <p className="text-center">No inquiries found.</p>
+    )}
+  </div>
+</div>
+
   );
 };
 
