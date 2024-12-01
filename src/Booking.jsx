@@ -511,7 +511,7 @@ const Booking = () => {
       value={searchQuery}
       onChange={(e) => setSearchQuery(e.target.value)} // Update search query dynamically
       placeholder="Search by client name"
-      className="flex-grow p-2 rounded-lg text-white"
+      className="flex-grow p-2 rounded-lg bg-white text-black"
     />
   </div>
   {error && <p className="text-red-400">{error}</p>}
@@ -827,7 +827,7 @@ const Booking = () => {
           value={piercingSearchQuery}
           onChange={(e) => setPiercingSearchQuery(e.target.value)}
           placeholder="Search by client name"
-          className="flex-grow p-2 rounded-lg text-white w-full mb-4"
+          className="flex-grow p-2 bg-white rounded-lg text-black w-full mb-4"
         />
 <div className="flex overflow-x-auto max-w-60 md:max-w-2xl space-x-6 p-4 bg-green-500/70 backdrop-blur-md rounded-lg shadow-lg">
 {piercings.map((piercing) => (
