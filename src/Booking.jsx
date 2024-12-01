@@ -515,8 +515,8 @@ const Booking = () => {
     />
   </div>
   {error && <p className="text-red-400">{error}</p>}
-  <div className="flex overflow-x-auto space-x-6 p-4 bg-pink-900/70 backdrop-blur-md rounded-lg shadow-lg">
-    {bookings.map((booking) => (
+  <div className="flex overflow-x-auto max-w-60 md:max-w-2xl space-x-6 p-4 bg-pink-500/70 backdrop-blur-md rounded-lg shadow-lg">
+  {bookings.map((booking) => (
       <div
         key={booking.id}
         className="flex-none w-52 bg-gradient-to-b from-gray-800 to-gray-900 rounded-lg shadow-md p-6 text-white hover:scale-105 transform transition-transform duration-300"
@@ -829,8 +829,8 @@ const Booking = () => {
           placeholder="Search by client name"
           className="flex-grow p-2 rounded-lg text-white w-full mb-4"
         />
-    <div className="flex overflow-x-auto space-x-6 p-4 bg-gray-900/70 backdrop-blur-md rounded-lg shadow-lg">
-      {piercings.map((piercing) => (
+<div className="flex overflow-x-auto max-w-60 md:max-w-2xl space-x-6 p-4 bg-green-500/70 backdrop-blur-md rounded-lg shadow-lg">
+{piercings.map((piercing) => (
         <div
           key={piercing.id}
           className="flex-none w-52 bg-gradient-to-b from-gray-800 to-gray-900 rounded-lg shadow-md p-6 text-white hover:scale-105 transform transition-transform duration-300"
