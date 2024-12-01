@@ -49,13 +49,14 @@ const ContactCenter = () => {
 
   return (
     <div
-      className="p-6 min-h-screen"
+      className="min-h-screen bg-custom"
       style={{
-        background: "linear-gradient(to bottom, #4f46e5, #8b5cf6)",
-        color: "#fff",
+        backgroundImage: "url('contact4.webp')", // Replace with your image URL
+        backgroundPosition: "center", // Centers the image
+        backgroundRepeat: "no-repeat", // Prevents repeating
       }}
     >
-      <h1 className="text-3xl font-bold mb-6 text-center">Contact Center</h1>
+      
       <div className=" text-black shadow-lg rounded-lg p-6">
         {message && (
           <div
@@ -67,13 +68,8 @@ const ContactCenter = () => {
           </div>
         )}
         <div
-          className="bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 p-6 min-h-screen flex items-center justify-center"
-          style={{
-            backgroundImage: "url('contact2.webp')", // Replace with your image URL
-            backgroundSize: "contain", // Ensures the image fits inside without cropping
-            backgroundPosition: "center", // Centers the image
-            backgroundRepeat: "no-repeat", // Prevents repeating
-          }}
+          className="p-6 min-h-screen flex items-center justify-center"
+
         >
           <div className="bg-white shadow-xl rounded-lg p-8 w-full max-w-md">
             <h2 className="text-4xl font-bold text-center mb-6 text-gray-800">
@@ -166,7 +162,9 @@ const ContactCenter = () => {
           </div>
         </div>
       </div>
+      
     </div>
+    
   );
 };
 

@@ -449,7 +449,7 @@ const Booking = () => {
       />
     </label>
     <label className="block">
-      <span className="text-lg text-white font-bold">Price</span>
+      <span className="text-lg text-white font-bold">Budget</span>
       <input
         type="number"
         name="price"

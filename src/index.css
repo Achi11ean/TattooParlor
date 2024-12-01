@@ -270,3 +270,18 @@ h1 {
   background: #1f2937; /* Dark background */
   border-radius: 10px;
 }
+
+
+.bg-custom {
+  background-image: url('contact4.webp'); /* Replace with your image URL */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%; /* Stretches the image to fill both width and height */
+ }
+@media (max-width: 768px) {
+  .bg-custom {
+    background-image: url('contact.webp'); /* Mobile-specific background */
+    background-size: cover; /* Adjusts to fill the screen while maintaining aspect ratio */
+    background-position: top center; /* Centers the image for mobile */
+  }
+}
