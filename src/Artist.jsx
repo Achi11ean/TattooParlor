@@ -96,11 +96,12 @@ const Artists = () => {
 >
 
 <div className="flex justify-between items-center mb-6">
-        <h1 className="text-5xl font-bold">Artists</h1>
+        <h1   className="text-6xl mx-auto font-bold font-playfair text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-600 drop-shadow-lg"
+        >Artists</h1>
         {showCreateArtistButton && (userType === "artist" || userType === "admin") && (
           <button
             onClick={handleCreateArtist}
-            className="px-4 py-2 bg-blue-600 text-white text-3xl rounded-md hover:bg-blue-700"
+            className="px-4 py-2 bg-pink-400  text-white text-3xl rounded-md hover:bg-blue-700"
           >
             Create Artist Profile
           </button>
@@ -148,6 +149,7 @@ const Artists = () => {
                   {artist.years_of_experience || "N/A"}
                 </p>
 <div className="overflow-x-auto overflow-y-hidden  h-39 mt-2">
+  <h2>{artist.name}'s Schedule</h2>
   <div className="grid grid-flow-col auto-cols-max gap-3">
     {schedule ? (
       Object.entries(schedule).map(([day, { start, end }]) => (
@@ -168,8 +170,13 @@ const Artists = () => {
     )}
   </div>
 </div>
-
-
+<br/>
+<button
+  onClick={() => navigate(`/artists/${artist.id}`)}
+  className="bg-gradient-to-r from-blue-500 to-purple-600 text-white w-full  rounded-full shadow-lg hover:shadow-xl text-md transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
+>
+   View profile
+</button>
 
 
                 <div className="flex items-center justify-between mt-4">
@@ -189,12 +196,7 @@ const Artists = () => {
     : "N/A"}
 </p>
 
-<button
-  onClick={() => navigate(`/artists/${artist.id}`)}
-  className="bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-2 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
->
-  View Profile
-</button>
+
 
                 </div>
                 
