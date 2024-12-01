@@ -502,7 +502,7 @@ const Booking = () => {
   }}
 >
 
-  <h2 className="text-3xl font-semibold   mb-6 text-center text-white">
+  <h2 className="text-3xl font-semibold mb-6 text-center text-white">
     Existing Bookings
   </h2>
   <div className="flex items-center gap-0 mb-2">
@@ -796,12 +796,12 @@ const Booking = () => {
         type="submit"
         className="w-full py-3 bg-gradient-to-r from-pink-500 to-blue-500 text-white font-semibold rounded-lg"
       >
-        Save Changes
+        Save
       </button>
       <button
         type="button"
         onClick={() => setEditingBooking(null)} // Cancel editing
-        className="w-full py-3 bg-gradient-to-r from-gray-500 to-gray-700 text-white font-semibold rounded-lg"
+        className="w-full py-3 bg-gradient-to-l from-yellow-200 to-red-700 text-black font-semibold rounded-lg"
       >
         Cancel
       </button>
@@ -1049,20 +1049,25 @@ const Booking = () => {
       </select>
     </label>
   </div>
+<br/>
+<div className="flex gap-4 mt-8">
 
   <button
     type="submit"
-    className="mt-8 w-80 py-3 bg-gradient-to-r from-pink-500 to-blue-500 text-white font-semibold rounded-lg"
-  >
-    Save Changes
+    className="w-full py-3 bg-gradient-to-r from-pink-500 to-blue-500 text-white font-semibold rounded-lg"
+    >
+    Save 
   </button>
+  <br/>
+  <br/>
   <button
     type="button"
     onClick={() => setEditingPiercing(null)} // Cancel editing
-    className="w-80  ml-10 py-3 bg-gradient-to-r  from-pink-500 to-blue-500 text-white font-semibold rounded-lg"
-  >
+    className="w-full py-3 bg-gradient-to-r from-yellow-200 to-red-500 text-black font-semibold rounded-lg"
+    >
     Cancel
   </button>
+  </div>
 </form>
 )}
 

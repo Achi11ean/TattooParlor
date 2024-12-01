@@ -191,7 +191,9 @@ function Navbar() {
                 Sign In
               </Link>
             )}
+            
           </div>
+          
         </div>
       )}
     </nav>

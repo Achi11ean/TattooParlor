@@ -73,7 +73,15 @@ const App = () => {
 </Link>
   </div>
 </div>
-
+<div className="mt-4 flex justify-center">
+          <iframe
+            allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write"
+            height="150"
+            style={{ width: "100%", maxWidth: "300px", borderRadius: "10px" }}
+            sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation"
+            src="https://embed.music.apple.com/us/playlist/90s-rock-essentials/pl.94aeee85f6bd48058d1a53873db1e66d" // Replace with your Apple Music embed URL
+          ></iframe>
+        </div>
                   </div>
                 </header>
 

@@ -91,7 +91,7 @@ const ArtistProfile = () => {
   
   return (
 <div
-  className="p-6 min-h-screen w-screen"
+  className="p-6 min-h-screen w-screen "
   style={{
     backgroundImage: "url('/profile3.webp')",
     backgroundSize: "cover",
@@ -122,7 +122,7 @@ const ArtistProfile = () => {
             
           </div>
                   {/* Average Rating Section */}
-                  <div className="mt-0 ml-40 bg-gradient-to-b from-red-600 via-red-900 to-black p-2 rounded-lg shadow-lg text-center">
+                  <div className="mt-0  bg-gradient-to-b from-red-600 via-red-900 to-black p-2 rounded-lg shadow-lg text-center">
                   <h2 className="text-xl underline font-semibold mb-2">Average Rating</h2>
   <div className="text-gray-700 flex items-center">
     {artist.average_rating ? (
@@ -208,16 +208,16 @@ const ArtistProfile = () => {
     <p className="text-white">No social media links available.</p>
   )}
 </div>
+<br/>
+<h3 className="text-center text-white text-2xl font-semibold  mb-4 truncate">
+        Artist Booking Calendar
+      </h3>
 {/* Bookings Section */}
 <div className="mt-6">
   <div className="flex flex-col md:flex-row gap-6 items-center justify-center">
     {/* Calendar Component */}
-    <div
-className="w-full bg-gradient-to-br from-purple-800 via-yellow-500 to-green-600 p-4 rounded-lg shadow-lg border border-gray-300 hover:shadow-xl transition-shadow duration-300"
->
-      <h3 className="text-center text-white text-2xl font-semibold mb-4">
-        Artist Booking Calendar
-      </h3>
+  
+
       <Calendar
   onChange={(date) => {
     setSelectedDate(date);
@@ -261,8 +261,9 @@ className="w-full bg-gradient-to-br from-purple-800 via-yellow-500 to-green-600 
       style={{
         color: "white",
         fontWeight: "bold",
-        fontSize: "1.2rem",
+        fontSize: "1rem",
         textAlign: "center",
+
       }}
     >
       {label}
@@ -281,7 +282,7 @@ className="w-full bg-gradient-to-br from-purple-800 via-yellow-500 to-green-600 
     {/* Bookings for the selected date */}
 
 
-  </div>
+  
 </div>
 <br/>
 <div

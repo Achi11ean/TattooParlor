@@ -84,7 +84,7 @@ const Artists = () => {
 
   if (loading) return <div>Loading artists...</div>;
   if (error) return <div className="text-red-500">{error}</div>;
-
+ 
   return (
 <div
   className="p-6 min-h-screen"
@@ -98,16 +98,26 @@ const Artists = () => {
 <div className="flex justify-between items-center mb-6">
         <h1   className="text-6xl mx-auto font-bold font-playfair text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-600 drop-shadow-lg"
         >Artists</h1>
+        </div>
         {showCreateArtistButton && (userType === "artist" || userType === "admin") && (
+          
           <button
             onClick={handleCreateArtist}
-            className="px-4 py-2 bg-pink-400  text-white text-3xl rounded-md hover:bg-blue-700"
+            className="px-4 py-2 bg-pink-400  text-white text-3xl rounded-md mx-auto hover:bg-blue-700"
           >
-            Create Artist Profile
+            Create Artist 
           </button>
 )}
-      </div>
-
+      
+      <div className="mt-4 mx-auto flex ">
+          <iframe
+            allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write"
+            height="100"
+            style={{ width: "100%", maxWidth: "400px", borderRadius: "10px" }}
+            sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation"
+            src="https://embed.music.apple.com/us/playlist/90s-rock-essentials/pl.94aeee85f6bd48058d1a53873db1e66d" // Replace with your Apple Music embed URL
+          ></iframe>
+        </div>
       <div className="grid grid-cols-1 text-3xl md:grid-cols-2 lg:grid-cols-3 gap-6">
         {artists.map((artist) => {
           // Parse availability_schedule if it's a JSON string

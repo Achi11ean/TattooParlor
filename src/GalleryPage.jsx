@@ -49,6 +49,15 @@ const GalleryPage = () => {
       <h1 className="text-4xl font-bold mb-10 text-center text-transparent bg-clip-text bg-gradient-to-r from-white to-blue-200">
         Gallery
       </h1>
+      <div className="mt-4 flex justify-center">
+          <iframe
+            allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write"
+            height="100"
+            style={{ width: "100%", maxWidth: "600px", borderRadius: "10px" }}
+            sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation"
+            src="https://embed.music.apple.com/us/album/calm-piano-playlist/1473136325" // Replace with your Apple Music embed URL
+          ></iframe>
+        </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {galleries.map((gallery) => (
           <div
