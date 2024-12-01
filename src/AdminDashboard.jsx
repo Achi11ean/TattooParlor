@@ -21,18 +21,21 @@ const AdminDashboard = () => {
     setEditingUser(userId);
     setEditedData({ username: user.username, email: user.email, user_type: user.user_type });
   };
-  const getMonthlyTrends = (bookings) => {
-    // Initialize an array with 12 zeros (one for each month)
+  const getMonthlyTrends = (combinedData) => {
     const monthlyCounts = Array(12).fill(0);
-  
-    bookings.forEach((booking) => {
-      const appointmentDate = new Date(booking.appointment_date);
-      const month = appointmentDate.getMonth(); // Get month as a number (0-11)
-      monthlyCounts[month] += 1; // Increment the count for the corresponding month
+    combinedData.forEach((item) => {
+      // Use appointment_date or fallback to created_at
+      const date = item.appointment_date || item.created_at;
+      if (date) {
+        const parsedDate = new Date(date);
+        const month = parsedDate.getMonth();
+        monthlyCounts[month] += 1;
+      }
     });
-  
-    return monthlyCounts; // Array of counts for each month
+    console.log("Monthly Counts:", monthlyCounts);
+    return monthlyCounts;
   };
+  
   
   const handleSaveUser = async () => {
     try {
@@ -126,6 +129,8 @@ const AdminDashboard = () => {
     fetchSetting();
   }, []);
 
+  
+
   const toggleShowCreateArtistButton = async () => {
     try {
       const response = await axios.patch(
@@ -153,7 +158,6 @@ const AdminDashboard = () => {
       }
   
       try {
-        // Fetch dashboard data for users and bookings
         const dashboardResponse = await axios.get(
           "https://tattooparlorbackend.onrender.com/api/admin-dashboard",
           {
@@ -162,17 +166,20 @@ const AdminDashboard = () => {
         );
   
         const fetchedUsers = dashboardResponse.data.users || [];
-        const fetchedBookings = dashboardResponse.data.bookings || [];
+        const fetchedAppointments = dashboardResponse.data.appointments || [];
+        const fetchedPiercings = dashboardResponse.data.piercings || [];
   
-        // Set users and bookings
+        console.log("Fetched Appointments:", fetchedAppointments);
+        console.log("Fetched Piercings:", fetchedPiercings);
+  
+        // Filter combined data for valid appointment dates
+        const combinedData = [...fetchedAppointments, ...fetchedPiercings].filter(
+          (item) => item.appointment_date
+        );
+  
         setUsers(fetchedUsers);
-        setBookings(fetchedBookings);
-  
-        // Calculate monthly trends based on bookings
-        const monthlyData = getMonthlyTrends(fetchedBookings);
-        setMonthlyTrends(monthlyData);
-  
-        // Optionally set platform metrics if available
+        setBookings(combinedData);
+        setMonthlyTrends(getMonthlyTrends(combinedData));
         setPlatformMetrics(dashboardResponse.data.platform_metrics || {});
       } catch (err) {
         console.error("Error fetching dashboard data:", err.response || err.message);
@@ -207,8 +214,8 @@ const AdminDashboard = () => {
     ],
     datasets: [
       {
-        label: "Monthly Bookings",
-        data: monthlyTrends, // Dynamic data from state
+        label: "Monthly Bookings & Piercings",
+        data: monthlyTrends, // Combined trends data
         borderColor: "#6a11cb",
         backgroundColor: "rgba(106, 17, 203, 0.2)",
         borderWidth: 2,
@@ -220,7 +227,8 @@ const AdminDashboard = () => {
       },
     ],
   };
-  
+
+
   // Columns for user table
   const userColumns = [
     { name: "Username", selector: (row) => row.username, sortable: true },
@@ -230,11 +238,12 @@ const AdminDashboard = () => {
 
   // Columns for bookings table
   const bookingColumns = [
-    { name: "Name", selector: (row) => row.name, sortable: true },
+    { name: "Name", selector: (row) => row.name || "N/A", sortable: true },
     { name: "Artist", selector: (row) => row.artist_name || "No artist", sortable: true },
-    { name: "Status", selector: (row) => row.status, sortable: true },
+    { name: "Status", selector: (row) => row.status || "Unknown", sortable: true },
+    { name: "Appointment Date", selector: (row) => row.appointment_date || "N/A", sortable: true },
   ];
-
+  
   return (
 <div
   className="h-screen overflow-y-auto"
@@ -253,8 +262,7 @@ const AdminDashboard = () => {
 >
   Admin Dashboard
 </h1>
-
-<div className="flex justify-end items-center mb-4">
+<div className="flex justify-between items-center mb-4">
   <button
     onClick={toggleShowCreateArtistButton}
     className={`px-4 py-2 text-white rounded-md shadow-lg ${
@@ -264,19 +272,29 @@ const AdminDashboard = () => {
     {showCreateArtistButton ? "Hide Create Artist Button" : "Show Create Artist Button"}
   </button>
 </div>
+
 {/* Platform Metrics */}
-<div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mb-8 px-4">
+<div className="flex justify-between items-center mb-8 px-4">
   {/* Total Bookings */}
-  <div className="bg-white shadow-md rounded-lg p-6 text-center transform hover:-translate-y-2 hover:shadow-lg transition-all duration-300 max-w-[250px] mx-auto">
-    <h2 className="text-xl font-medium text-gray-700">Total Bookings</h2>
+  <div className="bg-white shadow-md rounded-lg flex-1 mx-2 p-6 text-center transform hover:-translate-y-2 hover:shadow-lg transition-all duration-300">
+    <h2 className="text-xl font-medium text-gray-700">Total Tattoo Bookings</h2>
     <p className="text-5xl font-bold text-blue-600 mt-3">
       {platformMetrics.total_bookings || 0}
     </p>
     <span className="block mt-2 text-sm text-gray-500">Bookings so far</span>
   </div>
 
+  {/* Total Piercings Bookings */}
+  <div className="bg-white shadow-md rounded-lg flex-1 mx-2 p-6 text-center transform hover:-translate-y-2 hover:shadow-lg transition-all duration-300">
+    <h2 className="text-xl font-medium text-gray-700">Total Piercings Bookings</h2>
+    <p className="text-5xl font-bold text-purple-600 mt-3">
+      {platformMetrics.total_piercings || 0}
+    </p>
+    <span className="block mt-2 text-sm text-gray-500">Piercings so far</span>
+  </div>
+
   {/* Total Earnings */}
-  <div className="bg-white shadow-md rounded-lg p-6 pr-20 text-center transform hover:-translate-y-2 hover:shadow-lg transition-all duration-300 max-w-[250px] mx-auto">
+  <div className="bg-white shadow-md rounded-lg flex-1 mx-2 p-6 text-center transform hover:-translate-y-2 hover:shadow-lg transition-all duration-300">
     <h2 className="text-xl font-medium text-gray-700">Total Earnings</h2>
     <p className="text-4xl font-bold text-green-600 mt-3">
       ${platformMetrics.total_earnings?.toFixed(2) || "0.00"}
@@ -285,7 +303,7 @@ const AdminDashboard = () => {
   </div>
 
   {/* Average Rating */}
-  <div className="bg-white shadow-md rounded-lg p-6 text-center transform hover:-translate-y-2 hover:shadow-lg transition-all duration-300 max-w-[250px] mx-auto">
+  <div className="bg-white shadow-md rounded-lg flex-1 mx-2 p-6 text-center transform hover:-translate-y-2 hover:shadow-lg transition-all duration-300">
     <h2 className="text-xl font-medium text-gray-700">Average Rating</h2>
     <p className="text-5xl font-bold text-yellow-500 mt-3">
       {platformMetrics.average_rating || "N/A"}
