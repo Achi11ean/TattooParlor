@@ -366,8 +366,8 @@ const Booking = () => {
         <option value="" disabled>
           Choose preference
         </option>
-        <option value="call font-bold">Call</option>
-        <option value="text font-bold">Text</option>
+        <option value="call ">Call</option>
+        <option value="text ">Text</option>
       </select>
     </label>
     <label className="block">
