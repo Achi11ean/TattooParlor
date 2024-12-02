@@ -14,7 +14,7 @@ const NewsletterPage = () => {
   const [selectedNewsletter, setSelectedNewsletter] = useState(null); // For modal
   const deleteNewsletter = async (id) => {
     try {
-      const response = await fetch(`http://localhost:5002/api/newsletters/${id}`, {
+      const response = await fetch(`https://tattooparlorbackend.onrender.com/api/newsletters/${id}`, {
         method: "DELETE",
       });
       if (!response.ok) {
@@ -101,33 +101,38 @@ const NewsletterPage = () => {
       ) : Array.isArray(newsletters) && newsletters.length > 0 ? (
         <div className="newsletter-list grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 max-w-fit gap-4">
           {newsletters.map((newsletter) => (
-            <div
-              key={newsletter.id}
-              className="newsletter-card bg-white rounded-lg shadow-lg p-4 cursor-pointer hover:shadow-xl transition"
-              onClick={() => handleCardClick(newsletter)}
-            >
-              <h2 className="text-lg font-bold mb-2">{newsletter.title}</h2>
-              {newsletter.image && (
-                <img
-                  src={newsletter.image}
-                  alt={newsletter.title}
-                  className="w-full h-32 object-cover rounded-lg mb-2"
-                />
-              )}
-              <p className="text-sm text-gray-600">
-                
-                {newsletter.body.slice(0, 50)}...
-
-              </p>
-              {isAdmin && (
-                <button
-                  onClick={() => deleteNewsletter(newsletter.id)}
-                  className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition mt-2"
-                >
-                  Delete
-                </button>
-              )}
-            </div>
+  <div
+  key={newsletter.id}
+  className="newsletter-card bg-white rounded-lg shadow-lg p-4 cursor-pointer hover:shadow-xl transition"
+  onClick={() => handleCardClick(newsletter)}
+>
+  <div className="relative group">
+    {newsletter.image && (
+      <img
+        src={newsletter.image}
+        alt={newsletter.title}
+        className="w-full h-32 object-cover rounded-lg"
+      />
+    )}
+    <div className="absolute inset-0 bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition flex items-center justify-center rounded-lg">
+      <p className="text-white text-center px-4">{newsletter.title}</p>
+    </div>
+  </div>
+  <p className="text-sm text-gray-600 mt-2">
+    {newsletter.body.slice(0, 50)}...
+  </p>
+  {isAdmin && (
+  <button
+    onClick={(e) => {
+      e.stopPropagation(); // Prevent the click from triggering the card's onClick
+      deleteNewsletter(newsletter.id);
+    }}
+    className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition mt-2"
+  >
+    Delete
+  </button>
+)}
+</div>
             
           ))}
         </div>
