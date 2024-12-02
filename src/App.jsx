@@ -18,7 +18,8 @@ import EditArtist from "./EditArtist"; // Adjust the path as needed
 import ResetPassword from './ResetPassword';
 import ForgotPassword from "./ForgotPassword";
 import { Link } from "react-router-dom";
-
+import Subscribe from "./Subscribe";
+import NewsletterPage from "./NewsLEtterPage";
 const App = () => {
 
   
@@ -71,17 +72,12 @@ const App = () => {
 >
   Explore Artists
 </Link>
+<br/><br/>
   </div>
+
+
 </div>
-<div className="mt-4 flex justify-center">
-          <iframe
-            allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write"
-            height="150"
-            style={{ width: "100%", maxWidth: "300px", borderRadius: "10px" }}
-            sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation"
-            src="https://embed.music.apple.com/us/playlist/90s-rock-essentials/pl.94aeee85f6bd48058d1a53873db1e66d" // Replace with your Apple Music embed URL
-          ></iframe>
-        </div>
+<Subscribe />
                   </div>
                 </header>
 
@@ -107,6 +103,8 @@ const App = () => {
           <Route path="/artists/edit/:id" element={<EditArtist />} />
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/newsletters" element={<NewsletterPage />} />
+
 
           {/* Add other routes here if needed */}
         </Routes>

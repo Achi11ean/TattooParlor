@@ -55,6 +55,12 @@ function Navbar() {
               Home
             </Link>
             <Link
+  to="/newsletters"
+  className="hover:text-red-400 transition duration-300 transform hover:scale-110"
+>
+  Newsletters
+</Link>
+            <Link
               to="/artists"
               className="hover:text-red-400 transition duration-300 transform hover:scale-110"
             >
@@ -129,6 +135,12 @@ function Navbar() {
   className="block hover:text-red-400 transition duration-300"
 >
   Home
+</Link>
+<Link
+  to="/newsletters"
+  className="block hover:text-red-400 transition duration-300"
+>
+  Newsletters
 </Link>
             <Link
               to="/artists"

@@ -6,6 +6,7 @@ import { Line } from "react-chartjs-2";
 import { Chart as ChartJS, registerables } from "chart.js";
 import DataTable from "react-data-table-component";
 import "tailwindcss/tailwind.css";
+import NewsletterAdmin from "./NewsletterAdmin";
 
 ChartJS.register(...registerables);
 
@@ -378,6 +379,7 @@ const AdminDashboard = () => {
 
 </div>
 
+<NewsletterAdmin />
 
 
 {/* Users Table */}

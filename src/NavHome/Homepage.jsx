@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Subscribe from "../Subscribe";
 
 const HomePage = () => {
   const [activeTab, setActiveTab] = useState("about");
