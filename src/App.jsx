@@ -19,7 +19,8 @@ import ResetPassword from './ResetPassword';
 import ForgotPassword from "./ForgotPassword";
 import { Link } from "react-router-dom";
 import Subscribe from "./Subscribe";
-import Newsletter from "./NewsletterPage"
+import NewsletterPage from './NewsletterPage'; // Adjust path as needed
+
 const App = () => {
 
   
