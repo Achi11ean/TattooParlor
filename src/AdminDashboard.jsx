@@ -7,6 +7,7 @@ import { Chart as ChartJS, registerables } from "chart.js";
 import DataTable from "react-data-table-component";
 import "tailwindcss/tailwind.css";
 import NewsletterAdmin from "./NewsletterAdmin";
+import Subscribers from "./Subscribers";
 
 ChartJS.register(...registerables);
 
@@ -538,7 +539,10 @@ const AdminDashboard = () => {
 </div>
 
 
-
+<div className="mb-8">
+        <h2 className="text-2xl font-bold mb-4">Subscribers</h2>
+        <Subscribers />
+      </div>
 
     </div>
   );
