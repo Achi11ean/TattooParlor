@@ -14,15 +14,22 @@ const NewsletterPage = () => {
   const [selectedNewsletter, setSelectedNewsletter] = useState(null); // For modal
   const deleteNewsletter = async (id) => {
     try {
-      const response = await fetch(`https://tattooparlorbackend.onrender.com/api/newsletters/${id}`, {
-        method: "DELETE",
-      });
+      const response = await fetch(
+        `https://tattooparlorbackend.onrender.com/api/newsletters/${id}`,
+        {
+          method: "DELETE",
+        }
+      );
       if (!response.ok) {
         throw new Error("Failed to delete newsletter");
       }
       const data = await response.json();
       console.log(data.message);
-      // Update the UI to remove the deleted newsletter
+  
+      // Update the state to remove the deleted newsletter
+      setNewsletters((prevNewsletters) =>
+        prevNewsletters.filter((newsletter) => newsletter.id !== id)
+      );
     } catch (error) {
       console.error("Error deleting newsletter:", error);
     }
