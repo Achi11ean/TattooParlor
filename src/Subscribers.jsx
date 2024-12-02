@@ -12,6 +12,7 @@ const Subscribers = () => {
   const [search, setSearch] = useState("");
 
   const fetchSubscribers = async (page = 1, searchQuery = "") => {
+    setLoading(true);
     try {
       const response = await axios.get("https://tattooparlorbackend.onrender.com/api/subscribers", {
         headers: { Authorization: `Bearer ${authToken}` },
@@ -26,7 +27,24 @@ const Subscribers = () => {
       setLoading(false);
     }
   };
-  
+
+  const handleDelete = async (email) => {
+    if (!window.confirm(`Are you sure you want to delete the subscriber: ${email}?`)) {
+      return;
+    }
+    try {
+      await axios.delete("https://tattooparlorbackend.onrender.com/api/unsubscribe", {
+        headers: { Authorization: `Bearer ${authToken}` },
+        params: { email },
+      });
+      setSubscribers((prevSubscribers) =>
+        prevSubscribers.filter((subscriber) => subscriber.email !== email)
+      );
+      alert("Subscriber deleted successfully.");
+    } catch (err) {
+      alert(err.response?.data?.error || "Failed to delete subscriber.");
+    }
+  };
 
   useEffect(() => {
     fetchSubscribers();
@@ -78,6 +96,7 @@ const Subscribers = () => {
                     <th className="py-3 px-6 text-left">ID</th>
                     <th className="py-3 px-6 text-left">Email</th>
                     <th className="py-3 px-6 text-left">Subscribed On</th>
+                    <th className="py-3 px-6 text-left">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="text-gray-600 text-sm font-light">
@@ -90,6 +109,14 @@ const Subscribers = () => {
                       <td className="py-3 px-6">{subscriber.email}</td>
                       <td className="py-3 px-6">
                         {new Date(subscriber.subscribed_at).toLocaleDateString()}
+                      </td>
+                      <td className="py-3 px-6">
+                        <button
+                          onClick={() => handleDelete(subscriber.email)}
+                          className="bg-red-500 text-white px-3 py-1 rounded-lg hover:bg-red-600 transition"
+                        >
+                          Delete
+                        </button>
                       </td>
                     </tr>
                   ))}
