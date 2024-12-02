@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import Unsubscribe from "./Unsubscribe";
 
 const ContactCenter = () => {
   const [formData, setFormData] = useState({
@@ -162,6 +163,8 @@ const ContactCenter = () => {
           </div>
         </div>
       </div>
+      <Unsubscribe />
+
       
     </div>
     

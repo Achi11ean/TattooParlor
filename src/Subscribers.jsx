@@ -13,7 +13,7 @@ const Subscribers = () => {
 
   const fetchSubscribers = async (page = 1, searchQuery = "") => {
     try {
-      const response = await axios.get("https://tattooparlorbackend.onrender.com/api/subscribers", {
+      const response = await axios.get("http://127.0.0.1:5002/api/subscribers", {
         headers: { Authorization: `Bearer ${authToken}` },
         params: { page, per_page: 10, search: searchQuery }, // Pass the search query
       });
