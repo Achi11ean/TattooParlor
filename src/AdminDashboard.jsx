@@ -540,7 +540,6 @@ const AdminDashboard = () => {
 
 
 <div className="mb-8">
-        <h2 className="text-2xl font-bold mb-4">Subscribers</h2>
         <Subscribers />
       </div>
 
