@@ -62,58 +62,69 @@ const Subscribers = () => {
   };
 
   return (
-    <div className="subscribers-container bg-gray-100 p-6 rounded-lg shadow-lg">
-      <h1 className="text-3xl font-bold text-center mb-4">Subscribers</h1>
+    <div className="subscribers-container bg-gradient-to-b from-blue-500 to-indigo-500 p-8 rounded-xl shadow-xl">
+      <h1 className="text-4xl font-extrabold text-center text-white mb-6">
+        Subscribers
+      </h1>
       {userType !== "admin" && (
-        <p className="text-red-500 text-center">Access restricted to admin users.</p>
+        <p className="text-red-200 text-center bg-red-500 p-4 rounded-lg shadow-md">
+          Access restricted to admin users.
+        </p>
       )}
       {userType === "admin" && (
         <>
-          <form onSubmit={handleSearch} className="flex items-center gap-4 mb-6">
+          <form
+            onSubmit={handleSearch}
+            className="flex items-center gap-4 mb-8"
+          >
             <input
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search subscribers..."
-              className="p-2 border border-gray-300 rounded-lg flex-grow focus:ring focus:ring-blue-300"
+              className="p-3 border border-gray-300 rounded-full flex-grow focus:ring focus:ring-indigo-300"
             />
             <button
               type="submit"
-              className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition"
+              className="bg-indigo-600 text-white px-6 py-3 rounded-full hover:bg-indigo-700 transition font-semibold"
             >
               Search
             </button>
           </form>
           {loading ? (
-            <p className="text-center text-gray-500">Loading...</p>
+            <p className="text-center text-white text-lg animate-pulse">
+              Loading...
+            </p>
           ) : error ? (
-            <p className="text-center text-red-500">{error}</p>
+            <p className="text-center text-red-200 bg-red-500 p-4 rounded-lg shadow-md">
+              {error}
+            </p>
           ) : subscribers && Array.isArray(subscribers) && subscribers.length > 0 ? (
             <div className="overflow-x-auto">
-              <table className="min-w-full bg-white shadow-md rounded-lg">
+              <table className="min-w-full bg-white rounded-lg shadow-lg">
                 <thead>
-                  <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-                    <th className="py-3 px-6 text-left">ID</th>
-                    <th className="py-3 px-6 text-left">Email</th>
-                    <th className="py-3 px-6 text-left">Subscribed On</th>
-                    <th className="py-3 px-6 text-left">Actions</th>
+                  <tr className="bg-indigo-600 text-white uppercase text-sm font-semibold">
+                    <th className="py-4 px-6 text-left">ID</th>
+                    <th className="py-4 px-6 text-left">Email</th>
+                    <th className="py-4 px-6 text-left">Subscribed On</th>
+                    <th className="py-4 px-6 text-left">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="text-gray-600 text-sm font-light">
+                <tbody className="text-gray-700">
                   {subscribers.map((subscriber) => (
                     <tr
                       key={subscriber.id}
-                      className="border-b border-gray-200 hover:bg-gray-100"
+                      className="hover:bg-indigo-50 transition"
                     >
-                      <td className="py-3 px-6">{subscriber.id}</td>
-                      <td className="py-3 px-6">{subscriber.email}</td>
-                      <td className="py-3 px-6">
+                      <td className="py-4 px-6">{subscriber.id}</td>
+                      <td className="py-4 px-6">{subscriber.email}</td>
+                      <td className="py-4 px-6">
                         {new Date(subscriber.subscribed_at).toLocaleDateString()}
                       </td>
-                      <td className="py-3 px-6">
+                      <td className="py-4 px-6">
                         <button
                           onClick={() => handleDelete(subscriber.email)}
-                          className="bg-red-500 text-white px-3 py-1 rounded-lg hover:bg-red-600 transition"
+                          className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition font-medium"
                         >
                           Delete
                         </button>
@@ -124,23 +135,25 @@ const Subscribers = () => {
               </table>
             </div>
           ) : (
-            <p className="text-center text-gray-500">No subscribers found.</p>
+            <p className="text-center text-white text-lg">
+              No subscribers found.
+            </p>
           )}
-          <div className="pagination flex justify-center items-center gap-2 mt-6">
+          <div className="pagination flex justify-center items-center gap-4 mt-8">
             <button
               onClick={() => handlePageChange(currentPage - 1)}
               disabled={currentPage === 1}
-              className="bg-gray-200 text-gray-600 px-3 py-1 rounded-lg hover:bg-gray-300 transition disabled:opacity-50"
+              className="bg-gray-200 text-gray-600 px-4 py-2 rounded-full hover:bg-gray-300 transition disabled:opacity-50 font-medium"
             >
               Previous
             </button>
-            <span className="text-gray-600">
+            <span className="text-white font-semibold">
               Page {currentPage} of {totalPages}
             </span>
             <button
               onClick={() => handlePageChange(currentPage + 1)}
               disabled={currentPage === totalPages}
-              className="bg-gray-200 text-gray-600 px-3 py-1 rounded-lg hover:bg-gray-300 transition disabled:opacity-50"
+              className="bg-gray-200 text-gray-600 px-4 py-2 rounded-full hover:bg-gray-300 transition disabled:opacity-50 font-medium"
             >
               Next
             </button>
@@ -149,6 +162,7 @@ const Subscribers = () => {
       )}
     </div>
   );
+  
 };
 
 export default Subscribers;
