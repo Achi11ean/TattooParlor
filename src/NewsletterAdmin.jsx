@@ -33,15 +33,15 @@ const NewsletterAdmin = () => {
   };
 
   return (
-    <div className="newsletter-admin-container bg-gradient-to-r from-blue-500 to-purple-600 p-6 rounded-lg shadow-lg max-w-lg mx-auto">
-      <h2 className="text-2xl font-bold text-white text-center mb-4">
-        Create a New Newsletter
+    <div className="newsletter-admin-container bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 p-10 rounded-3xl shadow-2xl max-w-3xl mx-auto transform transition duration-300 hover:scale-105">
+      <h2 className="text-4xl font-extrabold text-white text-center mb-8 tracking-wide drop-shadow-lg">
+        ✨ Create Your Newsletter ✨
       </h2>
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        <div>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-8">
+        <div className="relative">
           <label
             htmlFor="title"
-            className="block text-white font-medium mb-1"
+            className="block text-white text-xl font-semibold mb-3"
           >
             Title:
           </label>
@@ -51,14 +51,17 @@ const NewsletterAdmin = () => {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Enter the newsletter title"
-            className="w-full p-2 rounded-md focus:ring focus:ring-purple-300"
+            className="w-full p-4 text-gray-800 rounded-lg shadow-inner focus:ring-4 focus:ring-pink-400 focus:outline-none transition transform hover:scale-105"
             required
           />
+          <span className="absolute top-full left-0 mt-1 text-sm text-gray-300 italic">
+            Make it catchy!
+          </span>
         </div>
-        <div>
+        <div className="relative">
           <label
             htmlFor="image"
-            className="block text-white font-medium mb-1"
+            className="block text-white text-xl font-semibold mb-3"
           >
             Image URL (optional):
           </label>
@@ -68,13 +71,16 @@ const NewsletterAdmin = () => {
             value={image}
             onChange={(e) => setImage(e.target.value)}
             placeholder="Enter the image URL"
-            className="w-full p-2 rounded-md focus:ring focus:ring-purple-300"
+            className="w-full p-4 text-gray-800 rounded-lg shadow-inner focus:ring-4 focus:ring-pink-400 focus:outline-none transition transform hover:scale-105"
           />
+          <span className="absolute top-full left-0 mt-1 text-sm text-gray-300 italic">
+            Add a link to an eye-catching image!
+          </span>
         </div>
-        <div>
+        <div className="relative">
           <label
             htmlFor="body"
-            className="block text-white font-medium mb-1"
+            className="block text-white text-xl font-semibold mb-3"
           >
             Body:
           </label>
@@ -83,30 +89,37 @@ const NewsletterAdmin = () => {
             value={body}
             onChange={(e) => setBody(e.target.value)}
             placeholder="Enter the newsletter content"
-            className="w-full p-2 rounded-md h-32 focus:ring focus:ring-purple-300"
+            className="w-full p-4 text-gray-800 rounded-lg shadow-inner h-48 resize-none focus:ring-4 focus:ring-pink-400 focus:outline-none transition transform hover:scale-105"
             required
           ></textarea>
+          <span className="absolute top-full left-0 mt-1 text-sm text-gray-300 italic">
+            Share your latest updates here!
+          </span>
         </div>
         <button
           type="submit"
-          className={`bg-white text-blue-600 font-bold py-2 px-4 rounded-lg hover:bg-purple-100 transition ${
-            loading ? "opacity-50 cursor-not-allowed" : ""
+          className={`w-full bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 text-white font-bold py-4 px-8 rounded-xl shadow-lg hover:shadow-2xl hover:from-pink-400 hover:to-indigo-400 transition duration-300 transform hover:scale-110 ${
+            loading ? "opacity-60 cursor-not-allowed" : ""
           }`}
           disabled={loading}
         >
-          {loading ? "Sending..." : "Send Newsletter"}
+          {loading ? "Sending..." : "🚀 Send Newsletter"}
         </button>
       </form>
       {message && (
-        <p className="text-green-100 text-center mt-4 font-medium">
+        <p className="text-green-100 text-center mt-6 font-semibold bg-green-600 p-4 rounded-lg shadow-lg">
           {message}
         </p>
       )}
       {error && (
-        <p className="text-red-200 text-center mt-4 font-medium">{error}</p>
+        <p className="text-red-100 text-center mt-6 font-semibold bg-red-600 p-4 rounded-lg shadow-lg">
+          {error}
+        </p>
       )}
     </div>
   );
+  
+  
 };
 
 export default NewsletterAdmin;

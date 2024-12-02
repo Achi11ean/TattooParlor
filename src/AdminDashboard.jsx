@@ -313,6 +313,7 @@ const AdminDashboard = () => {
     <span className="block mt-2 text-sm text-gray-500">Overall rating</span>
   </div>
 </div>
+<NewsletterAdmin />
 
 <div className=" shadow-lg rounded-lg p-6 mb-6" style={{ maxHeight: "400px", overflow: "hidden" }}>
   {/* Title with gradient background */}
@@ -380,7 +381,6 @@ const AdminDashboard = () => {
 
 </div>
 
-<NewsletterAdmin />
 
 
 {/* Users Table */}
