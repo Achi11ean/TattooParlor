@@ -88,7 +88,7 @@ style={{ fontFamily: "'Playfair Display', serif" }}
         {/* Tab Content */}
         <div className="text-center">
           {activeTab === "customTattoos" && (
-            <div className="max-w-4xl mx-auto text-left">
+                                    <div className="max-w-4xl mx-auto text-left" style={{ maxHeight: '450px', overflowY: 'auto' }}> 
               <h3
               style={{ fontFamily: "'Playfair Display', serif" }}
 
@@ -117,7 +117,8 @@ style={{ fontFamily: "'Playfair Display', serif" }}
           )}
 
           {activeTab === "customPiercings" && (
-            <div className="max-w-4xl mx-auto text-left">
+                        <div className="max-w-4xl mx-auto text-left" style={{ maxHeight: '450px', overflowY: 'auto' }}> 
+
               <h3
               style={{ fontFamily: "'Playfair Display', serif" }}
 
@@ -139,8 +140,7 @@ style={{ fontFamily: "'Playfair Display', serif" }}
           )}
 
           {activeTab === "tattooAftercare" && (
-            <div className="max-w-4xl mx-auto text-left">
-              <h3 
+            <div className="max-w-4xl mx-auto text-left" style={{ maxHeight: '450px', overflowY: 'auto' }}>              <h3 
               style={{ fontFamily: "'Playfair Display', serif" }}
 
               className="text-6xl font-semibold mb-6 underline">
