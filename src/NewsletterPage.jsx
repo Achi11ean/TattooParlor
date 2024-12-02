@@ -147,7 +147,7 @@ const NewsletterPage = () => {
             )}
             <p className="text-gray-700">{selectedNewsletter.body}</p>
             <p className="text-sm text-gray-500 mt-4">
-              Published on {selectedNewsletter.created_at}
+              Published On {selectedNewsletter.created_at}
             </p>
           </div>
         </div>
