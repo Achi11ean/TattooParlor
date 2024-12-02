@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useAuth } from "./AuthContext"; // Example if you're using AuthContext
 
 const NewsletterPage = () => {
   const [newsletters, setNewsletters] = useState([]);
@@ -7,9 +8,26 @@ const NewsletterPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(false);
+  const { userType } = useAuth(); // Get user info from context
+  const isAdmin = userType === "admin"; // Adjust "admin" if your role naming is different
   const [error, setError] = useState(null);
   const [selectedNewsletter, setSelectedNewsletter] = useState(null); // For modal
-
+  const deleteNewsletter = async (id) => {
+    try {
+      const response = await fetch(`http://localhost:5002/api/newsletters/${id}`, {
+        method: "DELETE",
+      });
+      if (!response.ok) {
+        throw new Error("Failed to delete newsletter");
+      }
+      const data = await response.json();
+      console.log(data.message);
+      // Update the UI to remove the deleted newsletter
+    } catch (error) {
+      console.error("Error deleting newsletter:", error);
+    }
+  };
+  
   const fetchNewsletters = async (page = 1, searchQuery = "") => {
     setLoading(true);
     setError(null);
@@ -97,11 +115,23 @@ const NewsletterPage = () => {
                 />
               )}
               <p className="text-sm text-gray-600">
+                
                 {newsletter.body.slice(0, 50)}...
+
               </p>
+              {isAdmin && (
+                <button
+                  onClick={() => deleteNewsletter(newsletter.id)}
+                  className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition mt-2"
+                >
+                  Delete
+                </button>
+              )}
             </div>
+            
           ))}
         </div>
+        
       ) : (
         <p className="text-center text-gray-500">No newsletters found.</p>
       )}
