@@ -91,6 +91,14 @@ const Booking = () => {
       setError("Failed to update booking. Please try again.");
     }
   };
+  const formatPhoneNumber = (phoneNumber) => {
+    const cleaned = ('' + phoneNumber).replace(/\D/g, ''); // Remove non-numeric characters
+    const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
+    if (match) {
+      return `(${match[1]}) ${match[2]}-${match[3]}`;
+    }
+    return phoneNumber; // Return original value if it can't be formatted
+  };
   
   const [formData, setFormData] = useState({
     tattoo_style: "",
@@ -522,6 +530,14 @@ const Booking = () => {
         className="flex-none w-52 bg-gradient-to-b from-gray-800 to-gray-900 rounded-lg shadow-md p-6 text-white hover:scale-105 transform transition-transform duration-300"
       >
         <h3 className="text-xl font-bold text-pink-400">{booking.name}</h3>
+        <p className="text-sm text-gray-400">
+  <span className="font-semibold text-gray-200">Phone Number:</span><br/>{" "}
+  {formatPhoneNumber(booking.phone_number)}
+</p>
+        <p className="text-sm text-gray-400">
+          <span className="font-semibold text-gray-200">Contact Preference:</span>{" "}
+          {booking.call_or_text_preference}
+        </p>
         <p className="text-sm text-gray-400 mt-2">
           <span className="font-semibold text-gray-200">Booking Date:</span><br/>{" "}
           {new Date(booking.booking_date).toLocaleString()}
@@ -530,14 +546,7 @@ const Booking = () => {
           <span className="font-semibold text-gray-200">Appointment Date:</span><br/>{" "}
           {new Date(booking.appointment_date).toLocaleString()}
         </p>
-        <p className="text-sm text-gray-400">
-          <span className="font-semibold text-gray-200">Phone Number:</span><br/>{" "}
-          {booking.phone_number}
-        </p>
-        <p className="text-sm text-gray-400">
-          <span className="font-semibold text-gray-200">Contact Preference:</span>{" "}
-          {booking.call_or_text_preference}
-        </p>
+
         <p className="text-sm text-gray-400">
           <span className="font-semibold text-gray-200">Style:</span>{" "}
           {booking.tattoo_style}
@@ -836,6 +845,12 @@ const Booking = () => {
           className="flex-none w-52 bg-gradient-to-b from-gray-800 to-gray-900 rounded-lg shadow-md p-6 text-white hover:scale-105 transform transition-transform duration-300"
         >
           <h3 className="text-xl font-bold text-pink-400">{piercing.name}</h3>
+          <p className="text-md text-gray-400">
+  <span className="font-semibold text-gray-200">Phone Number:</span> {formatPhoneNumber(piercing.phone_number)}
+</p>
+<p className="text-md text-gray-400">
+  <span className="font-semibold text-gray-200">Contact Preference:</span> {piercing.call_or_text_preference}
+</p>
           <p className="text-sm text-gray-400">
             <span className="font-semibold text-gray-200">Piercing:</span> {piercing.piercing_type}
           </p>
@@ -855,9 +870,8 @@ const Booking = () => {
             <span className="font-semibold text-gray-200">Price:</span> ${piercing.price}
           </p>
 
-          <p className="text-md text-gray-400">
-            <span className="font-semibold text-gray-200">Contact:</span> {piercing.phone_number} ({piercing.call_or_text_preference})
-          </p>
+
+
           <button
         onClick={() => handleDeletePiercing(piercing.id)}
         className="mt-4 py-2 px-4 bg-red-500 hover:bg-red-700 text-white font-semibold rounded-lg shadow-md"
