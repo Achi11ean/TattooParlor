@@ -103,20 +103,36 @@ const Subscribers = () => {
     plugins: {
       legend: {
         position: "top",
+        labels: {
+          color: "white", // Make the legend text color white for better contrast
+          font: {
+            size: 15, // Adjust font size for better readability
+            weight: "bold",
+          },
+        },
       },
       title: {
         display: true,
         text: "Subscriber Metrics (Last 12 Months)",
+        color: "white", // Title text color
+        font: {
+          size: 18, // Increase title font size
+          weight: "bold",
+        },
       },
       tooltip: {
         enabled: true,
+        backgroundColor: "rgba(0, 0, 0, 0.8)", // Dark background for tooltips
+        titleColor: "white", // Tooltip title color
+        bodyColor: "white", // Tooltip body text color
       },
     },
     scales: {
       x: {
         ticks: {
-          color: "#333",
+          color: "white", // X-axis tick labels color
           font: {
+            size: 12, // Adjust font size
             weight: "bold",
           },
         },
@@ -127,13 +143,14 @@ const Subscribers = () => {
       y: {
         beginAtZero: true,
         ticks: {
-          color: "#333",
+          color: "white", // Y-axis tick labels color
           font: {
+            size: 12, // Adjust font size
             weight: "bold",
           },
         },
         grid: {
-          color: "#eaeaea", // Light gray grid lines for the y-axis
+          color: "rgba(255, 255, 255, 0.2)", // Light grid lines for better visibility
         },
       },
     },
@@ -171,30 +188,32 @@ const Subscribers = () => {
       fetchSubscribers(newPage, search);
     }
   };
-  // Calculate the last 12 months
   const getLastTwelveMonthsLabels = () => {
     const now = new Date();
     const months = [];
     for (let i = 11; i >= 0; i--) {
       const date = new Date(now.getFullYear(), now.getMonth() - i, 1);
-      months.push(date.toLocaleString("default", { month: "long" })); // Full month name
+      months.push(date.toISOString().slice(0, 7)); // Use 'YYYY-MM' format
     }
     return months;
   };
   
+  
+  
   const data = {
-    labels: getLastTwelveMonthsLabels(), // Dynamic last 12 months
+    labels: getLastTwelveMonthsLabels(),
     datasets: [
       {
         label: "New Subscribers",
-        data: metrics?.monthly_new_subscribers || [], // Use monthly data from metrics
+        color: "white",
+        data: metrics?.monthly_new_subscribers || [],
         borderColor: "rgba(75, 192, 192, 1)",
         backgroundColor: "rgba(75, 192, 192, 0.2)",
         tension: 0.4,
       },
       {
         label: "Unsubscribes",
-        data: metrics?.monthly_unsubscribes || [], // Use monthly data from metrics
+        data: metrics?.monthly_unsubscribes || [],
         borderColor: "rgba(255, 99, 132, 1)",
         backgroundColor: "rgba(255, 99, 132, 0.2)",
         tension: 0.4,
@@ -202,11 +221,17 @@ const Subscribers = () => {
     ],
   };
   
+
+  console.log("Chart Labels:", getLastTwelveMonthsLabels());
+console.log("Monthly New Subscribers:", metrics?.monthly_new_subscribers);
+console.log("Monthly Unsubscribes:", metrics?.monthly_unsubscribes);
+console.log("Metrics fetched:", metrics);
+
   return (
-    <div className="subscribers-container bg-gradient-to-b from-blue-500 to-indigo-500 p-8 rounded-xl shadow-xl">
+    <div className="subscribers-container bg-gradient-to-b from-pink-800 to-indigo-500 p-8 rounded-xl shadow-xl">
       <h1 className="text-4xl font-extrabold text-center text-white mb-6">Subscribers</h1>
       {metrics && (
-        <div style={{ maxHeight: "1000px", overflow: "hidden" }}>
+        <div style={{ maxHeight: "1500px", overflow: "hidden" }}>
   <Line data={data} options={options} />
 </div>
 )}
