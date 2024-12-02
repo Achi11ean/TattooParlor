@@ -12,7 +12,7 @@ const Unsubscribe = () => {
     }
 
     try {
-      const response = await axios.delete(`http://127.0.0.1:5002/api/unsubscribe`, {
+      const response = await axios.delete(`https://tattooparlorbackend.onrender.com/api/unsubscribe`, {
         params: { email },
       });
       setMessage(response.data.message);
