@@ -73,6 +73,12 @@ const App = () => {
 >
   Explore Artists
 </Link>
+<Link
+    to="/contact"
+    className="px-20 py-3 bg-gradient-to-r from-yellow-400 to-black text-white font-bold rounded shadow-md hover:from-yellow-500 hover:to-yellow-400 transition-all duration-200"
+  >
+    Contact Us
+  </Link>
 <br/><br/>
   </div>
 

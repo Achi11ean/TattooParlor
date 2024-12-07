@@ -1,8 +1,30 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const Services = () => {
   const [activeTab, setActiveTab] = useState("customTattoos");
+  const [artists, setArtists] = useState([]);
 
+  useEffect(() => {
+    fetch("https://tattooparlorbackend.onrender.com/api/artists?page=1&per_page=100")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        if (data && data.artists) {
+          setArtists(data.artists);
+        } else {
+          console.error("Unexpected response structure:", data);
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching artists:", error);
+      });
+  }, []);
+  
   const services = {
     customTattoos: {
       title: "Custom Tattoos",
@@ -50,6 +72,37 @@ const Services = () => {
           </div>
         ))}
       </div>
+
+      {/* Artist Gallery */}
+
+      {artists.length > 0 ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 px-4 md:px-8 lg:px-12 mb-16">
+        {artists.map((artist) => (
+      <Link 
+  to={`/artists/${artist.id}`} 
+  key={artist.id}
+  className="text-center block transform transition-all duration-500 hover:scale-110 relative group"
+>
+  <div className="relative w-48 h-48 mx-auto rounded-full overflow-hidden shadow-lg border-4 border-gray-800 group-hover:border-red-600">
+    <img
+      src={artist.profile_picture || "/default-artist.jpg"}
+      alt={artist.name}
+      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-125"
+    />
+    <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end justify-center p-4">
+      <span className="text-white text-lg font-semibold drop-shadow-md" style={{ fontFamily: "'Playfair Display', serif" }}>
+        {artist.name}
+      </span>
+    </div>
+  </div>
+</Link>
+    ))}
+  </div>
+) : (
+  <p className="text-center text-gray-400 text-2xl">
+    No artists available at the moment. Please check back later!
+  </p>
+)}
 
       <div className="w-full mx-auto px-8 relative z-10">
         <h2 
