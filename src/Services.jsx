@@ -47,13 +47,12 @@ const Services = () => {
   };
 
   return (
-    <section
-    className="relative py-20 text-white overflow-hidden"
-    style={{
-      background: "linear-gradient(to bottom, #8B0000, #000000)", // Blood red to black gradient
-      height: "1000px", // Adjust height as needed
-    }}
-  >
+<section
+  className="relative py-12 md:py-20 text-white overflow-hidden min-h-screen"
+  style={{
+    background: "linear-gradient(to bottom, #8B0000, #000000)", // Keep gradient
+  }}
+>
       {/* Falling Skulls and Gravestones */}
       <div className="absolute inset-0 pointer-events-none">
         {Array.from({ length: 20 }).map((_, i) => (
@@ -74,8 +73,15 @@ const Services = () => {
       </div>
 
       {/* Artist Gallery */}
-
-      {artists.length > 0 ? (
+      <h2
+className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-center text-gray-100 mb-12 relative transform transition-transform duration-300 hover:scale-105"
+style={{ fontFamily: "'Playfair Display', serif" }}
+>
+  <span className="inline-block relative">
+    <span className="absolute -bottom-2 left-0 w-full h-2 bg-gradient-to-r from-blue-700 to-yellow-200 rounded-full"></span>
+     <span className="text-white">Our Artists</span>
+  </span>
+</h2>      {artists.length > 0 ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 px-4 md:px-8 lg:px-12 mb-16">
         {artists.map((artist) => (
       <Link 
