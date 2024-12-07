@@ -53,26 +53,26 @@ const App = () => {
                         Ink Haven
                       </a>
                     </div>
-                    <p className="mt-4 text-xl text-gray-300">
+                    <p className="mt-4 text-3xl text-gray-300">
                       Custom Tattoos | Piercings | Designs | Consultations
                     </p>
                     <div className="text-center py-8">
                       <div className="mt-6 flex flex-col sm:flex-row justify-center gap-4 items-center">
                         <Link
                           to="/bookings"
-                          className="px-20 py-3 bg-gradient-to-r from-black to-blue-700 text-white rounded shadow-md hover:from-blue-700 hover:to-black transition-all duration-200"
+                          className="px-28 py-5 text-xl  bg-gradient-to-r from-black to-blue-700 text-white rounded shadow-md hover:from-blue-700 hover:to-black transition-all duration-200"
                         >
                           Book Now
                         </Link>
                         <Link
                           to="/artists"
-                          className="px-20 py-3 bg-gradient-to-r from-red-700 to-black  text-white rounded shadow-md hover:from-black hover:to-red-700 transition-all duration-200"
+                          className="px-28 py-5 text-xl  bg-gradient-to-r from-red-700 to-black  text-white rounded shadow-md hover:from-black hover:to-red-700 transition-all duration-200"
                         >
                           Explore Artists
                         </Link>
                         <Link
                           to="/contact"
-                          className="px-20 py-3 bg-gradient-to-r from-yellow-400 to-black text-white font-bold rounded shadow-md hover:from-yellow-500 hover:to-yellow-400 transition-all duration-200"
+                          className="px-28 py-5 text-xl  bg-gradient-to-r from-yellow-400 to-black text-white font-bold rounded shadow-md hover:from-yellow-500 hover:to-yellow-400 transition-all duration-200"
                         >
                           Contact Us
                         </Link>

@@ -25,11 +25,11 @@ const Subscribe = () => {
   };
 
   return (
-    <div className="subscribe-container bg-gradient-to-r from-pink-500 to-yellow-500 p-4 rounded-xl shadow-lg max-w-sm mx-auto">
-      <h2 className="text-2xl font-extrabold text-white text-center mb-2">
+    <div className="subscribe-container bg-gradient-to-r from-pink-500 to-yellow-500 p-8 rounded-2xl shadow-2xl max-w-lg mx-auto">
+      <h2 className="text-4xl font-extrabold text-white text-center mb-4">
         Join Our Newsletter
       </h2>
-      <p className="text-white text-center text-sm mb-4">
+      <p className="text-black text-center text-lg mb-6">
         Get exclusive deals, flash sales, and updates!
       </p>
       <form onSubmit={handleSubmit} className="flex flex-col gap-3">
@@ -39,7 +39,7 @@ const Subscribe = () => {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="Enter your email"
-          className="p-2 rounded-full text-sm border-none focus:ring focus:ring-yellow-400"
+          className="p-4 rounded-full text-lg border-none focus:ring focus:ring-yellow-400"
           required
         />
         <button
