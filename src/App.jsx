@@ -11,19 +11,17 @@ import Reviews from "./Reviews";
 import Booking from "./Booking"; // Import the Booking component
 import GalleryPage from "./GalleryPage";
 import About from "./About";
-import AdminDashboard from './AdminDashboard'; // Adjust the path as needed
+import AdminDashboard from "./AdminDashboard"; // Adjust the path as needed
 import Contact from "./Contact";
 import ContactCenter from "./ContactCenter";
 import EditArtist from "./EditArtist"; // Adjust the path as needed
-import ResetPassword from './ResetPassword';
+import ResetPassword from "./ResetPassword";
 import ForgotPassword from "./ForgotPassword";
 import { Link } from "react-router-dom";
 import Subscribe from "./Subscribe";
-import NewsletterPage from './NewsletterPage'; // Adjust path as needed
+import NewsletterPage from "./NewsletterPage"; // Adjust path as needed
 
 const App = () => {
-
-  
   return (
     <Router>
       <div className="h-screen w-screen text-white">
@@ -59,32 +57,30 @@ const App = () => {
                       Custom Tattoos | Piercings | Designs | Consultations
                     </p>
                     <div className="text-center py-8">
-
-  <div className="mt-6 flex justify-center space-x-4">
-  <Link
-  to="/bookings"
-  className="px-20 py-3 bg-gradient-to-r from-black to-blue-700 text-white rounded shadow-md hover:from-blue-700 hover:to-black transition-all duration-200"
->
-  Book Now
-</Link>
-<Link
-  to="/artists"
-  className="px-20 py-3 bg-gradient-to-r from-red-700 to-black  text-white rounded shadow-md hover:from-black hover:to-red-700 transition-all duration-200"
->
-  Explore Artists
-</Link>
-<Link
-    to="/contact"
-    className="px-20 py-3 bg-gradient-to-r from-yellow-400 to-black text-white font-bold rounded shadow-md hover:from-yellow-500 hover:to-yellow-400 transition-all duration-200"
-  >
-    Contact Us
-  </Link>
-<br/><br/>
-  </div>
-
-
-</div>
-<Subscribe />
+                      <div className="mt-6 flex flex-col sm:flex-row justify-center gap-4 items-center">
+                        <Link
+                          to="/bookings"
+                          className="px-20 py-3 bg-gradient-to-r from-black to-blue-700 text-white rounded shadow-md hover:from-blue-700 hover:to-black transition-all duration-200"
+                        >
+                          Book Now
+                        </Link>
+                        <Link
+                          to="/artists"
+                          className="px-20 py-3 bg-gradient-to-r from-red-700 to-black  text-white rounded shadow-md hover:from-black hover:to-red-700 transition-all duration-200"
+                        >
+                          Explore Artists
+                        </Link>
+                        <Link
+                          to="/contact"
+                          className="px-20 py-3 bg-gradient-to-r from-yellow-400 to-black text-white font-bold rounded shadow-md hover:from-yellow-500 hover:to-yellow-400 transition-all duration-200"
+                        >
+                          Contact Us
+                        </Link>
+                        <br />
+                        <br />
+                      </div>
+                    </div>
+                    <Subscribe />
                   </div>
                 </header>
 
@@ -93,15 +89,16 @@ const App = () => {
               </>
             }
           />
-
           {/* Sign-Up Route */}
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/artists" element={<Artists />} />
           <Route path="/create-artist" element={<CreateArtist />} />
-          <Route path="/artists/:id" element={<ArtistProfile />} /> {/* Optional for individual profiles */}
+          <Route path="/artists/:id" element={<ArtistProfile />} />{" "}
+          {/* Optional for individual profiles */}
           <Route path="/artists/:artistId/reviews" element={<Reviews />} />
-          <Route path="/bookings" element={<Booking />} /> {/* Add Booking route */}
+          <Route path="/bookings" element={<Booking />} />{" "}
+          {/* Add Booking route */}
           <Route path="/gallery" element={<GalleryPage />} />
           <Route path="/about" element={<About />} />
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
@@ -111,40 +108,32 @@ const App = () => {
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/newsletters" element={<NewsletterPage />} />
-
-
           {/* Add other routes here if needed */}
         </Routes>
 
         {/* Footer */}
         <footer className="bg-black text-white py-6">
-  <div className="container mx-auto px-4 text-center">
-    <div className="flex flex-col md:flex-row justify-center items-center space-y-2 md:space-y-0 md:space-x-4">
-      {/* Brand Name */}
-      <p className="text-lg font-bold tracking-wide">
-        Ink Haven
-      </p>
+          <div className="container mx-auto px-4 text-center">
+            <div className="flex flex-col md:flex-row justify-center items-center space-y-2 md:space-y-0 md:space-x-4">
+              {/* Brand Name */}
+              <p className="text-lg font-bold tracking-wide">Ink Haven</p>
 
-      {/* Separator */}
-      <div className="hidden md:block w-px h-6 bg-gray-600"></div>
+              {/* Separator */}
+              <div className="hidden md:block w-px h-6 bg-gray-600"></div>
 
-      {/* Year and Rights */}
-      <p className="text-sm font-light">
-        &copy; {new Date().getFullYear()} All Rights Reserved.
-      </p>
-    </div>
+              {/* Year and Rights */}
+              <p className="text-sm font-light">
+                &copy; {new Date().getFullYear()} All Rights Reserved.
+              </p>
+            </div>
 
-    {/* Links */}
-    <div className="mt-4 flex justify-center space-x-6">
+            {/* Links */}
+            <div className="mt-4 flex justify-center space-x-6"></div>
 
-    </div>
-
-    {/* Decorative Line */}
-    <div className="mt-4 mx-auto h-0.5 w-20 bg-gradient-to-r from-gray-700 via-white to-gray-700"></div>
-  </div>
-</footer>
-
-
+            {/* Decorative Line */}
+            <div className="mt-4 mx-auto h-0.5 w-20 bg-gradient-to-r from-gray-700 via-white to-gray-700"></div>
+          </div>
+        </footer>
       </div>
     </Router>
   );
