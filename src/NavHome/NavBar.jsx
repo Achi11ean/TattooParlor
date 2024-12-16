@@ -204,7 +204,7 @@ const Navbar = () => {
             </Link>
           )}
 
-          {/* Social Media Icons */}
+
           <div className="flex justify-center space-x-6 mt-4">
             <a
               href="https://www.instagram.com/gay_coded/?igsh=cTM2ZTFyenU4NTFt&utm_source=qr#"
