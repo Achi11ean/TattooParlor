@@ -77,7 +77,7 @@ const NewsletterPage = () => {
 
   return (
 <div
-  className="newsletter-page-container  min-h-full min-w-full bg-gradient-to-tr from-gray-600 via-blue-600 to-blue-800 ellow-200 p-6 mx-auto"
+  className="newsletter-page-container  min-h-screen min-w-full bg-gradient-to-tr from-gray-600 via-blue-600 to-blue-800 ellow-200 p-6 mx-auto"
 
 >
       <h1 className="text-3xl font-bold text-center text-white border-b-2 mb-6">Newsletters</h1>
