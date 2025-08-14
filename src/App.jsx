@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Navbar from "./NavHome/NavBar";
 import Services from "./Services";
 import SignUp from "./SignUp";
@@ -8,29 +8,27 @@ import Artists from "./Artist";
 import CreateArtist from "./CreateArtist";
 import ArtistProfile from "./ArtistProfile";
 import Reviews from "./Reviews";
-import Booking from "./Booking"; // Import the Booking component
+import Booking from "./Booking";
 import GalleryPage from "./GalleryPage";
 import About from "./About";
-import AdminDashboard from "./AdminDashboard"; // Adjust the path as needed
+import AdminDashboard from "./AdminDashboard";
 import Contact from "./Contact";
 import ContactCenter from "./ContactCenter";
-import EditArtist from "./EditArtist"; // Adjust the path as needed
+import EditArtist from "./EditArtist";
 import ResetPassword from "./ResetPassword";
 import ForgotPassword from "./ForgotPassword";
-import { Link } from "react-router-dom";
 import Subscribe from "./Subscribe";
-import NewsletterPage from "./NewsletterPage"; // Adjust path as needed
+import NewsletterPage from "./NewsletterPage";
 
 const App = () => {
   return (
     <Router>
-      <div className="h-screen w-screen text-white">
+      <div className="min-h-screen w-screen text-white flex flex-col">
         {/* Navbar */}
         <Navbar />
 
         {/* Routes */}
         <Routes>
-          {/* Home Route */}
           <Route
             path="/"
             element={
@@ -40,46 +38,54 @@ const App = () => {
                   <div
                     className="absolute inset-0 bg-cover bg-center"
                     style={{
-                      backgroundImage: "url('/customtattoos.webp')", // Replace with your image
+                      backgroundImage: "url('/customtattoos.webp')",
                     }}
                   ></div>
-                  <div className="relative bg-black bg-opacity-50 py-20 px-4">
+                  <div className="relative bg-black bg-opacity-50 py-16 sm:py-20 px-4">
                     <div className="flex-shrink-0">
                       <a
                         href="/"
-                        className="text-9xl font-extrabold tracking-wide hover:text-red-500"
+                        className="text-5xl sm:text-7xl lg:text-9xl font-extrabold tracking-wide text-white"
                         style={{ fontFamily: "'Deutsch Gothic', serif" }}
                       >
                         Ink Haven
                       </a>
                     </div>
-                    <p className="mt-4 text-3xl text-gray-300">
-                      Custom Tattoos | Piercings | Designs | Consultations
+                    <hr className="border-t-4 border-white my-" />
+
+                    <p className=" bg-black/60 text-lg sm:text-2xl lg:text-3xl text-gray-300 px-4">
+                      Custom Tattoos | Piercings <br/> Designs | Consultations
                     </p>
-                    <div className="text-center py-8">
-                      <div className="mt-6 flex flex-col sm:flex-row justify-center gap-4 items-center">
-                        <Link
-                          to="/bookings"
-                          className="px-28 py-5 text-xl  bg-gradient-to-r from-black to-blue-700 text-white rounded shadow-md hover:from-blue-700 hover:to-black transition-all duration-200"
-                        >
-                          Book Now
-                        </Link>
-                        <Link
-                          to="/artists"
-                          className="px-28 py-5 text-xl  bg-gradient-to-r from-red-700 to-black  text-white rounded shadow-md hover:from-black hover:to-red-700 transition-all duration-200"
-                        >
-                          Explore Artists
-                        </Link>
-                        <Link
-                          to="/contact"
-                          className="px-28 py-5 text-xl  bg-gradient-to-r from-yellow-400 to-black text-white font-bold rounded shadow-md hover:from-yellow-500 hover:to-yellow-400 transition-all duration-200"
-                        >
-                          Contact Us
-                        </Link>
-                        <br />
-                        <br />
-                      </div>
-                    </div>
+<hr className="border-t-4 border-white " />
+
+                  {/* Action Buttons */}
+<div className="py-2 text-center">
+  <div className="mt-6 grid grid-cols-3 gap-3 max-w-5xl mx-auto px-2">
+    <Link
+      to="/bookings"
+      className="w-full px-4 py-3 text-sm sm:text-lg font-semibold rounded-xl shadow-lg bg-gradient-to-r from-black to-blue-700 text-white 
+                 hover:from-blue-700 hover:to-black transform hover:scale-105 transition-all duration-300"
+    >
+      Book
+    </Link>
+    <Link
+      to="/artists"
+      className="w-full px-4 py-3 text-sm sm:text-lg font-semibold rounded-xl shadow-lg bg-gradient-to-r from-red-700 to-black text-white 
+                 hover:from-black hover:to-red-700 transform hover:scale-105 transition-all duration-300"
+    >
+      Artists
+    </Link>
+    <Link
+      to="/contact"
+      className="w-full px-4 py-3 text-sm sm:text-lg font-semibold rounded-xl shadow-lg bg-gradient-to-r from-yellow-400 to-black text-white 
+                 hover:from-yellow-500 hover:to-yellow-400 transform hover:scale-105 transition-all duration-300"
+    >
+      Contact
+    </Link>
+  </div>
+</div>
+
+
                     <Subscribe />
                   </div>
                 </header>
@@ -89,16 +95,15 @@ const App = () => {
               </>
             }
           />
-          {/* Sign-Up Route */}
+
+          {/* Other Routes */}
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/artists" element={<Artists />} />
           <Route path="/create-artist" element={<CreateArtist />} />
-          <Route path="/artists/:id" element={<ArtistProfile />} />{" "}
-          {/* Optional for individual profiles */}
+          <Route path="/artists/:id" element={<ArtistProfile />} />
           <Route path="/artists/:artistId/reviews" element={<Reviews />} />
-          <Route path="/bookings" element={<Booking />} />{" "}
-          {/* Add Booking route */}
+          <Route path="/bookings" element={<Booking />} />
           <Route path="/gallery" element={<GalleryPage />} />
           <Route path="/about" element={<About />} />
           <Route path="/admin-dashboard" element={<AdminDashboard />} />
@@ -108,32 +113,62 @@ const App = () => {
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/newsletters" element={<NewsletterPage />} />
-          {/* Add other routes here if needed */}
         </Routes>
 
         {/* Footer */}
-        <footer className="bg-black text-white py-6">
-          <div className="container mx-auto px-4 text-center">
-            <div className="flex flex-col md:flex-row justify-center items-center space-y-2 md:space-y-0 md:space-x-4">
-              {/* Brand Name */}
-              <p className="text-lg font-bold tracking-wide">Ink Haven</p>
+{/* Footer */}
+<footer className="relative overflow-hidden bg-gray-900 text-gray-300 py-4">
+  {/* Top gradient bar */}
+  <div className="absolute left-0 top-0 h-1 w-full bg-gradient-to-r from-[#e85d04] via-[#d97706] to-[#dc2626]" />
 
-              {/* Separator */}
-              <div className="hidden md:block w-px h-6 bg-gray-600"></div>
+  {/* Content */}
+  <div className="container mx-auto relative flex flex-col items-center justify-center space-y-2 text-center group">
+    <a
+      href="https://jwhitproductions.com/"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="
+        relative inline-block uppercase tracking-wider font-semibold
+        text-yellow-400 text-xs sm:text-sm transition-colors duration-300 hover:text-yellow-300
+        after:absolute after:left-0 after:bottom-0 after:h-0.5 after:w-0 after:bg-yellow-300 after:transition-all after:duration-300 hover:after:w-full
+        [background:linear-gradient(to_right,rgba(255,255,255,0)_20%,rgba(255,255,255,0.3)_50%,rgba(255,255,255,0)_80%)]
+        [background-size:200px_100%] animate-[shimmer_2s_linear_infinite]
+        px-[2px] py-[3px] rounded
+      "
+    >
+      &copy; {new Date().getFullYear()} Jwhit Productions
+    </a>
 
-              {/* Year and Rights */}
-              <p className="text-sm font-light">
-                &copy; {new Date().getFullYear()} All Rights Reserved.
-              </p>
-            </div>
+    <p className="mt-1 text-[11px] sm:text-xs tracking-wide text-gray-400">
+      All Rights Reserved. This website and its contents are copyrighted materials © Jwhit Productions.
+    </p>
 
-            {/* Links */}
-            <div className="mt-4 flex justify-center space-x-6"></div>
+    {/* Tooltip */}
+    <span
+      className="
+        pointer-events-none absolute -bottom-7 left-1/2 -translate-x-1/2
+        whitespace-nowrap rounded-md px-3 py-1 text-[11px] text-white
+        opacity-0 shadow-md transition-opacity duration-300
+        bg-gradient-to-r from-[#e85d04] via-[#d97706] to-[#dc2626]
+        group-hover:opacity-100
+      "
+    >
+      Visit our main site
+    </span>
+  </div>
 
-            {/* Decorative Line */}
-            <div className="mt-4 mx-auto h-0.5 w-20 bg-gradient-to-r from-gray-700 via-white to-gray-700"></div>
-          </div>
-        </footer>
+  {/* Bottom gradient bar */}
+  <div className="absolute bottom-0 left-0 h-1 w-full bg-gradient-to-r from-[#e85d04] via-[#d97706] to-[#dc2626]" />
+
+  {/* Shimmer keyframes */}
+  <style>{`
+    @keyframes shimmer {
+      0% { background-position: -200px 0; }
+      100% { background-position: 200px 0; }
+    }
+  `}</style>
+</footer>
+
       </div>
     </Router>
   );

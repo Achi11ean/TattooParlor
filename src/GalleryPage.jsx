@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-
+import './App.css'; 
 const GalleryPage = () => {
   const [galleries, setGalleries] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [selectedImage, setSelectedImage] = useState(null); // State for the modal
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [showCurtain, setShowCurtain] = useState(true); // Curtain state
 
   useEffect(() => {
     const fetchGalleries = async () => {
       try {
-        const response = await axios.get(`https://tattooparlorbackend.onrender.com/api/galleries?page=${page}`);
+        const response = await axios.get(
+          `https://tattooparlorbackend.onrender.com/api/galleries?page=${page}`
+        );
         setGalleries(response.data.galleries);
         setTotalPages(response.data.pages);
       } catch (err) {
@@ -23,6 +26,12 @@ const GalleryPage = () => {
     };
 
     fetchGalleries();
+
+    // Remove curtain after animation
+    const timer = setTimeout(() => {
+      setShowCurtain(false);
+    }, 2500); // Match animation duration
+    return () => clearTimeout(timer);
   }, [page]);
 
   const handleNextPage = () => {
@@ -45,25 +54,28 @@ const GalleryPage = () => {
   if (error) return <div className="text-center text-red-500 mt-20">{error}</div>;
 
   return (
-    <div className="p-6 bg-gradient-to-b from-red-900 to-black min-h-screen text-white">
-      <h1 className="text-4xl font-bold mb-10 text-center text-transparent bg-clip-text bg-gradient-to-r from-white to-blue-200">
+<div
+  className="relative  p-2 sm:p-16 min-h-screen text-white overflow-hidden bg-cover bg-center"
+  style={{ backgroundImage: "url('/stage.webp')" }}
+>
+      {/* Curtains */}
+      {showCurtain && (
+        <>
+          <div className="curtain left"></div>
+          <div className="curtain right"></div>
+        </>
+      )}
+
+      <h1 className="text-4xl bg-black font-serif border-b-2 font-bold mb-10 text-center ">
         Gallery
       </h1>
-      <div className="mt-4 flex justify-center">
-          <iframe
-            allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write"
-            height="100"
-            style={{ width: "100%", maxWidth: "600px", borderRadius: "10px" }}
-            sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation"
-            src="https://embed.music.apple.com/us/album/calm-piano-playlist/1473136325" // Replace with your Apple Music embed URL
-          ></iframe>
-        </div>
+     
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {galleries.map((gallery) => (
           <div
             key={gallery.id}
             className="relative group overflow-hidden rounded-lg shadow-lg cursor-pointer"
-            onClick={() => openModal(gallery)} // Open modal on click
+            onClick={() => openModal(gallery)}
           >
             <img
               src={gallery.image_url}

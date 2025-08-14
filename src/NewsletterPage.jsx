@@ -77,15 +77,10 @@ const NewsletterPage = () => {
 
   return (
 <div
-  className="newsletter-page-container bg-yellow-200 p-6 mx-auto"
-  style={{
-    backgroundImage: `url(geometric.webp)`,
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    backgroundRepeat: "no-repeat",
-  }}
+  className="newsletter-page-container  min-h-full min-w-full bg-gradient-to-tr from-gray-600 via-blue-600 to-blue-800 ellow-200 p-6 mx-auto"
+
 >
-      <h1 className="text-3xl font-bold text-center text-black mb-6">Newsletters</h1>
+      <h1 className="text-3xl font-bold text-center text-white border-b-2 mb-6">Newsletters</h1>
       <form onSubmit={handleSearch} className="flex items-center  gap-2 mb-6">
         <input
           type="text"

@@ -18,6 +18,11 @@ const ArtistProfile = () => {
   const isArtist = artist?.created_by === parseInt(localStorage.getItem("user")?.id); // Match created_by with logged-in user ID
   const isAdmin = userType === "admin"; // Check if the user is an admin
   const [error, setError] = useState(null);
+const [tab, setTab] = useState(() => localStorage.getItem("artistTab") || "about");
+useEffect(() => {
+  localStorage.setItem("artistTab", tab);
+}, [tab]);
+
   const [selectedDate, setSelectedDate] = useState(new Date());
   const SocialMediaIcon = ({ platform }) => {
     const icons = {
@@ -103,35 +108,182 @@ const ArtistProfile = () => {
       >
         Back to Artists
       </button>
+<div className="items-center flex justify-center">
 
       <div
-      className="p-6 max-w-screen-md  min-h-screen  text-white"
+      className="p-1 max-w-screen-xl items-center justify-center  min-h-screen  text-white"
       style={{
         background: "linear-gradient(to bottom, royalblue, black)", // Gradient background
       }}
-    >        <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
-          <img
-            src={artist.profile_picture || "https://via.placeholder.com/150"}
-            alt={artist.name}
-            className="w-40 h-40 object-cover rounded-full shadow-md"
-          />
+    >  
+    
+  <div className="flex bg-black  justify-center mb-6 border-b border-white/40">
+        {[
+          { key: "about", label: "About" },
+          { key: "schedule", label: "Schedule" },
+          { key: "gallery", label: "Gallery" },
+          { key: "reviews", label: "Reviews" },
+        ].map(({ key, label }) => (
+          <button
+            key={key}
+            onClick={() => setTab(key)}
+            className={`relative px-4 py-1 text-sm sm:text-base font-semibold transition-all  ${
+              tab === key
+                ? "text-white bg-gradient-to-r from-[#e85d04] via-[#d97706] to-[#dc2626] shadow"
+                : "text-gray-200 hover:text-white hover:bg-white/10"
+            }`}
+          >
+            {label}
+            {tab === key && (
+              <span className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-[#e85d04] via-[#d97706] to-[#dc2626]" />
+            )}
+          </button>
+        ))}
+      </div>
+
+
+     <div className="  items-center  gap-6">
+  <div className="relative items-center justify-center flex">
+    <img
+      src={artist.profile_picture || "https://via.placeholder.com/150"}
+      alt={artist.name}
+      className="w-40 h-40 object-cover rounded-full shadow-md"
+    />
+    {artist.years_of_experience && (
+      <span className="absolute -bottom-3 left-1/2 transform -translate-x-1/2 bg-yellow-500 text-black font-bold px-3 py-1 rounded-full shadow-md text-sm">
+        {artist.years_of_experience} Yrs
+      </span>
+    )}
+  </div>
+  <div>
+  </div>
+<br/>
           <div>
-            <h1 className="text-3xl font-bold">{artist.name}</h1>
-            <p className="text-white">{artist.specialties || "Specialties not specified"}</p>
-            <p className="text-white text-sm mt-2">{artist.bio || "No bio available."}</p>
+            <h1 className="text-3xl border-b-2 text-center font-bold">{artist.name}</h1>
+            <div className="flex ">
+  <button
+    onClick={() => window.location.href = "https://your-stripe-payment-link-here"}
+    className="bg-black text-white px-4 py-1 rounded shadow-md hover:shadow-lg  transition-all duration-300 ease-in-out relative overflow-hidden"
+  >
+    <span className="absolute inset-0 bg-gradient-to-r from-yellow-300 via-red-500 to-pink-500 opacity-0 hover:opacity-30 transition-opacity duration-300"></span>
+    <span className="relative z-10 font-semibold text-sm uppercase tracking-wider">
+      Process Payment
+    </span>
+  </button>
+</div>
+<div className="mt-6 justify-center items-center rouned-2xl border-black border-2 bg-white">
+  <h2 className="text-xl text-black text-center font-semibold ">Connect with Us</h2>
+  {Object.keys(socialMedia).length > 0 ? (
+    <div className="flex items-center bg-black justify-center flex-wrap gap-3">
+      {Object.entries(socialMedia).map(([platform, handle]) => {
+        const sanitizedHandle = String(handle).replace(/["'{}]/g, "").trim();
+        const sanitizedPlatform = String(platform).replace(/["'{}]/g, "").trim();
+
+        if (!sanitizedHandle || sanitizedHandle === '""') return null;
+
+        return (
+          <a
+            key={sanitizedPlatform}
+            href={sanitizedHandle}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={sanitizedPlatform}
+            title={sanitizedPlatform}
+            className="
+              w-12 h-12 rounded-full
+              flex items-center justify-center
+              bg-white/10 text-white
+              hover:bg-white/20 hover:scale-105
+              transition duration-200 shadow
+              focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white/50
+            "
+          >
+            <SocialMediaIcon platform={sanitizedPlatform} />
+            <span className="sr-only">{sanitizedPlatform}</span>
+          </a>
+        );
+      })}
+    </div>
+  ) : (
+    <p className="text-white">No social media links available.</p>
+  )}
+</div>
+            <p className="text-white border-2 p-1 font-bold bg-black/60 text-sm mt-2"> <span className="text-center">  <h2 className="text-lg font-bold border-b-2 mb-2">Bio</h2>
+</span>{artist.bio || "No bio available."}</p>
+<div
+  className=" text-white border- bg-black/60 border-2  p-2 max-h-16 overflow-y-auto shadow-md text-center text-xs font-semibold font-serif"
+>
+  <h2 className="text-lg font-bold border-b-2 mb-2">Certifications</h2>
+  <p>
+ {artist.certifications || "None"}
+  </p>
+</div>
+<div className="text-black mt-2 p-4 bg-white shadow-md rounded-lg">
+  {/* Specialties */}
+  <h2 className="text-2xl font-bold text-center text-pink-700 border-b-2 border-pink-300 pb-2 mb-3">
+    🎨 Specialties
+  </h2>
+  {artist.specialties && artist.specialties.trim() !== "" ? (
+    <div className="flex flex-wrap capitalize justify-center gap-2 max-h-40 overflow-y-auto">
+      {artist.specialties
+        .split(",")
+        .map((specialty, index) => (
+          <span
+            key={index}
+            className="bg-gradient-to-b from-blue-200 to-blue-300 text-black px-4 py-1 rounded-full text-sm font-semibold shadow-sm border border-pink-300 hover:scale-105 transition-transform duration-200"
+          >
+            {specialty.trim()}
+          </span>
+        ))}
+    </div>
+  ) : (
+    <span className="text-gray-500 text-xs italic block text-center mt-2">
+      Specialties not specified
+    </span>
+  )}
+
+  {/* Styles */}
+  <h2 className="text-2xl font-bold text-center text-pink-700 border-b-2 border-pink-300 pb-2 mt-6 mb-3">
+    🎭 Styles
+  </h2>
+  <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+    {styles.length > 0 ? (
+      styles.map((style, index) => (
+        <span
+          key={index}
+          className="bg-pink-200 text-pink-800 px-3 py-1 rounded-full text-xs font-semibold shadow-sm border border-pink-300 text-center"
+        >
+          {style}
+        </span>
+      ))
+    ) : (
+      <span className="text-gray-500 text-xs italic col-span-full text-center">
+        Not specified
+      </span>
+    )}
+  </div>
+</div>
+
+
             
           </div>
+          
                   {/* Average Rating Section */}
-                  <div className="mt-0  bg-gradient-to-b from-red-600 via-red-900 to-black p-2 rounded-lg shadow-lg text-center">
-                  <h2 className="text-xl underline font-semibold mb-2">Average Rating</h2>
-  <div className="text-gray-700 flex items-center">
+                        {tab === "reviews" && (
+
+                <div className="mt-0 w-full bg-gradient-to-b from-red-600 via-red-900 to-black p-2 rounded-lg shadow-lg text-center">
+  <h2 className="text-xl underline font-semibold mb-2">Average Rating</h2>
+  
+  <div className="flex justify-center items-center">
     {artist.average_rating ? (
       <>
         {[...Array(5)].map((_, index) => (
           <span
             key={index}
-            className={`text-3xl ${
-              index < Math.round(artist.average_rating) ? "text-yellow-400" : "text-gray-300"
+            className={`text-3xl animate-pulse ${
+              index < Math.round(artist.average_rating)
+                ? "text-yellow-400"
+                : "text-gray-300"
             }`}
           >
             ★
@@ -142,73 +294,71 @@ const ArtistProfile = () => {
       <p className="text-gray-500">N/A</p>
     )}
   </div>
-
 </div>
+                        )}
         </div>
 
         {/* Details Section */}
         <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <h2 className="text-xl font-semibold mb-2">Details</h2>
-            <p className="text-white">
-              <strong>Location:</strong> {artist.location || "N/A"}
-            </p>
-            <p className="text-white">
-              <strong>Years of Experience:</strong> {artist.years_of_experience || "N/A"}
-            </p>
-            <p className="text-white">
-              <strong>Styles:</strong> {styles.length > 0 ? styles.join(", ") : "Not specified"}
-            </p>
-            <p className="text-white">
-              <strong>Certifications:</strong> {artist.certifications || "None"}
-            </p>
-            <p className="text-white">
-              <strong>Awards:</strong> {artist.awards || "None"}
-            </p>
+
+  
+
+
+            <h2 className="border-b-2 text-center mb-2">Certifications</h2>
+
+
+<div className="text-black rounded-lg mb-2 p-3 bg-white/90 shadow-md">
+  <h1 className="text-center text-base sm:text-lg font-bold mb-2">Awards</h1>
+
+  <div className="max-h-32 overflow-y-auto pr-1">
+    {artist.awards && String(artist.awards).trim() !== "" ? (
+      <div className="flex flex-wrap gap-2 justify-center">
+        {(Array.isArray(artist.awards)
+          ? artist.awards
+          : String(artist.awards).split(",")
+        ).map((raw, idx) => {
+          const cleaned = String(raw).replace(/^🏆\s*/u, "").trim();
+          const [awardTitle, issuer] = cleaned.split(/\s*-\s*/);
+
+          return (
+            <div
+              key={idx}
+              className="bg-yellow-200 text-yellow-900 px-3 py-2 rounded-lg text-xs font-semibold shadow-sm border border-yellow-300 flex flex-col items-center w-auto min-w-[140px] text-center"
+            >
+              {issuer && (
+                <div className="text-[10px] border-b-2 border-black font-bold uppercase text-yellow-800 mb-1">
+                  {issuer}
+                </div>
+              )}
+              <div className="flex items-center gap-1">
+                <span aria-hidden>🏆</span>
+                <span>{awardTitle || "Award"}</span>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    ) : (
+      <p className="text-center text-gray-500 text-xs italic">None</p>
+    )}
+  </div>
+</div>
+
+
           </div>
         </div>
         
-        <button
-  onClick={() => window.location.href = "https://your-stripe-payment-link-here"}
-  className="bg-gradient-to-r from-green-400 via-blue-500 to-purple-600 text-white px-6 py-3 rounded-full shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 ease-in-out relative overflow-hidden"
->
-  
-  <span className="absolute inset-0 bg-gradient-to-r from-yellow-300 via-red-500 to-pink-500 opacity-0 hover:opacity-30 transition-opacity duration-300 rounded-full"></span>
-  <span className="relative z-10 font-semibold text-lg uppercase tracking-wider">
-    Process Payment 
-  </span>
-</button>
 
 
 
 
-        {/* Social Media Section */}
-{/* Social Media Section */}
-<div className="mt-6">
-  <h2 className="text-xl font-semibold mb-4">Connect with Us</h2>
-  {Object.keys(socialMedia).length > 0 ? (
-    <div className="flex  flex-wrap gap-4">
-      {Object.entries(socialMedia).map(([platform, handle]) => {
-        const sanitizedHandle = handle.replace(/["'{}]/g, '').trim();
-        const sanitizedPlatform = platform.replace(/["'{}]/g, '').trim();
-        return handle != '""' ? (
-        <a
-          key={sanitizedPlatform}
-          href={sanitizedHandle}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-pink-200 via-blue-200 to-yellow-300 text-gray-800 rounded-lg shadow-md hover:from-pink-400 hover:via-purple-500 hover:to-green-400 hover:shadow-lg transition duration-300 hover:animate-wobble hover:text-white"
-          >
-          <SocialMediaIcon platform={sanitizedPlatform} /> 
-          <span className="font-medium capitalize">{sanitizedPlatform}</span>
-        </a>
-      ) : null})}
-    </div>
-  ) : (
-    <p className="text-white">No social media links available.</p>
-  )}
-</div>
+
+
+
 <br/>
+      {tab === "schedule" && (
+        <div className="mt-6">
 <h3 className="text-center text-white text-2xl font-semibold  mb-4 truncate">
         Artist Booking Calendar
       </h3>
@@ -284,6 +434,7 @@ const ArtistProfile = () => {
 
   
 </div>
+
 <br/>
 <div
   className="flex-1 bg-gradient-to-bl from-purple-600 via-yellow-400 to-green-500 p-6 rounded-xl shadow-lg border border-gray-200 hover:shadow-2xl transition-shadow duration-300"
@@ -319,22 +470,27 @@ const ArtistProfile = () => {
     <p className="text-black text-lg">No bookings for this date.</p>
   )}
 </div>
+</div>
+      )}
 <br/>
 
  <br/>
+       {tab === "gallery" && (
+
 <div>
   <Gallery artistId={id} isArtist={isArtist} isAdmin={isAdmin} />
 
     </div>
+       )}
+      {tab === "reviews" && (
 
-        {/* Reviews Section */}
         <div className="mt-6">
           <h2 className="text-xl font-semibold mb-2"></h2>
           <Reviews artistId={id} />
-        </div>
-        
+        </div>      )}
+
       </div>
-      
+      </div>
     </div>
   );
 };

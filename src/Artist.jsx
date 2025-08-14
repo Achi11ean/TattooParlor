@@ -95,8 +95,8 @@ const Artists = () => {
   }}
 >
 
-<div className="flex justify-between items-center mb-6">
-        <h1   className="text-6xl mx-auto font-bold font-playfair text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-600 drop-shadow-lg"
+<div className="flex justify-between bg-white border-black border-2 font-serif items-center mb-6">
+        <h1   className="text-6xl  mx-auto font-bold font-playfair text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-600 drop-shadow-lg"
         >Artists</h1>
         </div>
         {showCreateArtistButton && (userType === "artist" || userType === "admin") && (
@@ -109,15 +109,7 @@ const Artists = () => {
           </button>
 )}
       
-      <div className="mt-4 mx-auto flex ">
-          <iframe
-            allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write"
-            height="100"
-            style={{ width: "100%", maxWidth: "400px", borderRadius: "10px" }}
-            sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation"
-            src="https://embed.music.apple.com/us/playlist/90s-rock-essentials/pl.94aeee85f6bd48058d1a53873db1e66d" // Replace with your Apple Music embed URL
-          ></iframe>
-        </div>
+
       <div className="grid grid-cols-1 text-3xl md:grid-cols-2 lg:grid-cols-3 gap-6">
         {artists.map((artist) => {
           // Parse availability_schedule if it's a JSON string
@@ -127,109 +119,92 @@ const Artists = () => {
               : artist.availability_schedule;
 
           return (
-<RandomGradient key={artist.id}>
-<div className="p-4 rounded-lg shadow-lg transition duration-300 text-white custom-scrollbar"
-    style={{
-      height: "400px", // Set a fixed height for all cards
-      overflowY: "auto", // Add vertical scrolling for overflowing content
-    }}>
-<div className="w-40 h-40 bg-gray-200 flex items-center justify-center rounded-full overflow-hidden mx-auto">
-<img
-    src={artist.profile_picture || "https://via.placeholder.com/150"}
-    alt={artist.name}
-    className="w-full h-full object-cover"
-  />
-</div>
+<RandomGradient
+  key={artist.id}
+  onClick={() => navigate(`/artists/${artist.id}`)}
+>
+  <div
+    onClick={() => navigate(`/artists/${artist.id}`)}
+    className="p-1 rounded-lg shadow-lg transition duration-300 text-white custom-scrollbar cursor-pointer"
+    style={{ height: "400px", overflowY: "auto" }}
+    role="button"
+    tabIndex={0}
+    onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && navigate(`/artists/${artist.id}`)}
+  >
+    <div className="relative w-40 h-40 bg-gray-200 flex items-center justify-center rounded border-2 overflow-hidden mx-auto">
+      <img
+        src={artist.profile_picture || "https://via.placeholder.com/150"}
+        alt={artist.name}
+        className="w-full h-full object-cover"
+      />
+      {artist.years_of_experience && (
+        <span className="absolute bottom-2 z-10 right-2 bg-white text-black text-xs sm:text-sm font-bold px-2 py-1 rounded-full shadow-md border border-gray-300">
+          {artist.years_of_experience} yrs
+        </span>
+      )}
+    </div>
 
+    <div className="p-4">
+      <h2 className="text-4xl font-semibold text-center border-b-2 mb-2">{artist.name}</h2>
+      <div className="flex flex-wrap justify-center gap-2 mb-2">
+        {artist.specialties
+          ?.split(",")
+          .map((specialty, index) => (
+            <span
+              key={index}
+              className="bg-white text-black px-3 py-1 rounded-full text-sm sm:text-base font-medium shadow"
+            >
+              {specialty.trim()}
+            </span>
+          ))}
+      </div>
 
+      <div className="flex items-center  justify-center mt-4">
+        <p className="text-md text-white flex items-center">
+          {artist.average_rating
+            ? Array.from({ length: 5 }, (_, index) => (
+                <span
+                  key={index}
+                  className={`${
+                    index < Math.floor(artist.average_rating)
+                      ? "text-yellow-400"
+                      : "text-gray-400"
+                  }`}
+                >
+                  ★
+                </span>
+              ))
+            : "N/A"}
+        </p>
+      </div>
+    </div>
 
-              <div className="p-4">
-                <h2 className="text-4xl font-semibold mb-2">{artist.name}</h2>
-                <p className="text-white text-xl mb-2">Specialties: {artist.specialties}</p>
-                <p className="text-white text-xl mb-4">Bio: {artist.bio}</p>
-
-
-
-<p className="text-white text-lg">
-
-<p className="text-white text-xl">
-                  <strong>Location:</strong> {artist.location || "N/A"}
-                </p>
-                  <strong>Years of Experience:</strong>{" "}
-                  {artist.years_of_experience || "N/A"}
-                </p>
-<div className="overflow-x-auto overflow-y-hidden  h-39 mt-2">
-  <h2>{artist.name}'s Schedule</h2>
-  <div className="grid grid-flow-col auto-cols-max gap-3">
-    {schedule ? (
-      Object.entries(schedule).map(([day, { start, end }]) => (
-        <div
-          key={day}
-          className={`flex flex-col items-center text-center justify-center border rounded-lg p-5 text-base transition-transform transform hover:scale-110 hover:font-bold ${
-            start && end ? "bg-pink-500 text-white" : "bg-red-800 text-gray-300"
-          }`}
+    {(userType === "admin" || userId === artist.created_by) && (
+      <>
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            navigate(`/artists/edit/${artist.id}`);
+          }}
+          className="bg-gradient-to-r from-green-500 to-teal-600 text-white px-6 py-2 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-green-500 float-right focus:ring-offset-2 mt-4"
         >
-          <span className="font-bold">{day}</span>
-          <span>{start && end ? `${start} - ${end}` : "N/A"}</span>
-        </div>
-      ))
-    ) : (
-      <p className="text-gray-400 text-base col-span-full text-center">
-        Not specified
-      </p>
+          Edit Artist
+        </button>
+
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            handleDeleteArtist(artist.id);
+          }}
+          className="bg-gradient-to-r from-red-600 to-red-800 text-white px-6 py-2 rounded-full shadow-lg hover:shadow-xl transition-all w-30 duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 float-left"
+        >
+          Delete Artist
+        </button>
+      </>
     )}
   </div>
-</div>
-<br/>
-<button
-  onClick={() => navigate(`/artists/${artist.id}`)}
-  className="bg-gradient-to-r from-blue-500 to-purple-600 text-white w-full  rounded-full shadow-lg hover:shadow-xl text-md transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
->
-   View profile
-</button>
-
-
-                <div className="flex items-center justify-between mt-4">
-                <p className="text-md text-white flex items-center">
-  <strong className="mr-2">Rating:</strong>
-  {artist.average_rating
-    ? Array.from({ length: 5 }, (_, index) => (
-        <span
-          key={index}
-          className={`${
-            index < Math.floor(artist.average_rating) ? "text-yellow-400" : "text-gray-400"
-          }`}
-        >
-          ★
-        </span>
-      ))
-    : "N/A"}
-</p>
-
-
-
-                </div>
-                
-                {(userType === "admin" || userId === artist.created_by) && (
-  <button
-    onClick={() => navigate(`/artists/edit/${artist.id}`)}
-    className="bg-gradient-to-r from-green-500 to-teal-600 text-white px-6 py-2 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-green-500 float-right focus:ring-offset-2 mt-4"
-  >
-    Edit Artist
-  </button>
-)}
-              </div>
-              {(userType === "admin" || userId === artist.created_by) && (
-  <button
-    onClick={() => handleDeleteArtist(artist.id)}
-    className="bg-gradient-to-r from-red-600 to-red-800 text-white px-6 py-2 rounded-full shadow-lg hover:shadow-xl transition-all  w-30 duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 float-left"
-    >
-    Delete Artist
-  </button>
-)}
-
-              </div>
 </RandomGradient>
+
           );
         })}
       </div>

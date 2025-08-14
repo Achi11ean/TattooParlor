@@ -2,9 +2,8 @@
 
 
 #root {
-  margin: 0 auto;
-  padding: 2rem;
   text-align: center;
+  height:100%
 }
 
 .logo {
@@ -41,4 +40,49 @@
 
 .read-the-docs {
   color: #888;
+}
+
+@keyframes curtain-open-left {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+
+@keyframes curtain-open-right {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(100%); }
+}
+
+.curtain {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  background: linear-gradient(to right, #8b0000, #b22222, #8b0000);
+  background-size: 200% 100%;
+  box-shadow: inset -10px 0 15px rgba(0, 0, 0, 0.5);
+  z-index: 30;
+  border-top: 5px solid #6d0000;
+  border-bottom: 5px solid #6d0000;
+}
+.curtain.left {
+  left: 0;
+  animation: curtain-open-left 2.5s ease forwards;
+}
+.curtain.right {
+  right: 0;
+  animation: curtain-open-right 2.5s ease forwards;
+}
+.curtain::before, .curtain::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 10%;
+  background: rgba(0, 0, 0, 0.3);
+}
+.curtain::before {
+  left: 0;
+}
+.curtain::after {
+  right: 0;
 }
